@@ -1,12 +1,11 @@
 #### Preamble ####
-# Purpose: Simulates a dataset of US electoral divisions, including the 
-  #state and party that won each division.
-# Author: Jimin Lee, Sarah Ding, Xiayi Chen
+# Purpose: Generates a simulated dataset for polling data in the 2024 US Presidential Election.
+# Author: Jimin Lee, Sarah Ding, Xiyan Chen
 # Date: 19 October 2024
-# Contact: jamiejimin.lee@mail.utoronto.ca
+# Contact: jamiejimin.lee@mail.utoronto.ca, sarah.ding@mail.utoronto.ca, xiyan.chen@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: The `tidyverse` package must be installed
-# Any other information needed? Make sure you are in the `starter_folder` rproj
+# Pre-requisites: Downloaded data from url "https://projects.fivethirtyeight.com/polls/president-general/2024/national/"
+# Any other information needed? N/A
 
 
 #### Workspace setup ####
