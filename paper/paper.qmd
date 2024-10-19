@@ -20,7 +20,12 @@ bibliography: references.bib
 #| message: false
 
 library(tidyverse)
-library(palmerpenguins)
+library(janitor)
+library(lubridate)
+library(modelsummary)
+library(rstanarm)
+library(readr)
+library(dplyr)
 ```
 
 
@@ -42,6 +47,21 @@ Telegraphing paragraph: The remainder of this paper is structured as follows. @s
 
 
 # Data {#sec-data}
+```{r}
+# Load the cleaned poll data
+clean_poll_data <- read_csv("/Users/jamielee/2024_US_Elections/data/02-analysis_data/analysis_data.csv")
+
+# Group by state and candidate, and calculate the average percentage (pct)
+state_average <- clean_poll_data |>
+  group_by(state, candidate_name) |>
+  summarise(avg_pct = mean(pct, na.rm = TRUE)) |>
+  pivot_wider(names_from = candidate_name, values_from = avg_pct) |>
+  rename(Trump_pct = "Donald Trump", Harris_pct = "Kamala Harris")
+
+# Replace missing values only in the numeric columns (Trump_pct, Harris_pct)
+state_average <- state_average |>
+  mutate(across(c(Trump_pct, Harris_pct), ~replace_na(., 0)))
+```
 
 ## Overview
 
@@ -51,15 +71,13 @@ Overview text
 
 ## Measurement
 	
-Some paragraphs about how we go from a phenomena in the world to an entry in the dataset.
+To predict the election outcome, we will assume that the higher pct in a state between Trump and Harris determines the winner of the election. The difference in pct is used as the predictor for which candidate wins each state. 
 
 ## Outcome variables
 
 Add graphs, tables and text. Use sub-sub-headings for each outcome variable or update the subheading to be singular.
 
 
-
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
 
 ```{r}
 #| label: fig-bills

@@ -13,24 +13,25 @@ library(tidyverse)
 library(rstanarm)
 
 #### Read data ####
-analysis_data <- read_csv("data/analysis_data/analysis_data.csv")
+clean_poll_data <- read_csv("/Users/jamielee/2024_US_Elections/data/02-analysis_data/analysis_data.csv")
 
 ### Model data ####
-first_model <-
-  stan_glm(
-    formula = flying_time ~ length + width,
-    data = analysis_data,
-    family = gaussian(),
-    prior = normal(location = 0, scale = 2.5, autoscale = TRUE),
-    prior_intercept = normal(location = 0, scale = 2.5, autoscale = TRUE),
-    prior_aux = exponential(rate = 1, autoscale = TRUE),
-    seed = 853
-  )
+# Predicting the election outcome:
+# We'll assume that the higher pct in a state between Trump and Harris determines the winner. 
+# We can use the difference in pct as a predictor for which candidate wins each state. 
 
+# Create a binary outcome for prediction:m 1 if Trump is predicted to win, 0 if Harris
+state_average <- state_average |>
+  mutate(winner = ifelse(Trump_pct > Harris_pct, 1, 0))
+
+# Create a linear model using pct differences to predict the outcome
+linear_model <- lm(winner ~ Trump_pct + Harris_pct, data = state_average)
+
+summary(linear_model)
 
 #### Save model ####
 saveRDS(
-  first_model,
+  linear_model,
   file = "models/first_model.rds"
 )
 
