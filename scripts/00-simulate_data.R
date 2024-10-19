@@ -1,9 +1,9 @@
 #### Preamble ####
-# Purpose: Simulates a dataset of Australian electoral divisions, including the 
+# Purpose: Simulates a dataset of US electoral divisions, including the 
   #state and party that won each division.
-# Author: Rohan Alexander
-# Date: 26 September 2024
-# Contact: rohan.alexander@utoronto.ca
+# Author: Jimin Lee, Sarah Ding, Xiayi Chen
+# Date: 19 October 2024
+# Contact: jamiejimin.lee@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: The `tidyverse` package must be installed
 # Any other information needed? Make sure you are in the `starter_folder` rproj
@@ -15,38 +15,39 @@ set.seed(853)
 
 
 #### Simulate data ####
-# State names
+# Define State names
 states <- c(
-  "New South Wales",
-  "Victoria",
-  "Queensland",
-  "South Australia",
-  "Western Australia",
-  "Tasmania",
-  "Northern Territory",
-  "Australian Capital Territory"
+  "California", "Washington", "Pennsylvania", "New York", "Oregon", "Florida",
+  "Texas", "Alabama", "New Jersey", "Utah", "Colorado", "Alaska"
 )
 
-# Political parties
-parties <- c("Labor", "Liberal", "Greens", "National", "Other")
+# Define Pollster
+pollsters <- c("CNN", "ActiVote", "Beacon/Shaw", "Morning Consult", "Other")
+
+# Define Parties
+parties <- c("DEM", "REP", "Other")
+
+# Define candidates
+candidates <- c("Donald Trump", "Kamala Harris", "Other")
+
 
 # Create a dataset by randomly assigning states and parties to divisions
-analysis_data <- tibble(
-  division = paste("Division", 1:151),  # Add "Division" to make it a character
-  state = sample(
-    states,
-    size = 151,
-    replace = TRUE,
-    prob = c(0.25, 0.25, 0.15, 0.1, 0.1, 0.1, 0.025, 0.025) # Rough state population distribution
-  ),
-  party = sample(
-    parties,
-    size = 151,
-    replace = TRUE,
-    prob = c(0.40, 0.40, 0.05, 0.1, 0.05) # Rough party distribution
-  )
+simulated_data <- tibble(
+  poll_id = 1:1000,
+  pollster = sample(pollsters, size = 1000, replace = TRUE),
+  state = sample(states, size = 1000, replace = TRUE),
+  sample_size = sample(500:3000, size = 1000, replace = TRUE),
+  candidate = sample(candidates, size = 1000, replace = TRUE),
+  support_percent = runif(1000, min = 40, max = 60)
 )
 
+simulated_data <- simulated_data %>%
+  group_by(poll_id) %>%
+  mutate(support_percent = if_else(candidate == "Donald Trump",
+                                   runif(1, 45, 55),
+                                   100 - runif(1,45,55)))
+
+head(simulated_data)
 
 #### Save data ####
-write_csv(analysis_data, "data/00-simulated_data/simulated_data.csv")
+write_csv(simulated_data, "data/00-simulated_data/simulated_data.csv")

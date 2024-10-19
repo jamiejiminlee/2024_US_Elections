@@ -1,152 +1,1001 @@
-division,state,party
-Division 1,Victoria,Liberal
-Division 2,New South Wales,Liberal
-Division 3,Tasmania,Liberal
-Division 4,New South Wales,Liberal
-Division 5,Queensland,Liberal
-Division 6,New South Wales,Labor
-Division 7,Victoria,Liberal
-Division 8,Western Australia,Labor
-Division 9,Western Australia,Greens
-Division 10,Queensland,Labor
-Division 11,Queensland,Labor
-Division 12,Northern Territory,Liberal
-Division 13,New South Wales,Labor
-Division 14,Western Australia,Labor
-Division 15,Western Australia,National
-Division 16,Victoria,Liberal
-Division 17,South Australia,Liberal
-Division 18,Victoria,Liberal
-Division 19,Western Australia,Labor
-Division 20,South Australia,Labor
-Division 21,New South Wales,Liberal
-Division 22,Queensland,Greens
-Division 23,New South Wales,Liberal
-Division 24,New South Wales,Liberal
-Division 25,Queensland,Labor
-Division 26,Victoria,National
-Division 27,New South Wales,Liberal
-Division 28,Queensland,Liberal
-Division 29,Tasmania,Liberal
-Division 30,South Australia,Liberal
-Division 31,New South Wales,Liberal
-Division 32,Victoria,Labor
-Division 33,Tasmania,Liberal
-Division 34,New South Wales,Liberal
-Division 35,Western Australia,Labor
-Division 36,New South Wales,Liberal
-Division 37,Tasmania,Greens
-Division 38,Tasmania,Labor
-Division 39,Victoria,Greens
-Division 40,South Australia,Labor
-Division 41,New South Wales,Other
-Division 42,New South Wales,Other
-Division 43,Tasmania,Labor
-Division 44,Tasmania,National
-Division 45,Queensland,Liberal
-Division 46,Australian Capital Territory,Other
-Division 47,Queensland,Labor
-Division 48,Queensland,Other
-Division 49,South Australia,Liberal
-Division 50,Victoria,National
-Division 51,South Australia,Liberal
-Division 52,Victoria,Labor
-Division 53,South Australia,National
-Division 54,Queensland,Liberal
-Division 55,Queensland,Labor
-Division 56,South Australia,Liberal
-Division 57,New South Wales,Other
-Division 58,Northern Territory,Liberal
-Division 59,New South Wales,Labor
-Division 60,Western Australia,Labor
-Division 61,New South Wales,Liberal
-Division 62,South Australia,Liberal
-Division 63,Queensland,Labor
-Division 64,Tasmania,Labor
-Division 65,South Australia,Labor
-Division 66,Victoria,Labor
-Division 67,Queensland,Liberal
-Division 68,Queensland,Liberal
-Division 69,Tasmania,Labor
-Division 70,South Australia,National
-Division 71,Australian Capital Territory,Labor
-Division 72,Western Australia,Labor
-Division 73,Queensland,National
-Division 74,Victoria,Labor
-Division 75,Western Australia,Labor
-Division 76,Tasmania,Labor
-Division 77,Queensland,Liberal
-Division 78,Western Australia,Liberal
-Division 79,Queensland,Labor
-Division 80,Queensland,Liberal
-Division 81,Victoria,Labor
-Division 82,New South Wales,Liberal
-Division 83,Victoria,Liberal
-Division 84,Queensland,National
-Division 85,Western Australia,Liberal
-Division 86,New South Wales,Labor
-Division 87,Queensland,Liberal
-Division 88,New South Wales,Liberal
-Division 89,Tasmania,Liberal
-Division 90,South Australia,Labor
-Division 91,Victoria,Liberal
-Division 92,New South Wales,Labor
-Division 93,Tasmania,Labor
-Division 94,South Australia,Labor
-Division 95,Victoria,Liberal
-Division 96,Victoria,Labor
-Division 97,Western Australia,Liberal
-Division 98,Queensland,Liberal
-Division 99,South Australia,Liberal
-Division 100,New South Wales,Labor
-Division 101,South Australia,Labor
-Division 102,New South Wales,Labor
-Division 103,Victoria,Labor
-Division 104,Victoria,Labor
-Division 105,South Australia,Other
-Division 106,Western Australia,Labor
-Division 107,Tasmania,Liberal
-Division 108,Victoria,Labor
-Division 109,Queensland,Liberal
-Division 110,Victoria,Labor
-Division 111,Australian Capital Territory,Labor
-Division 112,Victoria,Liberal
-Division 113,Victoria,Liberal
-Division 114,Victoria,Liberal
-Division 115,Tasmania,Labor
-Division 116,Victoria,Labor
-Division 117,New South Wales,Labor
-Division 118,Victoria,Labor
-Division 119,Victoria,Greens
-Division 120,Northern Territory,Labor
-Division 121,South Australia,Liberal
-Division 122,New South Wales,Liberal
-Division 123,New South Wales,Labor
-Division 124,New South Wales,Liberal
-Division 125,New South Wales,National
-Division 126,New South Wales,Labor
-Division 127,Queensland,Labor
-Division 128,New South Wales,Other
-Division 129,Queensland,Labor
-Division 130,Australian Capital Territory,Liberal
-Division 131,Tasmania,Greens
-Division 132,New South Wales,National
-Division 133,New South Wales,Labor
-Division 134,Northern Territory,Labor
-Division 135,South Australia,National
-Division 136,Victoria,Labor
-Division 137,Tasmania,National
-Division 138,South Australia,Liberal
-Division 139,New South Wales,Labor
-Division 140,Victoria,Other
-Division 141,Queensland,Greens
-Division 142,Victoria,National
-Division 143,Western Australia,Labor
-Division 144,Victoria,Labor
-Division 145,Queensland,Liberal
-Division 146,Tasmania,Liberal
-Division 147,South Australia,Liberal
-Division 148,Victoria,Labor
-Division 149,New South Wales,National
-Division 150,New South Wales,Labor
-Division 151,Victoria,Liberal
+poll_id,pollster,state,sample_size,candidate,support_percent
+1,CNN,Washington,1549,Other,54.15640610968694
+2,ActiVote,Colorado,978,Donald Trump,47.701558934058994
+3,Other,Alabama,737,Other,48.44111386919394
+4,CNN,Pennsylvania,1324,Other,50.81753481877968
+5,Other,Alabama,2969,Other,51.46951514761895
+6,Other,California,1881,Donald Trump,49.00636122794822
+7,ActiVote,Texas,2050,Kamala Harris,51.891539888456464
+8,Morning Consult,Utah,1652,Other,52.52171245869249
+9,Beacon/Shaw,New Jersey,2306,Donald Trump,53.063028985634446
+10,Beacon/Shaw,Pennsylvania,1868,Other,46.934938319027424
+11,CNN,Oregon,2061,Donald Trump,48.55502827093005
+12,Beacon/Shaw,Utah,864,Other,46.265457316767424
+13,Beacon/Shaw,California,2703,Donald Trump,48.80102686351165
+14,Beacon/Shaw,Alaska,1338,Donald Trump,54.9268589890562
+15,ActiVote,New York,2318,Kamala Harris,46.72085384139791
+16,Other,Pennsylvania,1873,Donald Trump,52.552878740243614
+17,ActiVote,New Jersey,2183,Kamala Harris,53.77328943228349
+18,Morning Consult,Florida,2438,Donald Trump,45.858280539978296
+19,Other,Washington,2170,Donald Trump,54.75595039082691
+20,Morning Consult,Washington,2746,Kamala Harris,49.28427854087204
+21,ActiVote,New Jersey,2402,Other,49.45742447627708
+22,Other,Pennsylvania,2421,Donald Trump,45.01398387365043
+23,ActiVote,Pennsylvania,925,Kamala Harris,45.20759218139574
+24,CNN,Pennsylvania,2680,Donald Trump,46.58523412887007
+25,CNN,Washington,2916,Other,51.15513333817944
+26,Morning Consult,Washington,1713,Other,52.98140261089429
+27,Other,Alabama,1425,Other,47.04062508419156
+28,Beacon/Shaw,Alabama,1115,Other,54.16995316976681
+29,Beacon/Shaw,Alaska,1872,Donald Trump,53.64511254243553
+30,ActiVote,Texas,2627,Other,53.26077891048044
+31,CNN,Alaska,1915,Donald Trump,48.83189236279577
+32,Beacon/Shaw,Oregon,2604,Kamala Harris,52.83917963504791
+33,ActiVote,Oregon,2647,Other,49.46606792276725
+34,CNN,Alaska,1715,Kamala Harris,47.55021418211982
+35,CNN,Florida,2941,Other,46.917948226910084
+36,Other,California,2246,Donald Trump,48.921207210514694
+37,Other,Washington,1468,Other,48.40416884049773
+38,CNN,New Jersey,1791,Other,47.059424887411296
+39,CNN,Utah,936,Kamala Harris,53.75024750828743
+40,Other,Oregon,1293,Other,46.106672240421176
+41,Other,Alaska,1717,Kamala Harris,51.47999314125627
+42,Morning Consult,Colorado,1515,Kamala Harris,53.8925941567868
+43,CNN,Oregon,570,Kamala Harris,46.32265000138432
+44,Morning Consult,Texas,2021,Donald Trump,50.29742864659056
+45,Other,Oregon,2839,Donald Trump,53.72476932359859
+46,CNN,Utah,1048,Donald Trump,52.47145504690707
+47,ActiVote,Alaska,2138,Donald Trump,49.06328214099631
+48,Beacon/Shaw,Pennsylvania,1680,Other,51.97710249340162
+49,Other,New York,1659,Donald Trump,46.21306367684156
+50,CNN,Colorado,1463,Other,51.91709534963593
+51,CNN,Colorado,1163,Kamala Harris,47.52730605658144
+52,Morning Consult,New York,541,Kamala Harris,47.06937949405983
+53,Morning Consult,California,979,Donald Trump,46.85684875352308
+54,Beacon/Shaw,Washington,2279,Donald Trump,50.69560031173751
+55,Beacon/Shaw,New York,697,Other,50.072664788458496
+56,CNN,Utah,1844,Kamala Harris,51.3299742131494
+57,Beacon/Shaw,Oregon,1023,Other,47.381416556891054
+58,Morning Consult,California,1388,Donald Trump,54.11622222745791
+59,Morning Consult,Alabama,1128,Other,49.9413492414169
+60,ActiVote,Washington,2043,Kamala Harris,50.4265663982369
+61,Beacon/Shaw,Utah,2424,Kamala Harris,51.733450123574585
+62,Other,Pennsylvania,1210,Other,45.85701142670587
+63,Beacon/Shaw,Texas,2568,Other,46.81487363995984
+64,ActiVote,New York,2162,Donald Trump,47.78032574104145
+65,Other,Utah,848,Other,54.32211472420022
+66,Other,Florida,2136,Donald Trump,51.38306385371834
+67,Beacon/Shaw,Alaska,1455,Other,50.86451072478667
+68,CNN,Utah,1293,Donald Trump,50.15875204466283
+69,CNN,California,2682,Other,52.18052670592442
+70,Beacon/Shaw,New York,825,Kamala Harris,45.81089418614283
+71,Morning Consult,Utah,879,Kamala Harris,46.3399071036838
+72,Beacon/Shaw,New Jersey,1737,Other,52.129030427895486
+73,ActiVote,Florida,2035,Kamala Harris,53.164840559475124
+74,CNN,Colorado,947,Kamala Harris,47.68013204447925
+75,Morning Consult,New Jersey,2557,Donald Trump,47.92876472696662
+76,Other,New Jersey,1684,Other,49.21267744386569
+77,Other,New York,774,Kamala Harris,54.20133824227378
+78,Beacon/Shaw,Colorado,804,Donald Trump,54.16940000606701
+79,Morning Consult,Washington,2683,Other,50.12390202609822
+80,CNN,Florida,2085,Other,47.46925410348922
+81,Morning Consult,Oregon,1810,Donald Trump,54.451318744104356
+82,Beacon/Shaw,Oregon,1497,Kamala Harris,45.7419329113327
+83,Beacon/Shaw,New Jersey,539,Kamala Harris,48.466385037172586
+84,CNN,Colorado,2329,Donald Trump,54.79583705076948
+85,CNN,Colorado,954,Donald Trump,46.511419476009905
+86,Other,Washington,2081,Other,53.75620987499133
+87,Other,Florida,2298,Kamala Harris,50.90833283960819
+88,Morning Consult,Texas,2195,Other,53.68587266653776
+89,Beacon/Shaw,Oregon,1594,Other,48.80294926697388
+90,Other,Texas,891,Kamala Harris,51.68937625363469
+91,Other,Colorado,519,Donald Trump,51.754779804032296
+92,Morning Consult,Washington,2727,Kamala Harris,52.33228386612609
+93,Morning Consult,Oregon,743,Donald Trump,52.557162726297975
+94,Morning Consult,Pennsylvania,2509,Other,51.438592448830605
+95,CNN,Utah,1472,Other,53.09530279831961
+96,CNN,Utah,1099,Kamala Harris,52.73242380935699
+97,CNN,California,625,Donald Trump,50.27817224152386
+98,Beacon/Shaw,Washington,1908,Donald Trump,48.391626093070954
+99,Morning Consult,New Jersey,2492,Other,48.044095498044044
+100,Other,Oregon,612,Kamala Harris,53.20310454349965
+101,Morning Consult,California,1957,Donald Trump,50.37952632177621
+102,Beacon/Shaw,Alabama,1022,Other,54.648952789139
+103,ActiVote,California,2624,Donald Trump,54.70981891732663
+104,CNN,Pennsylvania,2890,Kamala Harris,52.1297629061155
+105,Other,California,1337,Other,53.55031580897048
+106,CNN,Utah,720,Kamala Harris,46.54301028465852
+107,ActiVote,New Jersey,735,Donald Trump,46.108750915154815
+108,ActiVote,Florida,2337,Kamala Harris,54.648175542242825
+109,Morning Consult,Washington,812,Other,48.80562849342823
+110,Other,Alabama,573,Kamala Harris,47.56024700123817
+111,CNN,Utah,1130,Kamala Harris,52.95843633590266
+112,Morning Consult,New Jersey,1542,Kamala Harris,51.365942226257175
+113,CNN,Pennsylvania,2544,Kamala Harris,45.59019028674811
+114,Beacon/Shaw,Alabama,1356,Donald Trump,51.597734729293734
+115,CNN,Texas,848,Donald Trump,52.113139557186514
+116,CNN,Washington,1596,Donald Trump,49.75994054926559
+117,Other,New Jersey,1630,Donald Trump,46.47748783696443
+118,CNN,Pennsylvania,1017,Other,46.11625198973343
+119,CNN,Colorado,1305,Other,51.60638963337988
+120,Beacon/Shaw,Oregon,2741,Other,51.08276721322909
+121,Morning Consult,Texas,968,Kamala Harris,53.42782325576991
+122,Other,Oregon,725,Kamala Harris,53.54547851253301
+123,CNN,New Jersey,1308,Donald Trump,46.382151276338845
+124,ActiVote,California,644,Donald Trump,45.65304160583764
+125,Morning Consult,New Jersey,2918,Other,50.18953163176775
+126,Beacon/Shaw,Colorado,1797,Kamala Harris,53.069742284715176
+127,Beacon/Shaw,Oregon,2449,Other,46.50301018496975
+128,CNN,Utah,598,Donald Trump,47.75129199028015
+129,CNN,Florida,2859,Donald Trump,45.73428629897535
+130,ActiVote,Utah,1445,Kamala Harris,50.02207112964243
+131,Other,New York,831,Donald Trump,49.53522792784497
+132,Other,Colorado,2647,Other,48.81101612234488
+133,Morning Consult,California,2888,Other,51.22557339258492
+134,Morning Consult,Texas,964,Donald Trump,46.464944465551525
+135,ActiVote,Pennsylvania,2777,Donald Trump,46.961811974179
+136,Beacon/Shaw,Colorado,998,Kamala Harris,45.9926559147425
+137,Other,Texas,2748,Donald Trump,52.31323645217344
+138,CNN,New Jersey,605,Donald Trump,45.94966374570504
+139,ActiVote,New Jersey,1260,Kamala Harris,48.897087189834565
+140,CNN,Alaska,1578,Donald Trump,51.19183693313971
+141,Other,Texas,2692,Other,53.39634492294863
+142,Other,Washington,796,Kamala Harris,48.648468831088394
+143,ActiVote,Pennsylvania,2001,Donald Trump,52.287836549803615
+144,Beacon/Shaw,Alaska,2620,Kamala Harris,50.26627796702087
+145,Beacon/Shaw,Washington,2504,Kamala Harris,53.715090865734965
+146,Morning Consult,New Jersey,1550,Other,48.547476469539106
+147,Beacon/Shaw,New York,510,Other,49.35305286431685
+148,CNN,Washington,540,Donald Trump,48.89038073597476
+149,CNN,Florida,1766,Donald Trump,46.27468735445291
+150,Beacon/Shaw,Washington,741,Kamala Harris,45.10446008294821
+151,Beacon/Shaw,Colorado,992,Kamala Harris,54.41276346100494
+152,Morning Consult,Pennsylvania,867,Donald Trump,48.338924599811435
+153,Beacon/Shaw,Pennsylvania,2700,Donald Trump,49.511694577522576
+154,Beacon/Shaw,Florida,1784,Kamala Harris,52.98830960644409
+155,Other,New Jersey,1219,Donald Trump,49.8454897524789
+156,Beacon/Shaw,Alabama,821,Other,46.59504556795582
+157,ActiVote,Pennsylvania,2191,Other,52.82580536790192
+158,CNN,California,1113,Other,52.933078196365386
+159,ActiVote,California,1919,Kamala Harris,51.914697827305645
+160,Other,Washington,2317,Donald Trump,52.967881467193365
+161,ActiVote,New Jersey,523,Kamala Harris,52.51626183511689
+162,Other,Colorado,2446,Kamala Harris,48.88503754045814
+163,CNN,Alaska,2681,Other,52.46757846325636
+164,Morning Consult,New York,1753,Kamala Harris,45.25350645184517
+165,Other,Colorado,1210,Other,46.49010340217501
+166,Morning Consult,Florida,2201,Other,46.20543053606525
+167,Beacon/Shaw,New York,1169,Donald Trump,49.79428665712476
+168,Beacon/Shaw,New York,2765,Donald Trump,45.938184631522745
+169,ActiVote,New York,1438,Kamala Harris,47.04354040091857
+170,ActiVote,New Jersey,2168,Other,53.66328224306926
+171,Morning Consult,Texas,2339,Other,53.18202889058739
+172,Beacon/Shaw,Alabama,2926,Donald Trump,48.13646027818322
+173,ActiVote,California,690,Other,48.38705773698166
+174,Beacon/Shaw,New Jersey,2119,Kamala Harris,52.87003012606874
+175,CNN,Oregon,2663,Kamala Harris,48.7591396830976
+176,Morning Consult,Utah,833,Kamala Harris,54.52065602643415
+177,Beacon/Shaw,New York,2656,Donald Trump,47.99134952016175
+178,Morning Consult,Florida,2880,Donald Trump,46.407068765256554
+179,ActiVote,California,1045,Kamala Harris,45.353809737134725
+180,Other,New York,796,Other,53.66712241433561
+181,ActiVote,Florida,1705,Donald Trump,45.32360019395128
+182,ActiVote,Washington,532,Donald Trump,53.34880389273167
+183,Beacon/Shaw,Florida,2874,Other,50.49787154654041
+184,CNN,Alaska,1391,Kamala Harris,49.82231190195307
+185,CNN,Utah,992,Other,48.916315680835396
+186,Beacon/Shaw,Texas,1173,Donald Trump,47.883311924524605
+187,CNN,Pennsylvania,2601,Other,53.957493072375655
+188,Morning Consult,Texas,1345,Kamala Harris,53.8597582350485
+189,CNN,Florida,1325,Donald Trump,48.79244666779414
+190,Beacon/Shaw,California,2242,Kamala Harris,51.87925376696512
+191,Other,Alabama,736,Donald Trump,54.391329844947904
+192,CNN,Utah,877,Other,54.8797622625716
+193,ActiVote,Alaska,2023,Kamala Harris,52.0423432206735
+194,CNN,Texas,1545,Other,47.75605362607166
+195,Beacon/Shaw,Colorado,1814,Other,54.846612038090825
+196,Beacon/Shaw,Pennsylvania,1560,Other,52.60524426586926
+197,Beacon/Shaw,Florida,1098,Donald Trump,54.59889974212274
+198,ActiVote,Colorado,643,Donald Trump,53.42806470114738
+199,ActiVote,California,2165,Kamala Harris,50.50990967312828
+200,Morning Consult,New York,1862,Other,51.43180073238909
+201,CNN,California,1306,Donald Trump,51.25914663076401
+202,ActiVote,New Jersey,2433,Kamala Harris,49.45007585454732
+203,CNN,California,990,Other,47.96416843542829
+204,ActiVote,Colorado,1917,Other,47.286034412682056
+205,Beacon/Shaw,New Jersey,852,Other,54.79378036689013
+206,Other,Oregon,1467,Donald Trump,52.47255347901955
+207,ActiVote,Alabama,2743,Kamala Harris,49.81378743657842
+208,CNN,Alabama,2952,Kamala Harris,48.80774559918791
+209,CNN,Washington,1651,Kamala Harris,46.58044560812414
+210,Other,Washington,1720,Other,49.10621723392978
+211,Other,Washington,1097,Donald Trump,46.19463060516864
+212,Beacon/Shaw,New Jersey,1621,Other,54.80026171542704
+213,CNN,Texas,1457,Other,51.00957262562588
+214,Other,New Jersey,2876,Other,47.58853896521032
+215,Other,California,2913,Other,47.10081580327824
+216,ActiVote,Oregon,687,Donald Trump,48.24544810457155
+217,Other,New Jersey,2938,Other,48.5184265836142
+218,Beacon/Shaw,Alaska,1930,Other,51.745515449438244
+219,Morning Consult,Pennsylvania,1853,Other,51.628171547781676
+220,Other,Colorado,1608,Other,51.93058896576986
+221,Beacon/Shaw,Pennsylvania,856,Other,53.61819065641612
+222,Morning Consult,Alaska,2827,Other,50.64957715570927
+223,Other,New Jersey,2742,Kamala Harris,50.091446673031896
+224,CNN,Colorado,2502,Other,51.274758053477854
+225,ActiVote,Pennsylvania,2639,Kamala Harris,48.618787177838385
+226,Beacon/Shaw,Washington,2925,Donald Trump,49.66135079972446
+227,Morning Consult,California,1188,Kamala Harris,49.721499416045845
+228,Other,Florida,2977,Donald Trump,47.058439711108804
+229,Morning Consult,Washington,1715,Donald Trump,50.46371911186725
+230,Morning Consult,Florida,916,Other,50.231548328883946
+231,ActiVote,Colorado,2289,Other,50.16855635680258
+232,Other,Oregon,1613,Donald Trump,47.88676489144564
+233,Other,Alabama,1390,Other,50.72687180014327
+234,Beacon/Shaw,Washington,2121,Donald Trump,54.9848473793827
+235,Beacon/Shaw,Pennsylvania,1793,Other,48.49101243773475
+236,Beacon/Shaw,Florida,1524,Other,47.50376274809241
+237,ActiVote,California,2653,Other,51.552998449187726
+238,Beacon/Shaw,California,2429,Kamala Harris,49.77639547782019
+239,ActiVote,Pennsylvania,2315,Donald Trump,52.48017494333908
+240,Beacon/Shaw,California,1289,Other,48.034075521864
+241,Morning Consult,Texas,1257,Kamala Harris,54.46598998270929
+242,CNN,Washington,1277,Kamala Harris,46.72288317466155
+243,CNN,Oregon,1642,Other,54.1856048675254
+244,ActiVote,Utah,1044,Other,48.01785578252748
+245,ActiVote,Alabama,2311,Kamala Harris,48.53230645880103
+246,Beacon/Shaw,New York,2208,Kamala Harris,49.1180374706164
+247,Beacon/Shaw,Pennsylvania,1557,Kamala Harris,45.791281431447715
+248,Beacon/Shaw,Alaska,607,Kamala Harris,50.70313155883923
+249,CNN,Oregon,850,Other,47.127508227713406
+250,CNN,New York,805,Kamala Harris,51.49195545120165
+251,ActiVote,Colorado,2041,Donald Trump,50.85313180927187
+252,CNN,Florida,857,Donald Trump,46.3169442047365
+253,Beacon/Shaw,Texas,2364,Other,52.09538862109184
+254,CNN,New York,773,Other,47.217254389543086
+255,Beacon/Shaw,California,1601,Other,51.679617324844
+256,Beacon/Shaw,Utah,2042,Kamala Harris,51.62309964420274
+257,ActiVote,Texas,2341,Other,53.634773385711014
+258,Morning Consult,Pennsylvania,2334,Donald Trump,52.48284944333136
+259,Beacon/Shaw,Colorado,2099,Kamala Harris,48.1567170470953
+260,Morning Consult,California,698,Kamala Harris,52.571414939593524
+261,Other,Oregon,2040,Kamala Harris,46.03122818749398
+262,CNN,Washington,786,Other,45.6932802638039
+263,CNN,Florida,1982,Donald Trump,49.97573739849031
+264,Morning Consult,New York,1356,Other,54.25839695613831
+265,Beacon/Shaw,Washington,755,Kamala Harris,46.20528341270983
+266,CNN,Colorado,2912,Other,51.45854870788753
+267,CNN,Utah,1546,Kamala Harris,49.35027519706637
+268,Other,Oregon,2692,Kamala Harris,54.82577707152814
+269,Other,Oregon,1775,Kamala Harris,45.703951409086585
+270,Beacon/Shaw,Texas,1966,Other,52.3211053176783
+271,CNN,Alaska,563,Other,50.85290476214141
+272,Morning Consult,Alaska,1906,Donald Trump,50.18350654048845
+273,Other,Alaska,2834,Donald Trump,54.93064088514075
+274,Other,California,849,Kamala Harris,47.60363201610744
+275,Other,Alabama,1655,Other,47.78387490194291
+276,ActiVote,Washington,1465,Donald Trump,53.75710622174665
+277,Beacon/Shaw,Oregon,1602,Kamala Harris,49.112724910955876
+278,Other,Alaska,2069,Donald Trump,52.878840495832264
+279,Other,Florida,1208,Kamala Harris,51.30020137876272
+280,Other,California,1880,Kamala Harris,52.84757180605084
+281,Morning Consult,Oregon,1784,Donald Trump,48.877142884302884
+282,Other,Colorado,2250,Kamala Harris,50.71754703298211
+283,Morning Consult,Utah,2288,Donald Trump,47.01208765618503
+284,ActiVote,Washington,1311,Kamala Harris,46.17676891153678
+285,ActiVote,New York,1574,Other,49.42880091955885
+286,Morning Consult,New Jersey,1126,Donald Trump,46.96569781983271
+287,ActiVote,Washington,975,Other,46.56560574658215
+288,Other,New York,1165,Other,51.5952323214151
+289,CNN,Utah,1792,Donald Trump,46.84791973326355
+290,CNN,Texas,1096,Donald Trump,49.13325177272782
+291,Morning Consult,Florida,810,Kamala Harris,47.17822443693876
+292,CNN,Alaska,2718,Other,53.09960869606584
+293,Beacon/Shaw,Colorado,1426,Donald Trump,49.563521191012114
+294,ActiVote,Oregon,747,Other,52.142293569631875
+295,Morning Consult,Alabama,2575,Other,46.64653243962675
+296,Morning Consult,Texas,911,Donald Trump,53.564902564976364
+297,Other,Alaska,2133,Kamala Harris,53.777925146277994
+298,Other,Florida,2940,Other,48.6058665974997
+299,Morning Consult,Alabama,1140,Donald Trump,48.872118659783155
+300,ActiVote,Washington,691,Kamala Harris,50.963330338709056
+301,CNN,Colorado,538,Donald Trump,53.29291699221358
+302,Other,Alaska,547,Donald Trump,53.19125771988183
+303,Other,New York,2468,Kamala Harris,52.79792483430356
+304,ActiVote,Pennsylvania,2347,Kamala Harris,46.030578636564314
+305,ActiVote,Colorado,2682,Other,52.08634924143553
+306,ActiVote,Florida,1071,Other,45.28080487623811
+307,Morning Consult,Pennsylvania,1915,Kamala Harris,45.353345840703696
+308,Other,New York,2776,Kamala Harris,50.646324849221855
+309,CNN,Pennsylvania,784,Other,54.56106974277645
+310,ActiVote,New York,2389,Kamala Harris,49.05215537874028
+311,Other,Florida,2330,Donald Trump,50.08878475986421
+312,CNN,Florida,1931,Donald Trump,49.30729585699737
+313,Morning Consult,New York,736,Other,46.739260950125754
+314,Other,Pennsylvania,2382,Kamala Harris,54.75615581963211
+315,CNN,New York,2193,Other,46.25441326061264
+316,Other,Alabama,2698,Donald Trump,53.4251734893769
+317,Other,California,2859,Donald Trump,49.1750091034919
+318,Beacon/Shaw,Texas,2942,Kamala Harris,47.029775576666
+319,ActiVote,Florida,808,Other,46.67427791515365
+320,Beacon/Shaw,Washington,1107,Donald Trump,45.78317127889022
+321,CNN,Pennsylvania,1909,Kamala Harris,48.54087721090764
+322,CNN,Washington,2509,Donald Trump,53.80989844445139
+323,ActiVote,Colorado,2760,Kamala Harris,52.467883785720915
+324,Morning Consult,New York,963,Donald Trump,53.76031161053106
+325,CNN,Alaska,1082,Kamala Harris,46.67863821377978
+326,ActiVote,California,2655,Donald Trump,45.22562821628526
+327,Other,Pennsylvania,2520,Donald Trump,54.477741601876915
+328,ActiVote,Pennsylvania,1094,Donald Trump,45.2251752698794
+329,Beacon/Shaw,Oregon,781,Other,50.34623757470399
+330,Morning Consult,New Jersey,1623,Kamala Harris,49.96840181527659
+331,Other,Florida,1702,Kamala Harris,53.95002296194434
+332,Beacon/Shaw,Alabama,1393,Other,53.03766356781125
+333,Beacon/Shaw,Pennsylvania,966,Other,47.04765117960051
+334,ActiVote,Alaska,2577,Kamala Harris,47.684992246795446
+335,Other,New Jersey,1694,Kamala Harris,46.87826774083078
+336,ActiVote,Utah,2754,Kamala Harris,48.53814643342048
+337,Beacon/Shaw,Washington,1076,Donald Trump,47.45912911137566
+338,ActiVote,Utah,980,Other,53.677802151069045
+339,CNN,Alaska,1123,Other,47.97533301869407
+340,CNN,Alabama,2399,Donald Trump,50.836694543249905
+341,CNN,New Jersey,2494,Other,49.793546434957534
+342,CNN,Utah,1803,Kamala Harris,46.97592527139932
+343,Other,New Jersey,522,Kamala Harris,50.037755500525236
+344,Beacon/Shaw,Colorado,1617,Other,54.45858787512407
+345,CNN,New Jersey,1232,Donald Trump,49.986724611371756
+346,CNN,Washington,1980,Donald Trump,49.132411901373416
+347,CNN,Pennsylvania,960,Other,54.89559899549931
+348,Other,Washington,1231,Donald Trump,51.99249125784263
+349,CNN,New York,1021,Donald Trump,54.84670818783343
+350,ActiVote,Colorado,1106,Kamala Harris,52.00649025849998
+351,Morning Consult,New York,2207,Other,54.74643951514736
+352,CNN,Utah,1304,Kamala Harris,45.835702805779874
+353,Other,Alabama,751,Kamala Harris,47.11563752731308
+354,Other,Texas,2857,Kamala Harris,47.575899853836745
+355,ActiVote,Pennsylvania,2101,Donald Trump,49.58057677606121
+356,CNN,New Jersey,1537,Donald Trump,48.578625412192196
+357,CNN,New York,2888,Kamala Harris,53.41329097747803
+358,Other,California,869,Other,54.50969585450366
+359,Beacon/Shaw,Alaska,1101,Donald Trump,51.39869122300297
+360,Other,New Jersey,755,Donald Trump,46.56508604530245
+361,Beacon/Shaw,Colorado,2571,Kamala Harris,48.525429067667574
+362,Beacon/Shaw,New York,2893,Other,54.51070222072303
+363,Morning Consult,Alabama,548,Other,53.50647558225319
+364,Beacon/Shaw,Florida,1531,Kamala Harris,51.63273974554613
+365,Other,California,870,Donald Trump,50.62468817457557
+366,CNN,Colorado,1179,Other,49.556427316274494
+367,ActiVote,Alabama,1276,Kamala Harris,51.63475356064737
+368,Other,New Jersey,2108,Kamala Harris,49.64297536062077
+369,ActiVote,Alaska,1042,Donald Trump,46.753683323040605
+370,CNN,Oregon,544,Other,47.98956188606098
+371,Morning Consult,Washington,2076,Kamala Harris,54.02119170874357
+372,ActiVote,Texas,537,Other,52.44309902423993
+373,Morning Consult,Florida,1015,Donald Trump,52.3896124586463
+374,Other,Washington,1065,Donald Trump,48.63585467915982
+375,Other,Texas,2341,Other,54.663875398691744
+376,Beacon/Shaw,Washington,511,Donald Trump,50.65795735223219
+377,ActiVote,Alaska,2058,Other,50.944459626916796
+378,CNN,New York,1119,Donald Trump,49.75672327913344
+379,Morning Consult,Utah,1352,Donald Trump,48.39655379764736
+380,Beacon/Shaw,Pennsylvania,1531,Kamala Harris,50.517287862021476
+381,Beacon/Shaw,Utah,2070,Donald Trump,48.578132395632565
+382,ActiVote,California,1763,Other,54.11775200627744
+383,Morning Consult,Colorado,2288,Kamala Harris,52.42265398381278
+384,CNN,Alabama,1530,Other,48.48885613493621
+385,Other,Washington,1001,Other,52.91156038409099
+386,Morning Consult,New York,1050,Other,52.434825205709785
+387,CNN,Texas,1608,Other,52.22180124372244
+388,ActiVote,Alaska,2843,Kamala Harris,53.9495374285616
+389,Beacon/Shaw,Pennsylvania,2357,Donald Trump,54.78747483808547
+390,ActiVote,Utah,1034,Donald Trump,46.47710363846272
+391,ActiVote,Alaska,2303,Donald Trump,51.4386975299567
+392,Morning Consult,Alabama,547,Donald Trump,52.4986722250469
+393,ActiVote,Texas,1147,Other,52.13432897813618
+394,Other,New York,1459,Other,49.680259379092604
+395,Other,Alaska,1492,Donald Trump,54.44363787537441
+396,Morning Consult,Alaska,2240,Donald Trump,50.59914984041825
+397,ActiVote,Alaska,598,Donald Trump,48.206010265275836
+398,Other,New York,2636,Donald Trump,51.40171308768913
+399,Beacon/Shaw,Utah,588,Other,50.965110084507614
+400,CNN,Colorado,2074,Other,49.916226582136005
+401,CNN,New Jersey,1389,Kamala Harris,50.56129139615223
+402,Beacon/Shaw,Utah,2453,Kamala Harris,47.65494798542932
+403,Other,California,510,Donald Trump,46.15225750952959
+404,CNN,Utah,2070,Other,50.447832653298974
+405,Morning Consult,New York,2211,Other,50.500702515710145
+406,CNN,New York,2869,Other,47.61744268005714
+407,Other,Washington,618,Other,51.862673298455775
+408,CNN,Washington,2885,Other,51.874644993804395
+409,CNN,Colorado,2521,Other,51.92014077678323
+410,Other,Colorado,947,Other,49.03437785571441
+411,CNN,Pennsylvania,887,Donald Trump,48.05442596087232
+412,Other,Utah,1383,Donald Trump,45.305003409739584
+413,Other,Pennsylvania,1253,Other,47.9472738946788
+414,CNN,Texas,1383,Other,50.667825508862734
+415,Beacon/Shaw,Alaska,1609,Kamala Harris,46.43796036252752
+416,Beacon/Shaw,California,2651,Donald Trump,49.400338635314256
+417,Other,Alabama,2992,Donald Trump,54.97581186238676
+418,Morning Consult,Alaska,889,Kamala Harris,51.280066224280745
+419,Morning Consult,Washington,2702,Other,46.768953395076096
+420,Other,Oregon,1200,Other,49.09415909321979
+421,Other,Colorado,2527,Kamala Harris,50.63148918794468
+422,Beacon/Shaw,Alabama,2666,Other,49.34602234978229
+423,Other,New Jersey,599,Donald Trump,51.96191652677953
+424,Other,Washington,740,Other,46.95520675741136
+425,ActiVote,Alaska,2494,Other,52.26181267295033
+426,ActiVote,Utah,740,Donald Trump,52.31644007610157
+427,Morning Consult,Texas,1998,Donald Trump,46.66210880735889
+428,Other,Utah,1985,Kamala Harris,52.55880155367777
+429,Morning Consult,Texas,2899,Kamala Harris,54.84267758904025
+430,ActiVote,Pennsylvania,2031,Other,45.778629498090595
+431,Morning Consult,Oregon,2718,Other,54.70039404230192
+432,Morning Consult,Texas,2709,Kamala Harris,51.66071131126955
+433,CNN,Florida,2052,Other,45.71306001627818
+434,ActiVote,California,1837,Donald Trump,54.7830024571158
+435,Other,Washington,683,Other,52.43564993375912
+436,ActiVote,Utah,2813,Kamala Harris,51.733930059708655
+437,Morning Consult,California,1716,Kamala Harris,45.16847866587341
+438,Other,Alaska,1901,Kamala Harris,45.05995403509587
+439,Other,New York,2516,Donald Trump,47.28236579801887
+440,CNN,Texas,2941,Donald Trump,53.470660974271595
+441,CNN,Florida,2290,Donald Trump,47.073801995720714
+442,Morning Consult,Florida,2807,Other,45.07138247368857
+443,Beacon/Shaw,Colorado,1693,Donald Trump,50.13188138836995
+444,Beacon/Shaw,California,2252,Kamala Harris,47.53652716288343
+445,Morning Consult,New York,2879,Other,53.20412870729342
+446,Other,Pennsylvania,2664,Kamala Harris,49.739424218423665
+447,CNN,Alabama,2541,Other,53.182902191765606
+448,Other,Florida,790,Donald Trump,47.323005970101804
+449,CNN,Colorado,2943,Other,48.40113813756034
+450,Morning Consult,New York,2906,Other,48.40003449236974
+451,Beacon/Shaw,Alabama,2927,Kamala Harris,48.806167969014496
+452,Morning Consult,Washington,2727,Kamala Harris,45.846663049887866
+453,ActiVote,Washington,1638,Donald Trump,49.97193746268749
+454,Morning Consult,Utah,593,Kamala Harris,52.21439743414521
+455,Morning Consult,Washington,2786,Kamala Harris,53.03802096750587
+456,Beacon/Shaw,Alabama,2697,Other,49.06644233735278
+457,Beacon/Shaw,New Jersey,570,Donald Trump,54.12635464221239
+458,CNN,Washington,1383,Other,51.12758827628568
+459,Beacon/Shaw,Washington,2372,Kamala Harris,53.6351749766618
+460,Morning Consult,New Jersey,805,Donald Trump,47.97791942488402
+461,Morning Consult,Texas,2076,Donald Trump,49.68180818948895
+462,Morning Consult,Utah,885,Donald Trump,49.06100649619475
+463,Morning Consult,New York,1407,Donald Trump,45.075590189080685
+464,Other,Alabama,1958,Kamala Harris,45.42471082182601
+465,Beacon/Shaw,Oregon,2188,Donald Trump,51.84925687499344
+466,ActiVote,New Jersey,2061,Other,50.70957832504064
+467,CNN,Oregon,2745,Donald Trump,46.402182155288756
+468,ActiVote,New Jersey,1799,Other,51.184576763771474
+469,ActiVote,Utah,1487,Other,46.72321447636932
+470,ActiVote,Pennsylvania,2877,Donald Trump,52.74135486455634
+471,Other,Utah,1779,Kamala Harris,49.70233802916482
+472,Morning Consult,Texas,1802,Kamala Harris,49.67114142840728
+473,ActiVote,Texas,2427,Kamala Harris,49.93592407787219
+474,CNN,California,1830,Kamala Harris,45.19790132064372
+475,Beacon/Shaw,Alabama,2078,Other,53.187596406787634
+476,CNN,Florida,1471,Donald Trump,48.29102656804025
+477,Morning Consult,Oregon,1555,Kamala Harris,48.725229271221906
+478,Beacon/Shaw,Florida,2103,Donald Trump,54.822557820007205
+479,Morning Consult,New Jersey,2717,Donald Trump,45.398875831160694
+480,Other,Oregon,582,Kamala Harris,53.39706176426262
+481,Other,New Jersey,2765,Other,50.88113439036533
+482,Beacon/Shaw,Oregon,2965,Other,47.69021826097742
+483,Other,New Jersey,1413,Kamala Harris,49.85764314653352
+484,Morning Consult,Alabama,1205,Other,48.81610773038119
+485,CNN,New York,2073,Donald Trump,53.84860223857686
+486,Morning Consult,California,683,Other,46.661370331421494
+487,Morning Consult,Oregon,1490,Other,51.23382992343977
+488,ActiVote,Alabama,2562,Donald Trump,47.00634102104232
+489,Other,Washington,2025,Kamala Harris,47.639979457017034
+490,CNN,Alaska,550,Donald Trump,49.18595970608294
+491,CNN,California,1090,Other,46.676016873680055
+492,ActiVote,Alabama,2637,Donald Trump,48.41029921779409
+493,CNN,Washington,1799,Other,48.45163393300027
+494,Morning Consult,Oregon,854,Other,51.43708691932261
+495,Other,Pennsylvania,2026,Kamala Harris,50.08919273968786
+496,Beacon/Shaw,Oregon,2154,Kamala Harris,47.96458149095997
+497,CNN,Colorado,2396,Other,53.43299030791968
+498,Other,Washington,849,Donald Trump,51.177695943042636
+499,ActiVote,Texas,2553,Donald Trump,54.065684371162206
+500,CNN,Alaska,2476,Other,47.70617996575311
+501,Beacon/Shaw,California,1796,Kamala Harris,53.688618515152484
+502,CNN,Utah,1938,Donald Trump,45.06755080772564
+503,ActiVote,Texas,1259,Other,46.52671361807734
+504,CNN,Florida,1617,Other,51.65552552556619
+505,Other,Alaska,1594,Kamala Harris,46.187087702564895
+506,Other,California,579,Donald Trump,50.52375802770257
+507,Beacon/Shaw,Alabama,2158,Kamala Harris,48.53479994926602
+508,Beacon/Shaw,Pennsylvania,1419,Donald Trump,49.368986980989575
+509,Morning Consult,New York,897,Other,47.89639343973249
+510,Beacon/Shaw,Utah,1532,Donald Trump,53.6181676085107
+511,Beacon/Shaw,Utah,1758,Kamala Harris,48.23340191040188
+512,Beacon/Shaw,Washington,1695,Kamala Harris,52.04017937416211
+513,Beacon/Shaw,Colorado,756,Other,54.44980156375095
+514,Morning Consult,Alabama,2482,Donald Trump,46.84647732647136
+515,CNN,Florida,2676,Kamala Harris,54.71224400680512
+516,ActiVote,Pennsylvania,1060,Donald Trump,50.50066911382601
+517,Morning Consult,Pennsylvania,655,Kamala Harris,52.67345545114949
+518,ActiVote,Florida,2294,Kamala Harris,47.50087370863184
+519,CNN,Alabama,2309,Other,49.55150237074122
+520,Morning Consult,Utah,2160,Kamala Harris,48.0025492166169
+521,Morning Consult,Colorado,2474,Donald Trump,49.059344050474465
+522,Other,Washington,2857,Donald Trump,52.72009608335793
+523,Morning Consult,Colorado,1066,Other,48.18172703264281
+524,CNN,Washington,599,Other,48.35681492462754
+525,ActiVote,Washington,1827,Donald Trump,46.2925422238186
+526,ActiVote,Colorado,1647,Other,50.73637964203954
+527,Other,Oregon,1580,Other,47.94386748922989
+528,Beacon/Shaw,Texas,771,Kamala Harris,51.325809189584106
+529,Other,Colorado,574,Donald Trump,47.228273714426905
+530,Beacon/Shaw,Oregon,872,Other,49.0323062078096
+531,Morning Consult,New Jersey,1205,Donald Trump,51.606623094994575
+532,Other,California,549,Kamala Harris,51.64739043684676
+533,Beacon/Shaw,Washington,2124,Donald Trump,49.67017500195652
+534,CNN,Florida,1547,Donald Trump,46.39973383396864
+535,CNN,Utah,867,Kamala Harris,49.25731013296172
+536,Other,Florida,2246,Donald Trump,52.71307231625542
+537,CNN,Alabama,1131,Donald Trump,52.91729954537004
+538,CNN,Florida,1022,Donald Trump,47.21608220366761
+539,Other,New Jersey,2958,Kamala Harris,49.31054487125948
+540,Beacon/Shaw,Pennsylvania,979,Other,53.9462016755715
+541,CNN,Alaska,572,Donald Trump,47.42572753923014
+542,ActiVote,Alabama,565,Other,51.34730167221278
+543,Other,New Jersey,1873,Kamala Harris,54.227661257609725
+544,Other,New Jersey,1657,Kamala Harris,45.238843811675906
+545,Other,Utah,1158,Other,50.836050692014396
+546,Other,New Jersey,1907,Donald Trump,54.26841301843524
+547,ActiVote,New York,1919,Donald Trump,49.43717916030437
+548,Beacon/Shaw,Oregon,2236,Kamala Harris,50.66075045848265
+549,Other,Alabama,1252,Kamala Harris,47.69790883874521
+550,ActiVote,New Jersey,2028,Other,49.41567314090207
+551,Other,Pennsylvania,2593,Donald Trump,47.009656904265285
+552,Morning Consult,Alabama,2685,Other,51.80606833891943
+553,CNN,Pennsylvania,1336,Donald Trump,51.87914552167058
+554,Morning Consult,New Jersey,1646,Donald Trump,45.39478222839534
+555,CNN,Florida,1438,Donald Trump,54.025835341308266
+556,ActiVote,New Jersey,968,Other,54.567804334219545
+557,Other,Oregon,599,Donald Trump,48.502021555323154
+558,Morning Consult,Texas,1139,Other,54.52237951569259
+559,CNN,Alabama,1818,Kamala Harris,49.799122381955385
+560,CNN,Alabama,1280,Other,46.21112295659259
+561,Other,Texas,2825,Kamala Harris,52.60666167596355
+562,CNN,Colorado,2744,Kamala Harris,53.45915208570659
+563,CNN,California,1297,Kamala Harris,54.6777986176312
+564,CNN,New York,536,Other,53.862799152266234
+565,Other,Utah,2006,Donald Trump,53.86269088834524
+566,ActiVote,Alaska,916,Kamala Harris,50.69990442600101
+567,CNN,New Jersey,1152,Donald Trump,46.519136456772685
+568,Other,Texas,1649,Other,48.01401111762971
+569,Morning Consult,California,2144,Donald Trump,48.36585588287562
+570,Beacon/Shaw,Washington,982,Kamala Harris,45.87469288147986
+571,ActiVote,Pennsylvania,2755,Kamala Harris,47.647024733014405
+572,Morning Consult,Utah,2727,Donald Trump,53.44926450867206
+573,ActiVote,Florida,1163,Donald Trump,47.19132690690458
+574,Other,Alaska,2486,Kamala Harris,50.29728847090155
+575,CNN,New Jersey,1490,Kamala Harris,54.90158403059468
+576,Morning Consult,California,2314,Donald Trump,45.20723792491481
+577,Other,Florida,828,Kamala Harris,49.54014021670446
+578,Morning Consult,Alabama,2553,Kamala Harris,47.94364113826305
+579,CNN,Alabama,1808,Kamala Harris,54.02243942255154
+580,CNN,Pennsylvania,933,Donald Trump,54.793160709086806
+581,Beacon/Shaw,Alaska,1919,Donald Trump,48.5035612154752
+582,ActiVote,Alaska,2608,Donald Trump,48.28062251443043
+583,Beacon/Shaw,Texas,2791,Other,47.58946328423917
+584,ActiVote,California,1989,Donald Trump,46.33852728176862
+585,Beacon/Shaw,Pennsylvania,2917,Kamala Harris,54.89217834779993
+586,Beacon/Shaw,California,2825,Other,52.75888744741678
+587,Morning Consult,Texas,585,Donald Trump,52.0698332763277
+588,Other,Florida,1914,Other,53.274564701132476
+589,Beacon/Shaw,Colorado,519,Donald Trump,46.254749826621264
+590,Morning Consult,Alaska,896,Donald Trump,50.00277996994555
+591,Morning Consult,New Jersey,2533,Donald Trump,52.395720183849335
+592,Other,New Jersey,1188,Other,52.18257586704567
+593,Morning Consult,Pennsylvania,987,Other,54.44539480609819
+594,Morning Consult,Utah,1245,Kamala Harris,52.35015186946839
+595,ActiVote,Alabama,1292,Donald Trump,51.02610287955031
+596,Morning Consult,California,802,Other,46.244527969975024
+597,Morning Consult,Texas,2777,Other,48.99140080669895
+598,ActiVote,Colorado,1374,Kamala Harris,48.684901325032115
+599,ActiVote,Alaska,2144,Other,50.4143965896219
+600,Morning Consult,Texas,716,Other,45.18129963893443
+601,Morning Consult,Alaska,1292,Kamala Harris,45.696067705284804
+602,Morning Consult,Utah,585,Donald Trump,48.905147137120366
+603,Beacon/Shaw,Alabama,2101,Kamala Harris,49.67935470165685
+604,Morning Consult,California,2289,Kamala Harris,47.93535498902202
+605,Other,Utah,2870,Kamala Harris,46.88543948344886
+606,CNN,New Jersey,2807,Kamala Harris,45.56090379599482
+607,Morning Consult,Texas,1520,Kamala Harris,48.930565908085555
+608,Beacon/Shaw,Alaska,2581,Kamala Harris,52.69360059173778
+609,ActiVote,New York,2837,Donald Trump,51.69024664675817
+610,CNN,Alaska,2237,Other,49.17897538281977
+611,Beacon/Shaw,Utah,740,Kamala Harris,45.090835322625935
+612,ActiVote,New Jersey,2629,Kamala Harris,51.286023375578225
+613,CNN,Florida,668,Kamala Harris,54.410851129796356
+614,CNN,Alabama,568,Kamala Harris,45.99306037882343
+615,Morning Consult,Alaska,1788,Kamala Harris,48.848012576345354
+616,Other,Alaska,1427,Other,49.021011549048126
+617,Morning Consult,Texas,809,Donald Trump,48.147463637869805
+618,CNN,New Jersey,2355,Other,46.35800720425323
+619,Other,Alaska,607,Kamala Harris,51.800105141010135
+620,Morning Consult,Pennsylvania,2737,Donald Trump,47.33138527022675
+621,ActiVote,Florida,1304,Donald Trump,53.543085472192615
+622,ActiVote,Oregon,3000,Donald Trump,49.69160613371059
+623,Beacon/Shaw,New Jersey,1429,Kamala Harris,51.98718431405723
+624,ActiVote,Alabama,1620,Kamala Harris,46.51052135974169
+625,Morning Consult,Colorado,2689,Donald Trump,45.60993860242888
+626,CNN,Florida,1661,Donald Trump,54.26883490756154
+627,CNN,Alabama,2514,Other,50.474180893506855
+628,Morning Consult,Utah,2256,Other,50.68553665885702
+629,CNN,Utah,1601,Other,54.85389114357531
+630,Morning Consult,Oregon,2761,Donald Trump,53.23362114606425
+631,Beacon/Shaw,Alaska,2074,Other,49.43190433084965
+632,Other,California,1804,Other,45.131438970565796
+633,CNN,California,2535,Kamala Harris,49.90229481831193
+634,Other,Florida,2423,Kamala Harris,49.867892786860466
+635,ActiVote,New Jersey,842,Kamala Harris,54.33922222349793
+636,CNN,New Jersey,694,Kamala Harris,53.34629825782031
+637,ActiVote,Alaska,1192,Kamala Harris,45.36172865424305
+638,Other,Alabama,2194,Donald Trump,50.60688103782013
+639,Beacon/Shaw,Washington,711,Kamala Harris,50.30626330524683
+640,ActiVote,Utah,1341,Donald Trump,45.6294986163266
+641,CNN,Alaska,929,Donald Trump,53.840742490720004
+642,Other,Alabama,2327,Donald Trump,51.233171701896936
+643,Beacon/Shaw,Alabama,1609,Donald Trump,46.705829347483814
+644,CNN,California,1799,Donald Trump,52.525454917922616
+645,ActiVote,Colorado,2121,Other,45.595089555718005
+646,Beacon/Shaw,Utah,620,Donald Trump,49.2607885110192
+647,CNN,New York,2523,Kamala Harris,50.40018999483436
+648,Beacon/Shaw,Alabama,2613,Donald Trump,47.85176462493837
+649,Morning Consult,New York,1302,Donald Trump,53.844556054100394
+650,CNN,Alabama,1752,Donald Trump,52.95401697745547
+651,ActiVote,Utah,2659,Donald Trump,45.33628063974902
+652,Morning Consult,Utah,1667,Kamala Harris,46.763348744716495
+653,CNN,New Jersey,1842,Kamala Harris,53.42598922085017
+654,ActiVote,Colorado,2955,Other,50.248729810118675
+655,Morning Consult,Alaska,1942,Kamala Harris,49.388880610931665
+656,CNN,Oregon,1157,Kamala Harris,45.32993706641719
+657,Morning Consult,Florida,513,Other,51.92163241794333
+658,Other,Florida,1033,Kamala Harris,49.66027051676065
+659,Other,Utah,2438,Other,52.84194588661194
+660,ActiVote,Florida,2506,Donald Trump,48.45542959170416
+661,ActiVote,California,2272,Other,52.807807533536106
+662,ActiVote,Washington,782,Kamala Harris,45.85944561753422
+663,Other,Utah,2342,Donald Trump,49.25751248607412
+664,Beacon/Shaw,Oregon,1777,Kamala Harris,45.8522532437928
+665,Morning Consult,New Jersey,2861,Other,45.62499550636858
+666,Morning Consult,Alaska,2476,Other,50.46861251350492
+667,Beacon/Shaw,New York,1845,Kamala Harris,45.30107702827081
+668,ActiVote,California,1803,Other,50.664142535533756
+669,Beacon/Shaw,New York,1890,Other,48.7559584248811
+670,Beacon/Shaw,Colorado,1302,Kamala Harris,46.486231004819274
+671,CNN,Florida,1432,Donald Trump,47.15793578652665
+672,CNN,New Jersey,1850,Other,54.880419035907835
+673,Morning Consult,Alabama,2630,Kamala Harris,50.8939281408675
+674,Beacon/Shaw,New York,2992,Kamala Harris,49.328733147121966
+675,CNN,Utah,1927,Donald Trump,47.309050953481346
+676,Other,Texas,1636,Donald Trump,48.75840241787955
+677,ActiVote,California,517,Other,49.80142758227885
+678,Beacon/Shaw,Pennsylvania,1733,Donald Trump,49.15694752475247
+679,Beacon/Shaw,Texas,1168,Donald Trump,48.44149698270485
+680,Morning Consult,New York,2095,Other,50.657787413802
+681,CNN,New Jersey,2569,Other,45.61480349395424
+682,CNN,Oregon,1714,Other,50.1650894805789
+683,Beacon/Shaw,Washington,1490,Other,47.227719749789685
+684,Beacon/Shaw,Utah,2408,Donald Trump,49.5473724254407
+685,ActiVote,Washington,1951,Kamala Harris,52.57706354139373
+686,CNN,Oregon,1676,Donald Trump,48.67764892522246
+687,CNN,Utah,667,Other,52.6590032200329
+688,CNN,Washington,1772,Kamala Harris,53.23853511828929
+689,Morning Consult,Alabama,1948,Donald Trump,50.59387523913756
+690,Beacon/Shaw,Pennsylvania,1546,Other,54.5638926117681
+691,Other,Florida,2814,Donald Trump,53.65995567291975
+692,Other,New Jersey,1813,Kamala Harris,47.98991697374731
+693,ActiVote,Colorado,1253,Donald Trump,50.7918112911284
+694,CNN,Florida,2246,Kamala Harris,51.26084668794647
+695,ActiVote,California,2429,Donald Trump,46.46901262458414
+696,ActiVote,New Jersey,2285,Donald Trump,52.95285595813766
+697,ActiVote,Utah,2341,Donald Trump,47.31145912082866
+698,ActiVote,Texas,1982,Donald Trump,52.116245036013424
+699,CNN,Texas,2965,Other,49.13707296829671
+700,Other,Texas,2460,Kamala Harris,53.54903436964378
+701,CNN,Texas,2231,Donald Trump,51.098710875958204
+702,Morning Consult,Florida,592,Kamala Harris,45.255849016830325
+703,CNN,Alaska,1736,Other,46.08246281277388
+704,Other,California,1146,Kamala Harris,54.80141920270398
+705,ActiVote,Alaska,2310,Other,48.302147621288896
+706,Beacon/Shaw,Texas,2522,Donald Trump,53.39926840970293
+707,ActiVote,Alabama,2963,Other,51.09564943704754
+708,Other,Oregon,2247,Donald Trump,50.395629128906876
+709,Morning Consult,New York,1875,Donald Trump,49.17731749359518
+710,CNN,Alabama,2077,Donald Trump,48.9047688501887
+711,Morning Consult,Oregon,841,Kamala Harris,46.310408995486796
+712,Morning Consult,Alaska,2606,Donald Trump,48.09019202599302
+713,Beacon/Shaw,Pennsylvania,1377,Other,49.43711466388777
+714,Morning Consult,Utah,1289,Donald Trump,54.803492713253945
+715,CNN,Utah,2628,Kamala Harris,50.89578078361228
+716,Morning Consult,Alabama,2758,Kamala Harris,50.02569000935182
+717,Other,New York,1082,Kamala Harris,52.76821571402252
+718,ActiVote,California,2215,Kamala Harris,50.502844646107405
+719,Morning Consult,California,1847,Kamala Harris,52.74483115179464
+720,Morning Consult,Texas,1814,Donald Trump,47.533980486914515
+721,ActiVote,New Jersey,881,Kamala Harris,45.565645159222186
+722,CNN,New York,2343,Other,46.642900051083416
+723,CNN,Oregon,2452,Other,50.99053546320647
+724,Morning Consult,Alabama,1724,Donald Trump,54.91425347980112
+725,CNN,Pennsylvania,782,Other,51.4908911078237
+726,ActiVote,Pennsylvania,2425,Donald Trump,49.62737269233912
+727,ActiVote,Alaska,761,Other,54.206659502815455
+728,ActiVote,Florida,1260,Other,49.20691542793065
+729,Other,Oregon,554,Other,49.32840497000143
+730,CNN,Texas,721,Kamala Harris,51.421396227087826
+731,Morning Consult,Pennsylvania,2233,Kamala Harris,48.042326723225415
+732,Morning Consult,Utah,842,Kamala Harris,51.43352621700615
+733,Morning Consult,New Jersey,505,Kamala Harris,45.732988426461816
+734,Other,Texas,1223,Donald Trump,45.935125718824565
+735,ActiVote,New Jersey,2136,Kamala Harris,52.21311545232311
+736,Beacon/Shaw,Pennsylvania,966,Other,52.435521038714796
+737,Morning Consult,Utah,668,Other,53.002303685061634
+738,Morning Consult,Texas,1796,Kamala Harris,48.56699117925018
+739,Beacon/Shaw,Oregon,2617,Donald Trump,48.580486006103456
+740,CNN,Alaska,1222,Other,54.03928966028616
+741,Morning Consult,Alaska,1312,Donald Trump,52.045111362822354
+742,Other,Pennsylvania,2631,Donald Trump,52.88960338104516
+743,Beacon/Shaw,Alaska,951,Other,49.63041642215103
+744,ActiVote,California,834,Other,48.52831493830308
+745,CNN,New York,2002,Donald Trump,47.29957291157916
+746,Morning Consult,Florida,564,Kamala Harris,53.01721345866099
+747,ActiVote,New York,717,Donald Trump,51.97785992641002
+748,Morning Consult,New York,1566,Kamala Harris,45.116851462516934
+749,Other,Texas,1058,Kamala Harris,47.72895907284692
+750,CNN,New Jersey,834,Other,48.41692329151556
+751,Beacon/Shaw,Florida,2340,Donald Trump,47.44399896124378
+752,Beacon/Shaw,New York,1378,Other,53.7348434375599
+753,Beacon/Shaw,Colorado,2285,Kamala Harris,51.67357931379229
+754,Beacon/Shaw,Texas,516,Other,47.58474987465888
+755,ActiVote,Colorado,1994,Kamala Harris,54.08330332720652
+756,Morning Consult,New Jersey,1670,Donald Trump,45.196480341255665
+757,Beacon/Shaw,Utah,2233,Kamala Harris,52.624836610630155
+758,Beacon/Shaw,Colorado,2936,Donald Trump,54.78401483036578
+759,Beacon/Shaw,Oregon,1550,Kamala Harris,48.35615103831515
+760,Other,Oregon,608,Donald Trump,48.57554754242301
+761,CNN,Utah,2755,Donald Trump,49.68521075323224
+762,Beacon/Shaw,Alabama,941,Kamala Harris,45.46176091535017
+763,Other,Washington,1931,Donald Trump,46.59220675705001
+764,Other,New York,2823,Donald Trump,53.46739522879943
+765,Beacon/Shaw,Texas,1892,Other,52.05279532587156
+766,CNN,California,2386,Donald Trump,48.44141283305362
+767,Other,Alabama,1202,Donald Trump,47.90262348949909
+768,Beacon/Shaw,California,1803,Donald Trump,53.77331048017368
+769,Morning Consult,Florida,642,Kamala Harris,53.94270957680419
+770,Morning Consult,California,1982,Donald Trump,51.88771190587431
+771,Morning Consult,Alaska,2675,Kamala Harris,49.42717488622293
+772,Morning Consult,New Jersey,1781,Kamala Harris,50.311979635152966
+773,Beacon/Shaw,Pennsylvania,1528,Donald Trump,46.34735135361552
+774,Beacon/Shaw,Pennsylvania,2654,Other,48.992689868900925
+775,CNN,Alabama,1632,Donald Trump,52.418923075310886
+776,Beacon/Shaw,Texas,2613,Other,45.52824798738584
+777,Other,Texas,1954,Other,51.690954819787294
+778,ActiVote,New York,2186,Donald Trump,52.07664560060948
+779,Other,Colorado,2059,Kamala Harris,49.349855980835855
+780,Beacon/Shaw,California,1798,Donald Trump,53.45080405008048
+781,Morning Consult,Utah,557,Other,46.22963321162388
+782,Other,Oregon,1842,Kamala Harris,52.11468144552782
+783,Morning Consult,Washington,2981,Kamala Harris,53.80714633036405
+784,Beacon/Shaw,New York,2689,Other,45.96668718615547
+785,Beacon/Shaw,California,956,Other,49.72014309372753
+786,CNN,New Jersey,2408,Other,45.46284561045468
+787,CNN,Texas,738,Other,54.463489023037255
+788,ActiVote,Colorado,1544,Other,47.314520354848355
+789,Other,Colorado,2206,Kamala Harris,54.59991293027997
+790,Beacon/Shaw,Pennsylvania,602,Kamala Harris,54.003175110556185
+791,Other,New Jersey,536,Kamala Harris,47.81560855451971
+792,Other,Texas,1694,Donald Trump,51.012818343006074
+793,ActiVote,Florida,1658,Donald Trump,47.12774687912315
+794,CNN,Washington,2455,Kamala Harris,49.506351372692734
+795,CNN,Pennsylvania,607,Other,47.48627446126193
+796,CNN,Texas,2627,Other,49.49823716189712
+797,CNN,Florida,2204,Donald Trump,47.817974167410284
+798,ActiVote,Oregon,1179,Donald Trump,52.48291772324592
+799,CNN,California,1814,Other,48.253660164773464
+800,Morning Consult,New Jersey,2908,Other,50.95929701812565
+801,Morning Consult,New York,2093,Donald Trump,52.644863405730575
+802,Morning Consult,Alaska,879,Other,52.67057045828551
+803,Morning Consult,Oregon,2454,Other,45.50221177050844
+804,ActiVote,Pennsylvania,765,Donald Trump,52.97693121479824
+805,Other,Texas,2298,Other,50.28150090947747
+806,ActiVote,Utah,1978,Other,48.82038927171379
+807,Other,Washington,578,Donald Trump,51.208747662603855
+808,CNN,Utah,2147,Donald Trump,47.10290795657784
+809,ActiVote,Colorado,1094,Donald Trump,49.68126921681687
+810,Morning Consult,Washington,1437,Kamala Harris,46.44131253473461
+811,ActiVote,California,1454,Donald Trump,54.35454478254542
+812,Morning Consult,Pennsylvania,1688,Other,45.7636044267565
+813,Beacon/Shaw,Utah,2455,Other,47.28486462729052
+814,CNN,California,2015,Donald Trump,49.135418334044516
+815,Beacon/Shaw,New York,1680,Kamala Harris,52.63478824170306
+816,CNN,Colorado,1201,Donald Trump,52.185779677238315
+817,Beacon/Shaw,Utah,2791,Kamala Harris,46.32740215631202
+818,ActiVote,California,2274,Other,54.955920793581754
+819,Morning Consult,Alabama,2894,Donald Trump,49.3879953189753
+820,Beacon/Shaw,Pennsylvania,2705,Other,53.62558057066053
+821,Beacon/Shaw,Florida,1238,Donald Trump,50.140676465816796
+822,Other,Pennsylvania,1050,Donald Trump,50.83685490535572
+823,Other,New Jersey,2059,Donald Trump,48.24857720639557
+824,CNN,New York,714,Kamala Harris,50.905116100329906
+825,Morning Consult,Texas,911,Donald Trump,50.20614530425519
+826,ActiVote,New York,1790,Donald Trump,47.04882622696459
+827,CNN,Alaska,1768,Donald Trump,52.51106780022383
+828,Beacon/Shaw,New York,2971,Other,53.438804142642766
+829,ActiVote,Florida,1536,Other,45.75373814906925
+830,CNN,Oregon,2536,Other,53.25835392344743
+831,CNN,Texas,1914,Kamala Harris,54.035712683107704
+832,ActiVote,Alaska,872,Other,51.58165099332109
+833,Other,New Jersey,1301,Kamala Harris,50.99110596580431
+834,Beacon/Shaw,Colorado,959,Donald Trump,52.49389882199466
+835,Beacon/Shaw,California,2221,Donald Trump,51.85790948336944
+836,CNN,Alaska,1746,Donald Trump,49.178187302313745
+837,Morning Consult,California,2832,Donald Trump,48.81292519392446
+838,CNN,Utah,876,Donald Trump,48.31588696921244
+839,Other,Alaska,1217,Kamala Harris,53.51333426311612
+840,Beacon/Shaw,Colorado,935,Kamala Harris,46.36118749156594
+841,ActiVote,Washington,1646,Other,48.35786851122975
+842,Beacon/Shaw,Pennsylvania,2770,Kamala Harris,48.68132511386648
+843,Other,Utah,2960,Other,46.44374288851395
+844,Other,Pennsylvania,2712,Donald Trump,45.6667357403785
+845,Beacon/Shaw,Florida,747,Kamala Harris,50.051697494927794
+846,Other,Pennsylvania,530,Kamala Harris,46.39117185026407
+847,Beacon/Shaw,Pennsylvania,1732,Other,51.11178941093385
+848,Other,Pennsylvania,2836,Donald Trump,53.349263025447726
+849,Beacon/Shaw,New Jersey,2357,Kamala Harris,47.83247091341764
+850,CNN,Colorado,2116,Donald Trump,50.38576588500291
+851,Other,Utah,1001,Kamala Harris,52.555970437824726
+852,Other,Utah,1730,Donald Trump,48.671800799202174
+853,Morning Consult,Pennsylvania,2074,Other,51.11573261907324
+854,ActiVote,Oregon,1004,Other,47.3377857869491
+855,Morning Consult,Colorado,559,Kamala Harris,48.93276443472132
+856,ActiVote,Texas,1316,Donald Trump,48.14257867401466
+857,Beacon/Shaw,Utah,918,Other,48.02567476173863
+858,Morning Consult,California,1051,Kamala Harris,47.44883726583794
+859,Beacon/Shaw,Alabama,1055,Other,53.50914912763983
+860,CNN,Alabama,854,Kamala Harris,45.207060989923775
+861,CNN,Colorado,506,Donald Trump,48.938634048681706
+862,CNN,Texas,1008,Kamala Harris,54.49374838266522
+863,Morning Consult,Alabama,1123,Kamala Harris,54.294188539497554
+864,Beacon/Shaw,California,1927,Donald Trump,50.33249800326303
+865,Morning Consult,Utah,1560,Kamala Harris,52.80791852856055
+866,Other,Utah,1522,Kamala Harris,47.86794632440433
+867,Morning Consult,Florida,1835,Kamala Harris,51.53201522305608
+868,Other,Alabama,711,Kamala Harris,45.2772334869951
+869,ActiVote,New Jersey,2270,Kamala Harris,54.251283288467675
+870,ActiVote,Texas,2074,Donald Trump,51.117942954879254
+871,CNN,New Jersey,540,Other,50.63193129142746
+872,Morning Consult,Washington,2312,Donald Trump,53.491130580659956
+873,ActiVote,Oregon,2328,Donald Trump,45.05213315365836
+874,ActiVote,Texas,2931,Donald Trump,53.05829128017649
+875,CNN,Colorado,1805,Donald Trump,52.342431063298136
+876,CNN,Alaska,1104,Kamala Harris,45.816411392297596
+877,Other,Washington,2472,Donald Trump,54.0233747405
+878,Beacon/Shaw,New Jersey,1627,Kamala Harris,53.46663744421676
+879,CNN,California,899,Donald Trump,49.74030354991555
+880,Other,Alabama,1603,Other,50.900157829746604
+881,Other,New York,1723,Kamala Harris,46.33166233077645
+882,Other,Alabama,2945,Other,48.465521356556565
+883,Beacon/Shaw,California,1786,Other,50.53349969210103
+884,Morning Consult,Alabama,2874,Other,52.46543670305982
+885,Beacon/Shaw,Washington,1603,Donald Trump,51.7808982799761
+886,Other,Colorado,1140,Donald Trump,49.55051512923092
+887,Other,New York,853,Donald Trump,53.681897283531725
+888,CNN,New York,671,Kamala Harris,50.952369414735585
+889,ActiVote,New York,1445,Donald Trump,51.641613186802715
+890,CNN,Pennsylvania,2980,Kamala Harris,51.77226074738428
+891,Beacon/Shaw,Florida,968,Donald Trump,48.877827955875546
+892,Other,Texas,1565,Donald Trump,53.19092005258426
+893,ActiVote,Texas,1558,Other,50.3551527694799
+894,ActiVote,Colorado,1073,Kamala Harris,50.22546619409695
+895,ActiVote,California,1749,Kamala Harris,49.850490076933056
+896,Morning Consult,Washington,1477,Other,45.17271760152653
+897,CNN,Colorado,2927,Donald Trump,54.629667901899666
+898,ActiVote,Oregon,1422,Kamala Harris,49.952231496572495
+899,ActiVote,California,1789,Donald Trump,53.69168171659112
+900,Morning Consult,Texas,2132,Other,48.58851559692994
+901,Other,Oregon,934,Donald Trump,49.731164309196174
+902,Morning Consult,New Jersey,2496,Donald Trump,51.06142720673233
+903,ActiVote,Alabama,874,Other,47.99821081571281
+904,ActiVote,Oregon,2498,Kamala Harris,51.65886303642765
+905,Beacon/Shaw,Alaska,1032,Kamala Harris,48.481936980970204
+906,ActiVote,Colorado,1987,Other,48.545972395222634
+907,ActiVote,Texas,2455,Donald Trump,53.02710429299623
+908,Morning Consult,Florida,2935,Donald Trump,52.04754845239222
+909,ActiVote,New York,861,Donald Trump,46.81562470737845
+910,Other,Washington,2131,Donald Trump,45.25233072927222
+911,Morning Consult,New York,2962,Donald Trump,53.19942177506164
+912,CNN,New Jersey,1252,Kamala Harris,47.89408101933077
+913,Beacon/Shaw,Alaska,1115,Other,49.67672545928508
+914,ActiVote,Utah,1432,Other,49.68902772292495
+915,Morning Consult,Alabama,2033,Donald Trump,49.7801678464748
+916,Other,New Jersey,1913,Other,52.50001727370545
+917,Beacon/Shaw,Alaska,2821,Donald Trump,52.019428513012826
+918,Beacon/Shaw,Alabama,984,Donald Trump,50.6077400338836
+919,ActiVote,New Jersey,2673,Other,48.7261045887135
+920,Other,Alaska,2225,Other,54.191326783038676
+921,CNN,New Jersey,1934,Kamala Harris,52.70774141419679
+922,ActiVote,New Jersey,880,Other,50.96078917151317
+923,ActiVote,Alabama,1112,Donald Trump,49.36715865274891
+924,Other,California,2073,Donald Trump,54.568838111590594
+925,ActiVote,Alabama,1530,Donald Trump,48.169655648525804
+926,Beacon/Shaw,New York,881,Donald Trump,46.34760742774233
+927,CNN,Florida,739,Donald Trump,46.916703504975885
+928,Other,Washington,1807,Donald Trump,51.92184353247285
+929,Morning Consult,Alabama,2468,Kamala Harris,49.079172373749316
+930,Beacon/Shaw,New Jersey,2890,Other,48.783203621860594
+931,Morning Consult,New Jersey,2862,Donald Trump,50.730902252253145
+932,Other,Washington,1095,Other,50.20072925835848
+933,Morning Consult,Texas,1154,Other,46.87031955923885
+934,Morning Consult,Alaska,2338,Kamala Harris,48.73085449915379
+935,ActiVote,Colorado,2786,Kamala Harris,53.37775892345235
+936,Other,Washington,1199,Kamala Harris,53.9141228958033
+937,Morning Consult,Utah,2533,Other,45.98206288181245
+938,CNN,Colorado,2070,Other,48.33025406580418
+939,Other,Florida,2964,Other,54.36454787151888
+940,CNN,New York,2393,Kamala Harris,46.020188801921904
+941,Beacon/Shaw,Texas,2573,Kamala Harris,47.631714404560626
+942,Morning Consult,Alaska,2906,Kamala Harris,49.590480227489024
+943,Beacon/Shaw,Pennsylvania,1295,Donald Trump,46.46946093067527
+944,ActiVote,New York,1230,Other,50.11275517055765
+945,Morning Consult,Florida,957,Other,54.475250851828605
+946,Beacon/Shaw,Oregon,2471,Kamala Harris,46.99400832410902
+947,Beacon/Shaw,Oregon,2885,Donald Trump,50.01021514413878
+948,CNN,Alaska,2016,Other,48.799511096440256
+949,Beacon/Shaw,Alabama,2933,Kamala Harris,53.66156951524317
+950,Morning Consult,New York,2500,Kamala Harris,49.243909569922835
+951,Other,Pennsylvania,563,Other,51.67452976806089
+952,Beacon/Shaw,Texas,1619,Donald Trump,54.2301012435928
+953,ActiVote,Alaska,1050,Other,53.753145567607135
+954,ActiVote,California,2809,Kamala Harris,52.816582054365426
+955,Beacon/Shaw,Florida,1340,Other,54.490979593247175
+956,Morning Consult,California,1265,Donald Trump,47.116114450618625
+957,ActiVote,Pennsylvania,1318,Donald Trump,54.12734617711976
+958,Beacon/Shaw,California,1588,Kamala Harris,53.00467743072659
+959,Morning Consult,Colorado,1670,Other,49.83797563239932
+960,ActiVote,Alabama,1881,Donald Trump,50.107347902376205
+961,Other,New York,2010,Other,54.79342944920063
+962,ActiVote,Texas,802,Donald Trump,46.93303289124742
+963,Beacon/Shaw,Colorado,1084,Donald Trump,54.45296423044056
+964,Beacon/Shaw,Oregon,2715,Other,46.96298369439319
+965,CNN,Florida,1981,Other,45.856821183115244
+966,CNN,Alaska,2471,Donald Trump,48.30299969529733
+967,Beacon/Shaw,New York,1323,Other,52.22655133577064
+968,Other,Alabama,1842,Other,49.31710444856435
+969,CNN,New York,1504,Other,45.770439631305635
+970,CNN,New York,974,Donald Trump,49.65144536225125
+971,Morning Consult,Florida,1830,Other,50.9216425800696
+972,ActiVote,Florida,2726,Kamala Harris,48.8943369849585
+973,Other,Alaska,1046,Donald Trump,47.447391611058265
+974,Morning Consult,Oregon,886,Donald Trump,53.13955008983612
+975,Beacon/Shaw,Utah,2349,Kamala Harris,49.67801334569231
+976,Beacon/Shaw,Alabama,2731,Other,45.87721467250958
+977,Beacon/Shaw,Pennsylvania,1782,Other,54.95940596796572
+978,ActiVote,New Jersey,2693,Kamala Harris,54.10479884594679
+979,Other,California,629,Other,54.313246936071664
+980,CNN,California,2539,Other,51.37165551772341
+981,Beacon/Shaw,New York,825,Kamala Harris,54.054126653354615
+982,ActiVote,Utah,1791,Donald Trump,54.109674964565784
+983,Morning Consult,Texas,2699,Other,45.41273048846051
+984,Other,California,1548,Kamala Harris,52.32667218428105
+985,Beacon/Shaw,Florida,1146,Other,54.918678135145456
+986,Beacon/Shaw,Utah,2357,Other,49.11333105294034
+987,CNN,Pennsylvania,2098,Kamala Harris,46.22521929908544
+988,Beacon/Shaw,New York,613,Kamala Harris,45.19905398832634
+989,Other,Alaska,2006,Other,48.11467473162338
+990,CNN,California,2692,Kamala Harris,52.71974133560434
+991,CNN,Florida,2966,Other,54.607094309758395
+992,ActiVote,Washington,998,Other,54.898402073886245
+993,ActiVote,Oregon,2870,Kamala Harris,52.42472546175122
+994,ActiVote,Texas,2929,Kamala Harris,46.535934244748205
+995,CNN,Colorado,594,Donald Trump,47.76955291163176
+996,Morning Consult,Alaska,2128,Kamala Harris,45.211985239293426
+997,Other,Alabama,2611,Kamala Harris,53.979601913597435
+998,Other,New York,2069,Other,45.930837576743215
+999,Morning Consult,Texas,984,Kamala Harris,46.19730371283367
+1000,ActiVote,Alaska,2352,Donald Trump,46.62108057877049
