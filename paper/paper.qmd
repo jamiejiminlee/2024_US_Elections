@@ -26,6 +26,8 @@ library(modelsummary)
 library(rstanarm)
 library(readr)
 library(dplyr)
+library(ggplot2)
+library(usmap)
 ```
 
 
@@ -75,46 +77,77 @@ To predict the election outcome, we will assume that the higher pct in a state b
 
 ## Outcome variables
 
-Add graphs, tables and text. Use sub-sub-headings for each outcome variable or update the subheading to be singular.
-
-
-
+@fig-averagetable provides an overview of the average support for Trump and Harris across all states, along with the predicted winner for each state based on our model. 
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
+#| label: fig-averagetable
+#| fig-cap: Summary Table of Polling Averages by State
 #| echo: false
 
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
+# Create winner column: 1 if Trump_pct is greater than Harris_pct, 0 otherwise
+state_average <- state_average |>
+  mutate(winner = ifelse(Trump_pct > Harris_pct, 1, 0))
+
+average_table <- state_average |>
+  select(state, Trump_pct, Harris_pct, winner) |>
+  mutate(predicted_winner = ifelse(winner == 1, "Trump", "Harris"))
+
+average_table
 ```
 
-Talk more about it.
-
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
+@fig-barplot illustrates the average polling support for Donald Trump and Kamala Harris in each state. The side-by-side comparison represents the percentage of support each candidate has received, based on aggregated poll data from pollsters with high-quality scores. Trump's support is shown in red, while Harris's support is depicted in red. 
 
 ```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
+#| label: fig-barplot
+#| fig-cap: Average Poll Percentage by State
+#| echo: false
+
+# Reshape data to a long format for side-by-side bars
+stateaverage_long <- state_average %>%
+  pivot_longer(cols = c(Trump_pct, Harris_pct),
+               names_to = "candidate",
+               values_to = "support_pct")
+
+ggplot(stateaverage_long, aes(x=reorder(state, -support_pct), y= support_pct, fill = candidate)) + 
+  geom_bar(stat = "identity", position = position_dodge(width = 0.8), color = "black") +
+  labs(title = "Average Poll Percentages for Trump and Harris by State",
+       x = "State", y = "Average Percentage") +
+  scale_fill_manual(name = "Candidate", values = c("Trump_pct" = "red", "Harris_pct" = "blue")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+@fig-map visualizes the predicted winner of the 2024 US Presidential Election across all states, based on aggregated polling data. Each state is color-coded according to the candidate predicted to win - blue represents Donald Trump, and red represents Kamala Harris. 
+
+```{r}
+#| label: fig-map
+#| fig-cap: Predicted Election Winner by State
 #| echo: false
 #| warning: false
 #| message: false
 
-analysis_data <- read_csv(here::here("data/02-analysis_data/analysis_data.csv"))
+library(ggplot2)
+library(usmap)
 
-analysis_data |> 
-  ggplot(aes(x = width, y = length)) +
-  geom_point(alpha = 0.8) +
-  theme_minimal() +
-  labs(x = "Wing width (mm)",
-       y = "Wing length (mm)")
+# Ensuring state names are in the correct format
+state_average <- state_average %>%
+  mutate(state = str_to_title(state))
+
+# Creating binary variable winner column: 1 if Trump has more support, 0 if Harris has more support. 
+state_average <- state_average %>%
+  mutate(winner = ifelse(Trump_pct > Harris_pct, 1, 0))
+
+# Creating predicted_winner column to label Trump and Harris
+state_average <- state_average |>
+  mutate(predicted_winner = ifelse(winner == 1, "Trump", "Harris"))
+
+# Map visualization showing predicted winner by state
+plot_usmap(data = state_average, values = "predicted_winner", regions = "state") + 
+  scale_fill_manual(values = c("Trump" = "red", "Harris" = "blue"), name = "Predicted Winner") + 
+  labs(title = "Predicted Winner of 2024 US Presidential Election by state") + 
+  theme(legend.position = "right")
 ```
 
-Talk way more about it. 
+
 
 ## Predictor variables
 
