@@ -123,9 +123,6 @@ ggplot(stateaverage_long, aes(x=reorder(state, -support_pct), y= support_pct, fi
 ```
 
 
-
-
-
 # Model {#sec-model}
 
 The goal of our modeling strategy is twofold. Firstly, we aim to predict the winner of the 2024 US Presidential Election in each state based on aggregated polling data. Secondly, we seek to understand the relationship between polling support for each candidate and the likelihood of winning a state. Here we briefly describe the Bayesian analysis model used to investigate these relationships. This model allows for uncertainty in the predictions by incorporating prior distributions for the parameters, providing a probabilistic framework for estimating the election outcome. Background details and diagnostics are included in [Appendix -@sec-model-details].
@@ -133,7 +130,7 @@ The goal of our modeling strategy is twofold. Firstly, we aim to predict the win
 ## Model set-up
 Define $y_i$ as the binary outcome variable indicating whether Donald Trump is predicted to win state $i$ (1 if Trump wins, 0 if Harris wins). The predictor variables are $\beta_i$, the average percentage of polling support for Donald Trump in state $i$, and $\gamma_i$, the average percentage of polling support for Kamala Harris in state $i$.
 
-\[
+
 \begin{align*}
 y_i | \mu_i &\sim \text{Bernoulli}(\mu_i) \\
 \mu_i &= \alpha + \beta_i + \gamma_i \\
@@ -141,7 +138,7 @@ y_i | \mu_i &\sim \text{Bernoulli}(\mu_i) \\
 \beta_i &\sim \text{Normal}(0, 2.5) \\
 \gamma_i &\sim \text{Normal}(0, 2.5)
 \end{align*}
-\]
+
 
 
 We run the model in R [@citeR] using the `rstanarm` package [@rstanarm]. The model uses default priors from `rstanarm`, and estimates the likelihood of Donald Trump winning each state based on polling averages for both candidates.
@@ -159,12 +156,12 @@ logistic_model <-
   readRDS(file = here::here("models/first_model.rds"))
 ```
 
-The model used to predict the 2024 US Presidential Election outcome is a logistic regression model. The binary outcome variable, \( y_i \), represents whether Donald Trump (1) or Kamala Harris (0) is predicted to win each state. The predictor variables, \( \beta_i \) and \( \gamma_i \), are the average polling percentages for Trump and Harris, respectively, in state \( i \). We use a logistic regression model because the outcome is binary, making it appropriate for estimating the probability of a Trump victory in each state. The model is implemented in R using the `glm()` function with a binomial family, providing a probabilistic prediction of the election outcome based on polling data.
+The model used to predict the 2024 US Presidential Election outcome is a logistic regression model. The binary outcome variable, $y_i$, represents whether Donald Trump (1) or Kamala Harris (0) is predicted to win each state. The predictor variables, $\beta_i$ and $\gamma_i$, are the average polling percentages for Trump and Harris, respectively, in state $i$. We use a logistic regression model because the outcome is binary, making it appropriate for estimating the probability of a Trump victory in each state. The model is implemented in R using the `glm()` function with a binomial family, providing a probabilistic prediction of the election outcome based on polling data.
 
 
 ## Model Justification
 
-We expect a positive relationship between polling support for each candidate and the likelihood of winning a state. In particular, as the percentage of support for Donald Trump (\(\beta_i\)) increases, the probability of Trump winning state \(i\) also increases. Similarly, as Kamala Harris's support (\(\gamma_i\)) increases, the likelihood of her winning the state rises. The logistic regression model is suitable for capturing these dynamics, as it allows us to estimate the probability of a binary outcome (win or lose) using continuous predictor variables. The model outputs probabilities that are constrained between 0 and 1, which aligns with the binary nature of our outcome variable (\(y_i\)). In essence, we expect a higher \(\beta_i\) to correlate with a higher probability of Trump winning a state, while a higher \(\gamma_i\) suggests a greater likelihood of a Harris victory.
+We expect a positive relationship between polling support for each candidate and the likelihood of winning a state. In particular, as the percentage of support for Donald Trump ($\beta_i$) increases, the probability of Trump winning state $i$ also increases. Similarly, as Kamala Harris's support ($\gamma_i$) increases, the likelihood of her winning the state rises. The logistic regression model is suitable for capturing these dynamics, as it allows us to estimate the probability of a binary outcome (win or lose) using continuous predictor variables. The model outputs probabilities that are constrained between 0 and 1, which aligns with the binary nature of our outcome variable ($y_i$). In essence, we expect a higher $\beta_i$ to correlate with a higher probability of Trump winning a state, while a higher $\gamma_i$ suggests a greater likelihood of a Harris victory.
 
 
 # Results {#sec-results}
