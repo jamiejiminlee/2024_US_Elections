@@ -136,20 +136,15 @@ The goal of our modeling strategy is twofold. Firstly, we aim to predict the win
 Define \( y_i \) as the binary outcome variable indicating whether Donald Trump is predicted to win state \( i \) (1 if Trump wins, 0 if Harris wins). The predictor variables are \( \beta_i \), the average percentage of polling support for Donald Trump in state \( i \), and \( \gamma_i \), the average percentage of polling support for Kamala Harris in state \( i \).
 
 \[
-y_i|\mu_i \sim \text{Bernoulli}(\mu_i)
+\begin{align}
+y_i | \mu_i &\sim \text{Bernoulli}(\mu_i) \\
+\mu_i &= \alpha + \beta_i + \gamma_i \\
+\alpha &\sim \text{Normal}(0, 2.5) \\
+\beta_i &\sim \text{Normal}(0, 2.5) \\
+\gamma_i &\sim \text{Normal}(0, 2.5)
+\end{align}
 \]
-\[
-\mu_i = \alpha + \beta_i + \gamma_i
-\]
-\[
-\alpha \sim \text{Normal}(0, 2.5)
-\]
-\[
-\beta_i \sim \text{Normal}(0, 2.5)
-\]
-\[
-\gamma_i \sim \text{Normal}(0, 2.5)
-\]
+
 
 We run the model in R [@citeR] using the `rstanarm` package [@rstanarm]. The model uses default priors from `rstanarm`, and estimates the likelihood of Donald Trump winning each state based on polling averages for both candidates.
 
