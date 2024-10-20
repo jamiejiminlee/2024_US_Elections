@@ -207,23 +207,6 @@ plot_usmap(data = state_average, values = "predicted_winner", regions = "states"
   labs(title = "Predicted Winner of 2024 US Presidential Election by State") +
   theme(legend.position = "right")
 
-# Remove any states with missing polling data for Trump or Harris
-#state_average <- state_average %>%
-  #filter(!is.na(Trump_pct) & !is.na(Harris_pct))
-
-# Proceed with the prediction for all states
-#state_average <- state_average %>%
-  #mutate(predicted_prob = predict(logistic_model, newdata = state_average, type = "response"))
-
-# Classify the predicted winner: Trump if probability > 0.5, else Harris
-#state_average <- state_average %>%
-  #mutate(predicted_winner = ifelse(predicted_prob > 0.5, "Trump", "Harris"))
-
-#### Map Visualization ####
-#plot_usmap(data = state_average, values = "predicted_winner", regions = "states") +
-  #scale_fill_manual(values = c("Trump" = "red", "Harris" = "blue"), name = "Predicted Winner") +
-  #labs(title = "Predicted Winner of 2024 US Presidential Election by State") +
-  #theme(legend.position = "right")
 ```
 
 ### Summary of Predicted Election Results by State
@@ -294,7 +277,6 @@ To improve the accuracy and reliability of election forecasts, future iterations
 # Appendix {-}
 
 # Additional data details
-
 It is important to note that several states remain uncolored (in gray), indicating missing or incomplete polling data for those states. These uncolored states reflect the absence of reliable or sufficient polling information required for an accurate prediction. This underscores the limitations of the data used in the model, where predictions are only made for states with adequate polling coverage. As a result, certain regions lack predictions, which could be addressed by including more comprehensive polling data in future analyses.
 
 
