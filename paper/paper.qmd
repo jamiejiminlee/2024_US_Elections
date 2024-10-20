@@ -131,7 +131,7 @@ ggplot(stateaverage_long, aes(x=reorder(state, -support_pct), y= support_pct, fi
 The goal of our modeling strategy is twofold. Firstly, we aim to predict the winner of the 2024 US Presidential Election in each state based on aggregated polling data. Secondly, we seek to understand the relationship between polling support for each candidate and the likelihood of winning a state. Here we briefly describe the Bayesian analysis model used to investigate these relationships. This model allows for uncertainty in the predictions by incorporating prior distributions for the parameters, providing a probabilistic framework for estimating the election outcome. Background details and diagnostics are included in [Appendix -@sec-model-details].
 
 ## Model set-up
-Define \( y_i \) as the binary outcome variable indicating whether Donald Trump is predicted to win state \( i \) (1 if Trump wins, 0 if Harris wins). The predictor variables are \( \beta_i \), the average percentage of polling support for Donald Trump in state \( i \), and \( \gamma_i \), the average percentage of polling support for Kamala Harris in state \( i \).
+Define $y_i$ as the binary outcome variable indicating whether Donald Trump is predicted to win state $i$ (1 if Trump wins, 0 if Harris wins). The predictor variables are $\beta_i$, the average percentage of polling support for Donald Trump in state $i$, and $\gamma_i$, the average percentage of polling support for Kamala Harris in state $i$.
 
 \[
 \begin{align}
