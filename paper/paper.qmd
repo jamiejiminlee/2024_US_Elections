@@ -133,23 +133,22 @@ The goal of our modeling strategy is twofold. Firstly, we aim to predict the win
 ## Model set-up
 
 ## Model
-
 Define \( y_i \) as the binary outcome variable indicating whether Donald Trump is predicted to win state \( i \) (1 if Trump wins, 0 if Harris wins). The predictor variables are \( \beta_i \), the average percentage of polling support for Donald Trump in state \( i \), and \( \gamma_i \), the average percentage of polling support for Kamala Harris in state \( i \).
 
 \[
-y_i|\mu_i, \sigma \sim \mbox{Bernoulli}(\mu_i)
+y_i|\mu_i \sim \text{Bernoulli}(\mu_i)
 \]
 \[
 \mu_i = \alpha + \beta_i + \gamma_i
 \]
 \[
-\alpha \sim \mbox{Normal}(0, 2.5)
+\alpha \sim \text{Normal}(0, 2.5)
 \]
 \[
-\beta_i \sim \mbox{Normal}(0, 2.5)
+\beta_i \sim \text{Normal}(0, 2.5)
 \]
 \[
-\gamma_i \sim \mbox{Normal}(0, 2.5)
+\gamma_i \sim \text{Normal}(0, 2.5)
 \]
 
 We run the model in R [@citeR] using the `rstanarm` package [@rstanarm]. The model uses default priors from `rstanarm`, and estimates the likelihood of Donald Trump winning each state based on polling averages for both candidates.
@@ -170,7 +169,7 @@ logistic_model <-
 The model used to predict the 2024 US Presidential Election outcome is a logistic regression model. The binary outcome variable, \( y_i \), represents whether Donald Trump (1) or Kamala Harris (0) is predicted to win each state. The predictor variables, \( \beta_i \) and \( \gamma_i \), are the average polling percentages for Trump and Harris, respectively, in state \( i \). We use a logistic regression model because the outcome is binary, making it appropriate for estimating the probability of a Trump victory in each state. The model is implemented in R using the `glm()` function with a binomial family, providing a probabilistic prediction of the election outcome based on polling data.
 
 
-### Model Justification
+## Model Justification
 
 We expect a positive relationship between polling support for each candidate and the likelihood of winning a state. In particular, as the percentage of support for Donald Trump (\(\beta_i\)) increases, the probability of Trump winning state \(i\) also increases. Similarly, as Kamala Harris's support (\(\gamma_i\)) increases, the likelihood of her winning the state rises. The logistic regression model is suitable for capturing these dynamics, as it allows us to estimate the probability of a binary outcome (win or lose) using continuous predictor variables. The model outputs probabilities that are constrained between 0 and 1, which aligns with the binary nature of our outcome variable (\(y_i\)). In essence, we expect a higher \(\beta_i\) to correlate with a higher probability of Trump winning a state, while a higher \(\gamma_i\) suggests a greater likelihood of a Harris victory.
 
@@ -180,7 +179,7 @@ We expect a positive relationship between polling support for each candidate and
 @fig-statemap shows the predicted winner of the 2024 US Presidential Election by state, based on a logistic regression model using aggregated polling data for Donald Trump and Kamala Harris. States where Trump is predicted to win are shown in red, while states where Harris is predicted to win are displayed in blue. Several states appear in gray, indicating that the model could not generate a prediction due to incomplete or missing polling data. The results highlight clear regional differences, with Trump expected to perform strongly in the southern and midwestern states, while Harris is favored in parts of the Northeast and Midwest. The predicted outcomes underscore the importance of swing states, where polling results are closely contested and could shift the election results.
 
 
-### Predicted Election Winner By State
+## Predicted Election Winner By State
 ```{r}
 #| label: fig-statemap
 #| fig-cap: Predicted Election Winner by State
@@ -200,8 +199,6 @@ state_average <- state_average %>%
   filter(!is.na(Trump_pct) & !is.na(Harris_pct)) %>%
   ungroup()
 
-# Check that state_average has the correct number of rows and no grouping
-print(nrow(state_average))  # Ensure this number matches the expected rows
 
 # Proceed with prediction after ensuring the data is clean
 predicted_prob <- predict(logistic_model, newdata = state_average, type = "response")
