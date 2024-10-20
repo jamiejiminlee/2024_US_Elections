@@ -47,7 +47,7 @@ The remainder of this paper is structured as follows. In Section 2, we describe 
 
 ## Overview
 
-We use the statistical programming language R [@citeR] to perform data cleaning and analysis using the datasets we obtained from the Project 538 online database [@fivethirtyeight]. The database provides a wealth of information on the current cycle of presidential general election polls. It consists of the polling results from various pollsters such as the New York Times, ActiVote, Morning Consult, etc. Information about the transparency of methodology as well as the quality of the data is present as well, denoted as transparency score and numeric grades, which are significant to our data cleaning process to ensure the quality of data. Polling results are specific to different states in the US, mostly focusing on the six battleground states that are the likeliest to determine the outcome of the elections. Thus, we chose to use states, candidate names, and percentage of support to perform statistical analysis and gather our results. 
+We use the statistical programming language R [@citeR] to perform data cleaning and analysis using the datasets we obtained from the Project 538 online database [@FiveThirtyEight]. The database provides a wealth of information on the current cycle of presidential general election polls. It consists of the polling results from various pollsters such as the New York Times, ActiVote, Morning Consult, etc. Information about the transparency of methodology as well as the quality of the data is present as well, denoted as transparency score and numeric grades, which are significant to our data cleaning process to ensure the quality of data. Polling results are specific to different states in the US, mostly focusing on the six battleground states that are the likeliest to determine the outcome of the elections. Thus, we chose to use states, candidate names, and percentage of support to perform statistical analysis and gather our results. 
 
 ## Measurement
 
@@ -86,7 +86,7 @@ average_table <- state_average |>
   mutate(predicted_winner = ifelse(winner == 1, "Trump", "Harris"))
 
 # Render the simplest possible table
-knitr::kable(average_table, caption = "Summary Table of Polling Averages by State")
+knitr::kable(average_table)
 
 ```
 
@@ -111,8 +111,7 @@ stateaverage_long <- state_average %>%
 
 ggplot(stateaverage_long, aes(x=reorder(state, -support_pct), y= support_pct, fill = candidate)) + 
   geom_bar(stat = "identity", position = position_dodge(width = 0.8), color = "black") +
-  labs(title = "Average Poll Percentages for Trump and Harris by State",
-       x = "State", y = "Average Percentage") +
+  labs(x = "State", y = "Average Percentage") +
   scale_fill_manual(name = "Candidate", values = c("Trump_pct" = "red", "Harris_pct" = "blue")) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
@@ -120,7 +119,6 @@ ggplot(stateaverage_long, aes(x=reorder(state, -support_pct), y= support_pct, fi
 
 
 # Model {#sec-model}
-
 The goal of our modeling strategy is to predict the winner of the 2024 US Presidential Election in each state based on polling data, while also assessing the likelihood of Donald Trump or Kamala Harris winning. We employ a Bayesian logistic regression model, which allows for probabilistic predictions of binary outcomes, making it well-suited for the task of predicting election results. Background details and diagnostics are included in [Appendix -@sec-model-details].
 
 ## Model set-up
@@ -167,7 +165,7 @@ The results highlight the geographic divide between the two candidates. Trump is
 
 ```{r}
 #| label: fig-statemap
-#| fig-cap: Predicted Election Winner by State
+#| fig-cap: Predicted Winner of 2024 US Presidential Election by State
 #| echo: false
 #| warning: false
 #| message: false
@@ -204,7 +202,6 @@ state_average <- state_average %>%
 # Map visualization showing predicted winner by state
 plot_usmap(data = state_average, values = "predicted_winner", regions = "states") +
   scale_fill_manual(values = c("Trump" = "red", "Harris" = "blue"), name = "Predicted Winner") +
-  labs(title = "Predicted Winner of 2024 US Presidential Election by State") +
   theme(legend.position = "right")
 
 ```
@@ -234,7 +231,7 @@ summary_table <- state_average %>%
     "Predicted Winner" = predicted_winner
   )
 
-knitr::kable(summary_table, caption = "Summary of Predicted 2024 US Presidential Election Results by State", escape = TRUE)
+knitr::kable(summary_table, escape = TRUE)
 
 
 ```
@@ -305,15 +302,6 @@ if (exists("logistic_model")) {
 } else {
   print("Model not found")
 }
-
-#### Model Summary Table ####
-# Create and display a model summary table
-#modelsummary::modelsummary(
-  #list("First Model" = logistic_model),
-  #statistic = c("std.error", "p.value"),  # Use standard error and p-value
-  #fmt = 2,  # Format numbers to 2 decimal places
-  #output = "markdown"  # Output format for Quarto or RMarkdown
-#)
 
 ```
 
