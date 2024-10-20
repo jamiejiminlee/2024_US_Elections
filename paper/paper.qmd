@@ -296,12 +296,12 @@ To improve the accuracy and reliability of election forecasts, future iterations
 
 # Appendix {-}
 
-
 # Additional data details
 
 # Model details {#sec-model-details}
 
 ## Diagnostics
+@tbl-modelsummary presents the results of the logistic regression model predicting the winner of the 2024 US Presidential Election in each state based on polling percentages for Donald Trump and Kamala Harris. The coefficients indicate that an increase in Trump’s polling percentage (\( \beta = 8.72 \)) is positively associated with the probability of winning a state, whereas an increase in Harris’s polling percentage (\( \beta = -31.63 \)) is negatively associated with Trump’s probability of winning. The standard errors for both predictors are quite large, suggesting high variability in the estimates and possible uncertainty in the model.
 
 ```{r}
 #| echo: false
@@ -334,8 +334,6 @@ if (exists("logistic_model")) {
 #)
 
 ```
-
-@tbl-modelsummary presents the results of the logistic regression model predicting the winner of the 2024 US Presidential Election in each state based on polling percentages for Donald Trump and Kamala Harris. The coefficients indicate that an increase in Trump’s polling percentage (\( \beta = 8.72 \)) is positively associated with the probability of winning a state, whereas an increase in Harris’s polling percentage (\( \beta = -31.63 \)) is negatively associated with Trump’s probability of winning. The standard errors for both predictors are quite large, suggesting high variability in the estimates and possible uncertainty in the model.
 
 The model diagnostics, including the AIC (6.0) and BIC (8.1), suggest that the model fits the data reasonably well given the small sample size of 15 observations. However, the low log-likelihood (0.000) and root mean squared error (RMSE = 0.00) indicate that the model may not be well-calibrated, likely due to the small dataset or the structure of the data. These results emphasize the importance of using a larger sample size.
 
