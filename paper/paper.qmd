@@ -68,6 +68,8 @@ The outcome variable in our analysis is the binary variable winner, which repres
 #| label: fig-averagetable
 #| fig-cap: Summary Table of Polling Averages by State
 #| echo: false
+#| warning: false
+#| message: false
 
 # Load cleaned data
 clean_poll_data <- read_csv("/Users/jamielee/2024_US_Elections/data/02-analysis_data/analysis_data.csv")
@@ -88,7 +90,9 @@ average_table <- state_average |>
   select(state, Trump_pct, Harris_pct, winner) |>
   mutate(predicted_winner = ifelse(winner == 1, "Trump", "Harris"))
 
-average_table
+# Render the simplest possible table
+knitr::kable(average_table, caption = "Summary Table of Polling Averages by State")
+
 ```
 
 ## Predictor variables
@@ -101,6 +105,7 @@ The predictor variables used in the model are the aggregated polling percentages
 #| label: fig-barplot
 #| fig-cap: Average Poll Percentage by State
 #| echo: false
+#| warning: false
 
 # Reshape data to a long format for side-by-side bars
 stateaverage_long <- state_average %>%
@@ -158,7 +163,7 @@ We run the model in R [@citeR] using the `rstanarm` package [@rstanarm]. The mod
 
 library(rstanarm)
 
-first_model <-
+logistic_model <-
   readRDS(file = here::here("models/first_model.rds"))
 ```
 
@@ -182,30 +187,61 @@ We expect a positive relationship between polling support for each candidate and
 #| echo: false
 #| warning: false
 #| message: false
-
+#| cache: false
 
 #### Workspace setup ####
 library(tidyverse)
 library(usmap)
 library(ggplot2)
+library(rstanarm)
 
-# Remove any states with missing polling data for Trump or Harris
+# Check for missing values in state_average and ensure data is clean
 state_average <- state_average %>%
-  filter(!is.na(Trump_pct) & !is.na(Harris_pct))
+  filter(!is.na(Trump_pct) & !is.na(Harris_pct)) %>%
+  ungroup()
 
-# Proceed with the prediction for all states
+# Check that state_average has the correct number of rows and no grouping
+print(nrow(state_average))  # Ensure this number matches the expected rows
+
+# Proceed with prediction after ensuring the data is clean
+predicted_prob <- predict(logistic_model, newdata = state_average, type = "response")
+
+# Ensure predicted_prob matches the number of rows in state_average
+if (length(predicted_prob) != nrow(state_average)) {
+  stop("Mismatch between predicted_prob and state_average rows")
+}
+
+# Add predicted_prob to state_average
 state_average <- state_average %>%
-  mutate(predicted_prob = predict(logistic_model, newdata = state_average, type = "response"))
+  mutate(predicted_prob = predicted_prob)
 
 # Classify the predicted winner: Trump if probability > 0.5, else Harris
 state_average <- state_average %>%
   mutate(predicted_winner = ifelse(predicted_prob > 0.5, "Trump", "Harris"))
 
-#### Map Visualization ####
+# Map visualization showing predicted winner by state
 plot_usmap(data = state_average, values = "predicted_winner", regions = "states") +
   scale_fill_manual(values = c("Trump" = "red", "Harris" = "blue"), name = "Predicted Winner") +
   labs(title = "Predicted Winner of 2024 US Presidential Election by State") +
   theme(legend.position = "right")
+
+# Remove any states with missing polling data for Trump or Harris
+#state_average <- state_average %>%
+  #filter(!is.na(Trump_pct) & !is.na(Harris_pct))
+
+# Proceed with the prediction for all states
+#state_average <- state_average %>%
+  #mutate(predicted_prob = predict(logistic_model, newdata = state_average, type = "response"))
+
+# Classify the predicted winner: Trump if probability > 0.5, else Harris
+#state_average <- state_average %>%
+  #mutate(predicted_winner = ifelse(predicted_prob > 0.5, "Trump", "Harris"))
+
+#### Map Visualization ####
+#plot_usmap(data = state_average, values = "predicted_winner", regions = "states") +
+  #scale_fill_manual(values = c("Trump" = "red", "Harris" = "blue"), name = "Predicted Winner") +
+  #labs(title = "Predicted Winner of 2024 US Presidential Election by State") +
+  #theme(legend.position = "right")
 ```
 
 It is important to note that several states remain uncolored (in gray), indicating missing or incomplete polling data for those states. These uncolored states reflect the absence of reliable or sufficient polling information required for an accurate prediction. This underscores the limitations of the data used in the model, where predictions are only made for states with adequate polling coverage. As a result, certain regions lack predictions, which could be addressed by including more comprehensive polling data in future analyses.
@@ -234,7 +270,7 @@ summary_table <- state_average %>%
     "Predicted Winner" = predicted_winner
   )
 
-knitr::kable(summary_table, caption = "Summary of Predicted 2024 US Presidential Election Results by State")
+knitr::kable(summary_table, caption = "Summary of Predicted 2024 US Presidential Election Results by State", escape = TRUE)
 
 
 ```
@@ -312,21 +348,34 @@ In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. Th
 ## Diagnostics
 
 ```{r}
-``{r}
 #| echo: false
 #| eval: true
 #| label: tbl-modelsummary
 #| tbl-cap: "Explanatory models of election outcome based on polling percentages for Trump and Harris"
 #| warning: false
 
+
+# Ensure the model exists
+if (exists("logistic_model")) {
+  # Create and display a model summary table in LaTeX format for PDF
+  modelsummary::modelsummary(
+    list("First Model" = logistic_model),
+    statistic = c("std.error", "p.value"),  # Use standard error and p-value
+    fmt = 2,  # Format numbers to 2 decimal places
+    output = "latex"  # Use LaTeX for PDF output
+  )
+} else {
+  print("Model not found")
+}
+
 #### Model Summary Table ####
 # Create and display a model summary table
-modelsummary::modelsummary(
-  list("First Model" = logistic_model),
-  statistic = c("std.error", "p.value"),  # Use standard error and p-value
-  fmt = 2,  # Format numbers to 2 decimal places
-  output = "markdown"  # Output format for Quarto or RMarkdown
-)
+#modelsummary::modelsummary(
+  #list("First Model" = logistic_model),
+  #statistic = c("std.error", "p.value"),  # Use standard error and p-value
+  #fmt = 2,  # Format numbers to 2 decimal places
+  #output = "markdown"  # Output format for Quarto or RMarkdown
+#)
 
 ```
 

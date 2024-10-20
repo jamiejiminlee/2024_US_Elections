@@ -39,3 +39,4 @@ summary(logistic_model)
 #### Save Model ####
 # Save the trained logistic model for future use
 saveRDS(logistic_model, file = "models/first_model.rds")
+
