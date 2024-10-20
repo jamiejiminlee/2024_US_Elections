@@ -160,7 +160,6 @@ Bayesian logistic regression was chosen for its ability to model binary outcomes
 # Results {#sec-results}
 
 ## Predicted Election Winner By State
-
 @fig-statemap shows the predicted winner of the 2024 US Presidential Election by state on a map [@usmap], based on a logistic regression model using aggregated polling data for Donald Trump and Kamala Harris. States where Trump is predicted to win are shown in red, while states where Harris is predicted to win are displayed in blue. States in gray represent missing or incomplete polling data, where predictions were not possible. According to the model, Trump is expected to win key states, including Florida, Missouri, and Montana, while Harris is forecasted to lead in Michigan, Virginia, and Pennsylvania.
 
 The results highlight the geographic divide between the two candidates. Trump is predicted to perform well in southern and midwestern states, where his polling averages are significantly higher. Harris, on the other hand, is projected to win in the Midwest and along the East Coast, with stronger polling percentages in traditionally Democratic-leaning regions.
@@ -209,7 +208,6 @@ plot_usmap(data = state_average, values = "predicted_winner", regions = "states"
 ```
 
 ## Summary of Predicted Election Results by State
-
 @tbl-modelresults further breaks down the polling data by state, showing the average polling percentages for each candidate and the predicted win probability for Trump. For example, in Florida, Trump’s polling average is 53%, and his predicted win probability is almost certain at 99.93%. Conversely, in Michigan, Harris leads with an average of 46.27% of the vote, resulting in a 96.77% predicted probability that she will win the state.
 
 In swing states like North Carolina and Nevada, where the polling percentages are closer, Trump is still predicted to win with probabilities of 94.36% and 51.23%, respectively. These battleground states show tighter polling averages and thus greater uncertainty in the predicted outcomes.
