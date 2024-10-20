@@ -206,7 +206,7 @@ plot_usmap(data = state_average, values = "predicted_winner", regions = "states"
 ```
 The results highlight the geographic divide between the two candidates. Trump is predicted to perform well in southern and midwestern states, where his polling averages are significantly higher. Harris, on the other hand, is projected to win in the Midwest and along the East Coast, with stronger polling percentages in traditionally Democratic-leaning regions.
 
-## Summary of Predicted Election Results by State
+### Summary of Predicted Election Results by State
 
 @tbl-modelresults further breaks down the polling data by state, showing the average polling percentages for each candidate and the predicted win probability for Trump. For example, in Florida, Trump’s polling average is 53%, and his predicted win probability is almost certain at 99.93%. Conversely, in Michigan, Harris leads with an average of 46.27% of the vote, resulting in a 96.77% predicted probability that she will win the state.
 
