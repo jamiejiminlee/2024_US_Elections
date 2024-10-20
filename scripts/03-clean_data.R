@@ -18,9 +18,9 @@ library(dplyr)
 clean_poll_data <- read_csv("data/01-raw_data/raw_data.csv") |>
   clean_names()
 
-# Replace "nebraska-cd20" with "nebraska"
+# Replace "Nebraska CD-2" with "Nebraska"
 clean_poll_data <- clean_poll_data |>
-  mutate(state = str_replace(state, "Nebraska-CD20", "Nebraska"))
+  mutate(state = str_replace(state, "Nebraska CD-2", "Nebraska"))
 
 # Filter data to Harris estimates based on high-quality polls after she declared
 clean_poll_data <- clean_poll_data |>
