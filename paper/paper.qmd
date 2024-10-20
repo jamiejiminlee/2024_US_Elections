@@ -8,7 +8,7 @@ author:
 thanks: "Code and data are available at: [https://github.com/jamiejiminlee/2024_US_Elections.git](https://github.com/jamiejiminlee/2024_US_Elections.git)."
 date: today
 date-format: long
-abstract: "Placeholder: This paper presents a predictive model for the 2024 United States Presidential Election, utilizing polling data from various states. The model aggregates high-quality poll data, focusing on support for the two main candidates, Donald Trump and Kamala Harris. Using state-level polling averages, we create a linear model to predict the election outcome in each state. The model compares the polling percentages of both candidates to identify the likely winner. A geographic visualization provides a state-by-state breakdown, showing which candidate is predicted to win based on the polling data. The results offer insights into the competitive dynamics of the election and demonstrate the power of polling data in forecasting political outcomes. Furthermore, we discuss the methodology used to filter for high-quality pollsters and ensure data accuracy. The paper concludes with a reflection on the model’s limitations and the potential impact of polling biases on electoral predictions."
+abstract: "This paper presents a predictive model for the 2024 United States Presidential Election using state-level polling data. By aggregating high-quality polls, we predict the likely winner between Donald Trump and Kamala Harris in each state. A logistic regression model estimates the probability of Trump winning, with polling percentages as predictor variables. The model’s results highlight key battleground states and offer insights into voter dynamics, while also reflecting on the limitations of polling data in forecasting political outcomes."
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -31,19 +31,17 @@ library(ggplot2)
 library(usmap)
 ```
 
-
 # Introduction
 
-This paper develops a predictive model for the 2024 US Presidential Election using high-quality polling data. By aggregating state-level poll results for Donald Trump and Kamala Harris, we forecast the likely winner in each state. Our analysis leverages a linear regression model, with state-wise polling percentages as predictor variables, to estimate the outcome of the election.
+This paper develops a predictive model for the 2024 US Presidential Election using state-level polling data to forecast the likely winner between Donald Trump and Kamala Harris. We aggregate high-quality poll data to create a logistic regression model that estimates the probability of a Trump or Harris victory in each state. By comparing polling percentages for both candidates, we aim to predict election outcomes based on voter support patterns across the states.
 
-The estimand in this study is the probability that Donald Trump or Kamala Harris wins a given state, based on state-level polling averages. The binary outcome variable indicates whether Trump (1) or Harris (0) is predicted to win each state.
+The estimand in this study is the probability that Donald Trump or Kamala Harris wins a given state, based on aggregated state-level polling averages. The binary outcome variable in our model indicates whether Trump (1) or Harris (0) is predicted to win in each state, and the predictor variables are the average polling percentages for each candidate.
 
-Our model predicts the election outcome by comparing the average polling percentages for Trump and Harris in each state. The results show a geographic distribution of support, with some states clearly favoring one candidate. The map visualization highlights these state-by-state predictions, offering insight into key battleground states and strongholds for both candidates.
+Our model predicts election outcomes by comparing the average polling percentages for Trump and Harris in each state. The results highlight the geographic distribution of support, with some states clearly favoring one candidate over the other. Swing states emerge as critical battlegrounds, where polling percentages are closely contested and could influence the final election result.
 
-Accurate election predictions are crucial for understanding voter dynamics and campaign strategies. By focusing on high-quality polling data, this model provides a more reliable forecast of the election outcome, which can help inform both political analysts and the public about potential election results and voting trends.
+Accurate election predictions provide valuable insights into voter dynamics and help political analysts, campaigns, and the public anticipate electoral outcomes. By focusing on high-quality polling data, our model improves the reliability of predictions and highlights key regions where voter sentiment may shift, ultimately affecting the election.
 
-The remainder of this paper is structured as follows. In @sec-data, we describe the data and the variables used in the analysis. @sec-model outlines the model setup and estimation strategy. @sec-results presents the results, including the predicted election outcomes and visualizations. Finally, @sec-discussion the implications and limitations of our findings.
-
+The remainder of this paper is structured as follows. In Section 2, we describe the data and variables used in the analysis. Section 3 outlines the model setup and estimation strategy. Section 4 presents the results, including the predicted election outcomes and visualizations. Finally, Section 5 discusses the implications and limitations of our findings.
 
 # Data {#sec-data}
 
@@ -51,16 +49,13 @@ The remainder of this paper is structured as follows. In @sec-data, we describe 
 
 Placholder - We use the statistical programming language R [@citeR] for all data manipulation, modeling, and visualization in this study. Our data [@shelter] was obtained from the public polling aggregation website FiveThirtyEight, which provides comprehensive polling data for the 2024 US Presidential Election [@fivethirtyeight]. The dataset includes national polls conducted by various polling organizations, capturing voter support for the two leading candidates, Donald Trump and Kamala Harris. The dataset records critical variables such as the pollster, sample size, and percentage of voter support for each candidate.
 
-
-
 ## Measurement
-	
-To predict the election outcome, we will assume that the higher pct in a state between Trump and Harris determines the winner of the election. The difference in pct is used as the predictor for which candidate wins each state. 
+
+Placeholder - The measurement of voter support in our dataset is derived from polling data, which serves as a representation of public sentiment during the 2024 U.S. Presidential Election. Each entry in the dataset corresponds to a poll conducted by various polling organizations, capturing the percentage of respondents who express support for Donald Trump or Kamala Harris. To ensure the quality of the data, only polls from reputable pollsters with a numeric grade of 3 or higher and transparency scores above 6 were included. These polls measure voter preferences through structured survey questions, and the results are aggregated to create state-level averages for each candidate. The dataset thus transforms individual polling responses into a broader measurement of voter sentiment, reflecting the competitive dynamics between Trump and Harris across different states.
 
 ## Outcome variables
 
 The outcome variable in our analysis is the binary variable winner, which represents the predicted winner of the 2024 US Presidential Election in each state. The value of winner is set to 1 if Donald Trump is predicted to win the state, and 0 if Kamala Harris is predicted to win. This binary outcome is determined by comparing the polling support for both candidates within each state. By setting up this binary variable, we aim to forecast which candidate will secure more votes in each state based on the aggregated polling data.
-
 
 @fig-averagetable provides an overview of the average support for Trump and Harris across all states, along with the predicted winner for each state based on our model. 
 
@@ -97,9 +92,10 @@ knitr::kable(average_table, caption = "Summary Table of Polling Averages by Stat
 
 ## Predictor variables
 
-The predictor variables used in the model are the aggregated polling percentages for Donald Trump (Trump_pct) and Kamala Harris (Harris_pct). These variables are calculated as the average support for each candidate, using polling data filtered to include only high-quality pollsters with a numeric grade of 3 or higher and transparency scores above 6. These averages reflect the level of support for each candidate across all polls in each state. To further illustrate the distribution of support, a side-by-side bar graph is provided, comparing the average polling percentages for both candidates across all states. This visualization offers a clear comparison of the support levels, helping to visualize the competitive dynamics within each state.
+The predictor variables used in the model are the aggregated polling percentages for Donald Trump (Trump_pct) and Kamala Harris (Harris_pct). These variables are calculated as the average support for each candidate, using polling data filtered to include only high-quality pollsters with a numeric grade of 3 or higher and transparency scores above 6. These averages reflect the level of support for each candidate across all polls in each state. 
 
-@fig-barplot illustrates the average polling support for Donald Trump and Kamala Harris in each state. The side-by-side comparison represents the percentage of support each candidate has received, based on aggregated poll data from pollsters with high-quality scores. Trump's support is shown in red, while Harris's support is depicted in red. 
+To further illustrate the distribution of support, a side-by-side bar graph is provided, comparing the average polling percentages for both candidates across all states. @fig-barplot offers a clear comparison of the support levels, helping to visualize the competitive dynamics within each state. The side-by-side comparison represents the percentage of support each candidate has received, based on aggregated poll data from pollsters with high-quality scores. Trump's support is shown in red, while Harris's support is depicted in red. 
+
 
 ```{r}
 #| label: fig-barplot
@@ -125,10 +121,10 @@ ggplot(stateaverage_long, aes(x=reorder(state, -support_pct), y= support_pct, fi
 
 # Model {#sec-model}
 
-The goal of our modeling strategy is twofold. Firstly, we aim to predict the winner of the 2024 US Presidential Election in each state based on aggregated polling data. Secondly, we seek to understand the relationship between polling support for each candidate and the likelihood of winning a state. Here we briefly describe the Bayesian analysis model used to investigate these relationships. This model allows for uncertainty in the predictions by incorporating prior distributions for the parameters, providing a probabilistic framework for estimating the election outcome. Background details and diagnostics are included in [Appendix -@sec-model-details].
+The goal of our modeling strategy is to predict the winner of the 2024 US Presidential Election in each state based on polling data, while also assessing the likelihood of Donald Trump or Kamala Harris winning. We employ a Bayesian logistic regression model, which allows for probabilistic predictions of binary outcomes, making it well-suited for the task of predicting election results. Background details and diagnostics are included in [Appendix -@sec-model-details].
 
 ## Model set-up
-Define $y_i$ as the binary outcome variable indicating whether Donald Trump is predicted to win state $i$ (1 if Trump wins, 0 if Harris wins). The predictor variables are $\beta_i$, the average percentage of polling support for Donald Trump in state $i$, and $\gamma_i$, the average percentage of polling support for Kamala Harris in state $i$.
+The binary outcome variable $y_i$ is defined as 1 if Donald Trump is predicted to win state $i$, and 0 if Kamala Harris is predicted to win. The predictor variables are $\beta_i$, which represents the average percentage of polling support for Donald Trump in state $i$, and $\gamma_i$, the average percentage of support for Kamala Harris in state $i$. The relationship between these variables and the outcome is captured through a logistic link function.
 
 \begin{align*}
 y_i | \mu_i &\sim \text{Bernoulli}(\mu_i) \\
@@ -137,6 +133,8 @@ y_i | \mu_i &\sim \text{Bernoulli}(\mu_i) \\
 \beta_i &\sim \text{Normal}(0, 2.5) \\
 \gamma_i &\sim \text{Normal}(0, 2.5)
 \end{align*}
+
+We use weakly informative Normal priors for the intercept ($\alpha_i$) and the coefficients ($\beta_i$) and $\gamma_i$), centered around zero with a standard deviation of 2.5. These priors were chosen to reflect the assumption that, before seeing the data, there is no strong reason to favor one candidate over the other across states, but to allow room for the data to adjust predictions as polling percentages differ.
 
 We run the model in R [@citeR] using the `rstanarm` package [@rstanarm]. The model uses default priors from `rstanarm`, and estimates the likelihood of Donald Trump winning each state based on polling averages for both candidates.
 
@@ -152,20 +150,21 @@ logistic_model <-
   readRDS(file = here::here("models/first_model.rds"))
 ```
 
-The model used to predict the 2024 US Presidential Election outcome is a logistic regression model. The binary outcome variable, $y_i$, represents whether Donald Trump (1) or Kamala Harris (0) is predicted to win each state. The predictor variables, $\beta_i$ and $\gamma_i$, are the average polling percentages for Trump and Harris, respectively, in state $i$. We use a logistic regression model because the outcome is binary, making it appropriate for estimating the probability of a Trump victory in each state. The model is implemented in R using the `glm()` function with a binomial family, providing a probabilistic prediction of the election outcome based on polling data.
-
 
 ## Model Justification
 
-We expect a positive relationship between polling support for each candidate and the likelihood of winning a state. In particular, as the percentage of support for Donald Trump ($\beta_i$) increases, the probability of Trump winning state $i$ also increases. Similarly, as Kamala Harris's support ($\gamma_i$) increases, the likelihood of her winning the state rises. The logistic regression model is suitable for capturing these dynamics, as it allows us to estimate the probability of a binary outcome (win or lose) using continuous predictor variables. The model outputs probabilities that are constrained between 0 and 1, which aligns with the binary nature of our outcome variable ($y_i$). In essence, we expect a higher $\beta_i$ to correlate with a higher probability of Trump winning a state, while a higher $\gamma_i$ suggests a greater likelihood of a Harris victory.
+We expect a positive relationship between polling support for each candidate and their probability of winning a state. As Donald Trump’s polling percentage ($\beta_i$) increases, the likelihood of him winning state $i$ rises. Similarly, as Kamala Harris's polling percentage ($\gamma_i$) increases, her chances of winning that state increase. 
 
+Bayesian logistic regression was chosen for its ability to model binary outcomes like win/loss predictions while incorporating prior knowledge and uncertainty, helping mitigate overfitting through regularization with priors. This model strikes a balance between flexibility and interpretability, given that polling percentages are continuous and the outcome is binary. The model assumes polling data accurately reflects voter intentions and that state outcomes are independent of each other, although it does not account for interactions between states or regional voting trends. Potential biases in polling data could also affect predictions. The model was implemented using the rstanarm package in R, which supports Bayesian inference with default priors for logistic regression. Convergence diagnostics and model checking were conducted to ensure reliable estimates, with further details and alternative models provided in [Appendix -@sec-model-details].
 
 # Results {#sec-results}
 
-@fig-statemap shows the predicted winner of the 2024 US Presidential Election by state, based on a logistic regression model using aggregated polling data for Donald Trump and Kamala Harris. States where Trump is predicted to win are shown in red, while states where Harris is predicted to win are displayed in blue. Several states appear in gray, indicating that the model could not generate a prediction due to incomplete or missing polling data. The results highlight clear regional differences, with Trump expected to perform strongly in the southern and midwestern states, while Harris is favored in parts of the Northeast and Midwest. The predicted outcomes underscore the importance of swing states, where polling results are closely contested and could shift the election results.
-
-
 ## Predicted Election Winner By State
+
+@fig-statemap shows the predicted winner of the 2024 US Presidential Election by state, based on a logistic regression model using aggregated polling data for Donald Trump and Kamala Harris. States where Trump is predicted to win are shown in red, while states where Harris is predicted to win are displayed in blue. States in gray represent missing or incomplete polling data, where predictions were not possible. According to the model, Trump is expected to win key states, including Florida, Missouri, and Montana, while Harris is forecasted to lead in Michigan, Virginia, and Pennsylvania.
+
+The results highlight the geographic divide between the two candidates. Trump is predicted to perform well in southern and midwestern states, where his polling averages are significantly higher. Harris, on the other hand, is projected to win in the Midwest and along the East Coast, with stronger polling percentages in traditionally Democratic-leaning regions.
+
 ```{r}
 #| label: fig-statemap
 #| fig-cap: Predicted Election Winner by State
@@ -227,12 +226,11 @@ plot_usmap(data = state_average, values = "predicted_winner", regions = "states"
   #theme(legend.position = "right")
 ```
 
-It is important to note that several states remain uncolored (in gray), indicating missing or incomplete polling data for those states. These uncolored states reflect the absence of reliable or sufficient polling information required for an accurate prediction. This underscores the limitations of the data used in the model, where predictions are only made for states with adequate polling coverage. As a result, certain regions lack predictions, which could be addressed by including more comprehensive polling data in future analyses.
-
-
 ### Summary of Predicted Election Results by State
 
-@tbl-modelresults presents a summary of the predicted 2024 US Presidential Election results on a state-by-state basis. It includes the average polling percentages for Donald Trump and Kamala Harris, the predicted probability of Trump winning each state based on a logistic regression model, and the predicted winner in each state. 
+@tbl-modelresults further breaks down the polling data by state, showing the average polling percentages for each candidate and the predicted win probability for Trump. For example, in Florida, Trump’s polling average is 53%, and his predicted win probability is almost certain at 99.93%. Conversely, in Michigan, Harris leads with an average of 46.27% of the vote, resulting in a 96.77% predicted probability that she will win the state.
+
+In swing states like North Carolina and Nevada, where the polling percentages are closer, Trump is still predicted to win with probabilities of 94.36% and 51.23%, respectively. These battleground states show tighter polling averages and thus greater uncertainty in the predicted outcomes.
 
 ```{r}
 #| echo: false
@@ -258,16 +256,17 @@ knitr::kable(summary_table, caption = "Summary of Predicted 2024 US Presidential
 
 ```
 
-According to our model results, in **Florida**, Trump’s polling percentage (53.00%) is substantially higher than Harris’s (40.50%), leading to a near-certain predicted win for Trump with a probability of 0.9998. Conversely, in **Michigan**, Harris holds a slight polling lead (46.27% vs. 44.52%), resulting in a predicted win for her with a lower probability of 0.036. Several states, such as **Montana** and **Missouri**, have extremely high probabilities of a Trump victory, while others, like **Nebraska CD-2** and **North Carolina**, lean toward Harris. The inclusion of predicted probabilities adds nuance by highlighting the confidence levels of the model’s predictions for each state, especially in swing states where polling percentages are closely contested.
-
+The results of our predictive model suggest that Donald Trump is likely to win key states such as Florida, Missouri, and Montana, while Kamala Harris is expected to secure victories in states like Michigan, Virginia, and Pennsylvania. Close contests are predicted in battleground states like Nevada and North Carolina, where Trump holds a slight edge. 
 
 # Discussion {#sec-discussion}
 
 ## Interpretation of Results {#sec-results-interpretation}
 
-The results of the logistic regression model provide insights into the predicted winner of the 2024 US Presidential Election based on polling percentages for Donald Trump and Kamala Harris. The side-by-side bar graph comparing polling averages across states reveals a clear geographic divide. Trump tends to perform better in southern and midwestern states, while Harris shows stronger support in the northeastern and western regions. Swing states, where the polling differences between the two candidates are narrower, emerge as crucial battlegrounds that could determine the election outcome. The map visualization reinforces these trends, visually highlighting where each candidate is expected to win. These results align with historical voting patterns, but the model also emphasizes the close competition in key states that are not traditionally battlegrounds.
+The results of our model reveal clear geographic divides in voter sentiment, with Donald Trump predicted to win in many southern and midwestern states, while Kamala Harris is expected to perform well in the Midwest and on the East Coast. The predictions align with historical voting patterns, with Trump’s strongest support coming from traditionally conservative regions and Harris garnering more support in Democratic-leaning areas. Notably, several battleground states, such as Nevada and North Carolina, show a close contest, reflecting the competitive nature of the 2024 election. These results suggest that the election may hinge on the outcomes in these key states, where even small shifts in polling percentages could influence the final result. The predicted probabilities in states like Michigan, Virginia, and Pennsylvania indicate a strong chance for Harris, while Trump's significant lead in states like Florida and Missouri solidifies his dominance in certain regions. Overall, the model provides valuable insights into the competitive landscape, highlighting the states that could be decisive in determining the election outcome.
 
 ## Model Performance {#sec-model-performance}
+
+
 
 The logistic regression model used in this analysis successfully captures the relationship between polling percentages and the likelihood of a candidate winning a state. The coefficients for the predictor variables (polling percentages for Trump and Harris) indicate a strong relationship between candidate support and the probability of winning. The model outputs probabilities for each state, which are useful for gauging the certainty of predictions, especially in closely contested states. The model’s performance is reinforced by the robustness of the results in states where one candidate has a clear polling lead, providing accurate predictions. However, states with narrower margins reflect greater uncertainty, which is critical in understanding election dynamics.
 
@@ -288,8 +287,6 @@ Despite the model's predictive power, there are several weaknesses that should b
 
 To improve the accuracy and reliability of election forecasts, future iterations of the model could incorporate additional variables beyond polling data. Factors such as voter turnout models, economic conditions, and social media sentiment analysis may provide a more holistic view of voter behavior. Additionally, real-time polling data integration could allow for dynamic updates to predictions as the election nears, improving the timeliness and accuracy of forecasts. Moreover, regional adjustments to account for differences in polling methodology or demographic shifts would help to address some of the biases inherent in polling data. Expanding the model to include these aspects would offer a more comprehensive understanding of the election landscape and enhance the precision of predictions.
 
-
-
 \newpage
 
 \appendix
@@ -297,6 +294,9 @@ To improve the accuracy and reliability of election forecasts, future iterations
 # Appendix {-}
 
 # Additional data details
+
+It is important to note that several states remain uncolored (in gray), indicating missing or incomplete polling data for those states. These uncolored states reflect the absence of reliable or sufficient polling information required for an accurate prediction. This underscores the limitations of the data used in the model, where predictions are only made for states with adequate polling coverage. As a result, certain regions lack predictions, which could be addressed by including more comprehensive polling data in future analyses.
+
 
 # Model details {#sec-model-details}
 
