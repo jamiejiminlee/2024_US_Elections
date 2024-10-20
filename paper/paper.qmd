@@ -47,7 +47,7 @@ The remainder of this paper is structured as follows. In Section 2, we describe 
 
 ## Overview
 
-Placholder - We use the statistical programming language R [@citeR] for all data manipulation, modeling, and visualization in this study. Our data [@shelter] was obtained from the public polling aggregation website FiveThirtyEight, which provides comprehensive polling data for the 2024 US Presidential Election [@fivethirtyeight]. The dataset includes national polls conducted by various polling organizations, capturing voter support for the two leading candidates, Donald Trump and Kamala Harris. The dataset records critical variables such as the pollster, sample size, and percentage of voter support for each candidate.
+We use the statistical programming language R [@citeR] to perform data cleaning and analysis using the datasets we obtained from the Project 538 online database [@fivethirtyeight]. The database provides a wealth of information on the current cycle of presidential general election polls. It consists of the polling results from various pollsters such as the New York Times, ActiVote, Morning Consult, etc. Information about the transparency of methodology as well as the quality of the data is present as well, denoted as transparency score and numeric grades, which are significant to our data cleaning process to ensure the quality of data. Polling results are specific to different states in the US, mostly focusing on the six battleground states that are the likeliest to determine the outcome of the elections. Thus, we chose to use states, candidate names, and percentage of support to perform statistical analysis and gather our results. 
 
 ## Measurement
 
