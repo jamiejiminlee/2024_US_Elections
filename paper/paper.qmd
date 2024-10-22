@@ -30,7 +30,7 @@ library(ggplot2)
 library(usmap)
 ```
 
-# Introduction
+# Introduction {#sec-introduction}
 
 This paper develops a predictive model for the 2024 US Presidential Election using state-level polling data [@FiveThirtyEight] to forecast the likely winner between Donald Trump and Kamala Harris. We aggregate high-quality poll data to create a logistic regression model that estimates the probability of a Trump or Harris victory in each state. By comparing polling percentages for both candidates, we aim to predict election outcomes based on voter support patterns across the states.
 
@@ -40,7 +40,7 @@ Our model utilizes the Bayesian logistic regression model to predict election ou
 
 Accurate election predictions provide valuable insights into voter dynamics and help political analysts, campaigns, and the public anticipate electoral outcomes. By focusing on high-quality polling data, our model improves the reliability of predictions and highlights key regions where voter sentiment may shift, ultimately affecting the election.
 
-The remainder of this paper is structured as follows. In Section 2, we describe the data and variables used in the analysis. Section 3 outlines the model setup and estimation strategy. Section 4 presents the results, including the predicted election outcomes and visualizations. Finally, Section 5 discusses the implications and limitations of our findings.
+The remainder of this paper is structured as follows. In [@sec-data], we describe the data and variables used in the analysis. [@sec-model] outlines the model setup and estimation strategy. [@sec-results] presents the results, including the predicted election outcomes and visualizations. Finally, [@sec-discussion] discusses the implications and limitations of our findings.
 
 # Data {#sec-data}
 
@@ -379,7 +379,7 @@ This helps reduce the potential bias from non-response, especially since certain
 
 # Idealized Methodology
 
-Building on our discussion of the New York Times/Siena College Poll, we now present an idealized methodology that aims to enhance the accuracy and reliability of our predictions. This approach incorporates best practices and innovative techniques to ensure a comprehensive prediction of voter behavior in the upcoming 2024 U.S. presidential election. To demonstrate our idealized methodology, we generated a survey on the 2024 US Presidential election, which can be accessed via the the URL provided in [@sec-references] [@US-election-survey]. 
+Building on our discussion of the New York Times/Siena College Poll, we now present an idealized methodology that aims to enhance the accuracy and reliability of our predictions. This approach incorporates best practices and innovative techniques to ensure a comprehensive prediction of voter behavior in the upcoming 2024 U.S. presidential election. To demonstrate our idealized methodology, we generated a survey on the 2024 US Presidential election, which can be accessed via the the URL provided in [@US-election-survey] under [@sec-references].
 
 ## Sampling Approach
 
