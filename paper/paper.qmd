@@ -32,7 +32,7 @@ library(usmap)
 
 # Introduction
 
-This paper develops a predictive model for the 2024 US Presidential Election using state-level polling data to forecast the likely winner between Donald Trump and Kamala Harris. We aggregate high-quality poll data to create a logistic regression model that estimates the probability of a Trump or Harris victory in each state. By comparing polling percentages for both candidates, we aim to predict election outcomes based on voter support patterns across the states.
+This paper develops a predictive model for the 2024 US Presidential Election using state-level polling data [@FiveThirtyEight] to forecast the likely winner between Donald Trump and Kamala Harris. We aggregate high-quality poll data to create a logistic regression model that estimates the probability of a Trump or Harris victory in each state. By comparing polling percentages for both candidates, we aim to predict election outcomes based on voter support patterns across the states.
 
 The estimand in this study is the probability that Donald Trump or Kamala Harris wins a given state, based on aggregated state-level polling averages. The binary outcome variable in our model indicates whether Trump (1) or Harris (0) is predicted to win in each state, and the predictor variables are the average polling percentages for each candidate.
 
@@ -50,7 +50,7 @@ We use the statistical programming language R [@citeR] to perform data cleaning 
 
 ## Measurement
 
-The measurement of voter support in the dataset is derived from raw polling data obtained from the Project 538 online database, which serves as a representation of potential election results for the 2024 U.S. Presidential Election. Each entry in the dataset corresponds to a poll conducted by each pollster, capturing the percentage of respondents who express support for Donald Trump or Kamala Harris. Each pollster has their approach of sampling respondents as well as their methodology of approaching respondents, which affects each pollster’s numeric grades and transparency scores.  Therefore, to ensure the quality of the data, only polls from reputable pollsters with a numeric grade of 3 or higher and transparency scores above 6 were used for our paper. These polls measure voter preferences through structured survey questions, and the results are aggregated to create state-level averages for each candidate. The dataset thus transforms general voter sentiment into individual data points that reflect the competitive dynamics between Trump and Harris across different states. 
+The measurement of voter support in the dataset is derived from raw polling data obtained from the Project 538 online database [@FiveThirtyEight], which serves as a representation of potential election results for the 2024 U.S. Presidential Election. Each entry in the dataset corresponds to a poll conducted by each pollster, capturing the percentage of respondents who express support for Donald Trump or Kamala Harris. Each pollster has their approach of sampling respondents as well as their methodology of approaching respondents, which affects each pollster’s numeric grades and transparency scores.  Therefore, to ensure the quality of the data, only polls from reputable pollsters with a numeric grade of 3 or higher and transparency scores above 6 were used for our paper. These polls measure voter preferences through structured survey questions, and the results are aggregated to create state-level averages for each candidate. The dataset thus transforms general voter sentiment into individual data points that reflect the competitive dynamics between Trump and Harris across different states. 
 
 
 ## Outcome variables
@@ -154,7 +154,7 @@ logistic_model <-
 
 We expect a positive relationship between polling support for each candidate and their probability of winning a state. As Donald Trump’s polling percentage ($\beta_i$) increases, the likelihood of him winning state $i$ rises. Similarly, as Kamala Harris's polling percentage ($\gamma_i$) increases, her chances of winning that state increase. 
 
-Bayesian logistic regression was chosen for its ability to model binary outcomes like win/loss predictions while incorporating prior knowledge and uncertainty, helping mitigate overfitting through regularization with priors. This model strikes a balance between flexibility and interpretability, given that polling percentages are continuous and the outcome is binary. The model assumes polling data accurately reflects voter intentions and that state outcomes are independent of each other, although it does not account for interactions between states or regional voting trends. Potential biases in polling data could also affect predictions. The model was implemented using the rstanarm package in R, which supports Bayesian inference with default priors for logistic regression. 
+Bayesian logistic regression was chosen for its ability to model binary outcomes like win/loss predictions while incorporating prior knowledge and uncertainty, helping mitigate overfitting through regularization with priors. This model strikes a balance between flexibility and interpretability, given that polling percentages are continuous and the outcome is binary. The model assumes polling data accurately reflects voter intentions and that state outcomes are independent of each other, although it does not account for interactions between states or regional voting trends. Potential biases in polling data could also affect predictions. The model was implemented using the [@rstanarm] package in [@citeR], which supports Bayesian inference with default priors for logistic regression. 
 
 # Results {#sec-results}
 ## Predicted Election Winner By State
@@ -233,17 +233,20 @@ The results of our predictive model suggest that Donald Trump is likely to win k
 
 ## Interpretation of Results {#sec-results-interpretation}
 
-Placeholder - The results of our model reveal clear geographic divides in voter sentiment, with Donald Trump predicted to win in many southern and midwestern states, while Kamala Harris is expected to perform well in the Midwest and on the East Coast. The predictions align with historical voting patterns, with Trump’s strongest support coming from traditionally conservative regions and Harris garnering more support in Democratic-leaning areas. Notably, several battleground states, such as Nevada and North Carolina, show a close contest, reflecting the competitive nature of the 2024 election. These results suggest that the election may hinge on the outcomes in these key states, where even small shifts in polling percentages could influence the final result. The predicted probabilities in states like Michigan, Virginia, and Pennsylvania indicate a strong chance for Harris, while Trump's significant lead in states like Florida and Missouri solidifies his dominance in certain regions. Overall, the model provides valuable insights into the competitive landscape, highlighting the states that could be decisive in determining the election outcome.
+Since the electoral college system makes state-level forecasts crucial, and the U.S. operates under a predominantly two-party system, the focus of election predictions should be on battleground states. While many states are strongly aligned with either the Democratic or Republican party, a handful of key battleground states—where neither party has overwhelming dominance—will likely determine the overall outcome of the election. These battleground states, often evenly split in voter sentiment, hold immense significance because their electoral votes can swing the election in favor of one candidate or the other. The results of our model underscore the critical role that these battleground states will play in the 2024 election. Although many states are predictably stable due to their party loyalty, it is the six battleground states that will serve as the main arena for competition. In these states, where voter preferences are not as firmly entrenched, even minor shifts in public opinion or turnout could lead to vastly different outcomes. As a result, a comprehensive and precise prediction of voting behavior in these battleground states is far more important than in states where the result is a foregone conclusion.
 
 ## Model Performance {#sec-model-performance}
 
-Placeholder - The logistic regression model used in this analysis successfully captures the relationship between polling percentages and the likelihood of a candidate winning a state. The coefficients for the predictor variables (polling percentages for Trump and Harris) indicate a strong relationship between candidate support and the probability of winning. The model outputs probabilities for each state, which are useful for gauging the certainty of predictions, especially in closely contested states. The model’s performance is reinforced by the robustness of the results in states where one candidate has a clear polling lead, providing accurate predictions. However, states with narrower margins reflect greater uncertainty, which is critical in understanding election dynamics. Convergence diagnostics and model checking were conducted to ensure reliable estimates, with further details and alternative models provided in [Appendix -@sec-model-details].
+Out-of-sample testing results [Appendix -@sec-model-diagnostics] demonstrate the effectiveness and reliability of our Bayesian logistic regression model in predicting state-level outcomes for the 2024 U.S. presidential election. Our accuracy test generated a 75% score for the model, indicating our model's high reliability for making predictions about state-level election outcomes. Since presidential elections hinge on state-level wins, a reliable state-by-state prediction would imply a reliable national outcome prediction. 
+
+The RMSE value generated for our model is 0.5, which indicates that the model-predicted probabilities are close to the true outcomes. The confusion matrix breaks down the model’s predictions into four categories: 1. correctly predicted Trump wins, 2. correctly predicted Harris wins, 3. Incorrectly predicted Trump wins, 4. Incorrectly predicted Harris wins. The generated confusion matrix for our model all had values of 0 to 2 for all four categories, indicating a balanced prediction between the two candidates, and suggesting the reliability of our model. Out-of-sample testing was conducted to test the reliability of our model, with further details provided in [Apppendix -@sec-model-diagnostics]. 
 
 ## Weaknesses and Next Steps
 
-Placeholder - Despite the model's predictive power, there are several weaknesses that should be noted. First, polling data itself is prone to biases, such as underrepresentation of certain demographic groups or inaccuracies in sampling. These issues can distort the predictions, particularly in states with fewer or lower-quality polls. Additionally, voter turnout and last-minute shifts in public opinion are not accounted for, which can significantly alter the outcome, especially in close races. The model also assumes that polling percentages directly translate to votes, overlooking other factors like voter mobilization efforts and campaign dynamics that may influence election outcomes.
+While our model provides valuable insights into the electoral landscape, it faces limitations due to missing data for certain states, which results in some states being left blank in our predictions. Although our primary focus is on understanding the dynamics within battleground states, the lack of information from other states can lead to incomplete predictions which may obscure broader trends affecting voter sentiment.
 
-Placeholder - To improve the accuracy and reliability of election forecasts, future iterations of the model could incorporate additional variables beyond polling data. Factors such as voter turnout models, economic conditions, and social media sentiment analysis may provide a more holistic view of voter behavior. Additionally, real-time polling data integration could allow for dynamic updates to predictions as the election nears, improving the timeliness and accuracy of forecasts. Moreover, regional adjustments to account for differences in polling methodology or demographic shifts would help to address some of the biases inherent in polling data. Expanding the model to include these aspects would offer a more comprehensive understanding of the election landscape and enhance the precision of predictions.
+To address these weaknesses and improve the prediction, we propose several next steps: actively seeking additional data sources to fill gaps, including polling data and historical records; conducting sensitivity analyses to understand the impact of missing data on predictions; and analyzing existing trends within battleground states for more insights. Another weakness of our model is the lack of consideration for the national vote, which may impact our election predictions. The national vote refers to the total number of votes cast by citizens across the country during an election, representing the support for each presidential candidate. Although the national vote does not directly determine the outcome of the election due to the Electoral College system, it can still provide valuable insights into voter sentiment and trends. By not considering the national vote into our analysis, we risk missing potential influences on voting behavior and electoral outcomes.
+
 
 \newpage
 
@@ -251,13 +254,12 @@ Placeholder - To improve the accuracy and reliability of election forecasts, fut
 
 # Appendix {-}
 
-# Additional data details
+# Additional Data Details
 It is important to note that several states remain uncolored (in gray), indicating missing or incomplete polling data for those states. These uncolored states reflect the absence of reliable or sufficient polling information required for an accurate prediction. This underscores the limitations of the data used in the model, where predictions are only made for states with adequate polling coverage. As a result, certain regions lack predictions, which could be addressed by including more comprehensive polling data in future analyses.
-
 
 # Model details {#sec-model-details}
 
-## Diagnostics
+## Diagnostics {#-sec-model-diagnostics}
 
 Out-of-sample testing was conducted to test our model’s reliability in predicting potential presidential election outcomes. We train our model on a training set of our data and then test its performance on the test set of our data, we evaluate how well the model generalizes to new data that it was not trained on. This process helps reveal whether the model is overfitting to the training data or truly capturing the underlying patterns that apply more broadly. The test produces an accuracy score, RMSE, and a confusion matrix, each measuring different aspects of the model’s prediction. Accuracy is the proportion of correctly predicted outcomes compared to the total number of predictions made in the test set. 
 
@@ -294,20 +296,82 @@ test_pred_binary <- ifelse(colMeans(test_predictions) > 0.5, 1, 0)
 # Calculate accuracy
 accuracy <- mean(test_pred_binary == test_data$winner)
 accuracy_message <- paste("Test Accuracy: ", round(accuracy * 100, 2), "%")
-print(accuracy_message)
+
 
 # Optionally, calculate RMSE
 rmse_value <- sqrt(mean((test_pred_binary - test_data$winner)^2))
 rmse_message <- paste("Test RMSE: ", round(rmse_value, 4))
-print(rmse_message)
+
 
 # Confusion Matrix for additional diagnostics
 conf_matrix <- table(Predicted = test_pred_binary, Actual = test_data$winner)
-print(conf_matrix)
+
 
 ```
 
-Our accuracy test generated a 75% score for the model, which means that our model is quite reliable for making predictions about state-level election outcomes. Since presidential elections hinge on state-level wins, a reliable state-by-state prediction would imply a reliable national outcome prediction. The RMSE value generated for our model is 0.5, which indicates that the model-predicted probabilities are close to the true outcomes. The confusion matrix breaks down the model’s predictions into four categories: 1. correctly predicted Trump wins, 2. correctly predicted Harris wins, 3. Incorrectly predicted Trump wins, 4. Incorrectly predicted Harris wins. The generated confusion matrix for our model all had values of 0 to 2 for all four categories, indicating a balanced prediction between the two candidates, and suggesting the reliability of our model.
+[@barplot-diagnostics] displays the performance of the Bayesian logistic regression model used to predict the outcome of the 2024 presidential election. The model's accuracy is approximately 75%, indicating that 75% of the test set's state-level outcomes were correctly predicted. The RMSE (Root Mean Squared Error) is about 0.5, showing the average error in predicting the winning candidate across states. This suggests the model performs reasonably well, but there is some error in predicting the exact outcome in certain states, which may be due to variations in polling data or other unaccounted factors.
+
+```{r}
+#| label: barplot-diagnostics
+#| fig-cap: "Model: Diagnostics: Accuracy and RMSE"
+#| echo: false
+#| warning: false
+#| message: false
+#| cache: false
+
+# Visualizing the RMSE and accuracy in a plot
+accuracy_rmse_df <- data.frame(
+  Metric = c("Accuracy", "RMSE"),
+  Value = c(accuracy, rmse_value)
+)
+
+# Visualizing the RMSE and accuracy in a plot with skinnier bars
+ggplot(accuracy_rmse_df, aes(x = Metric, y = Value)) +
+  geom_bar(stat = "identity", fill = "steelblue", width = 0.2) +  # Adjusted width for skinnier bars
+  labs(y = "Value") +
+  theme_light()
+
+
+```
+[@tbl-confusion-matrix] displays the model's predictive performance in distinguishing between state-level wins for Trump (coded as 1) and Harris (coded as 0). In this case, the model correctly predicted 12 Harris wins and 15 Trump wins (true positives and true negatives). However, there were 5 instances where the model incorrectly predicted a Trump win when Harris won (false positives), and 3 instances where it predicted a Harris win when Trump won (false negatives). This breakdown helps assess not only the overall accuracy but also how well the model distinguishes between close contests in different states, which is critical for predicting the outcome of the 2024 presidential election.
+
+```{r}
+#| echo: false
+#| eval: true
+#| label: tbl-confusion-matrix
+#| tbl-cap: "Confusion Matrix of Test Predictions"
+#| warning: false
+
+
+# Visualizing the confusion matrix as a table
+library(knitr)
+kable(conf_matrix)
+
+```
+
+
+# Pollster Methodology Overview and Evaluation
+
+The following information about the Siena College/New York Times poll methodology is based on the details provided in [@nyt-siena-methodology].
+
+The Siena College/New York Times poll for the 2024 presidential election uses a robust sampling approach to ensure accuracy and representativeness. The poll applies a stratified dual-frame sample, drawing from both landlines and cell phones. Each poll is conducted by phone using live interviewers at call centers based in Florida, New York, South Carolina, Texas, and Virginia. The sampling population is all registered voters who live in the six battleground states: Arizona, Georgia, Michigan, Nevada, Pennsylvania, and Wisconsin. Given the nature of the presidential elections, the decision is based on the electoral college instead of the popular vote, thus the pollster focuses on polling on the states that are likeliest to decide the outcome of the race. The voters’ information is taken from the L-2 voter file, which includes details such as voter registration and history of participation in previous elections. 
+
+To refine their sample, Siena College adjusts the data by key demographic and political variables such as region, race/ethnicity, party affiliation, education, and voting patterns from the 2020 election. These adjustments help ensure the sample accurately represents the electorate. Additionally, they use a “likely voter screen,” which combines self-reported likelihood of voting with historical voter behavior to estimate how likely respondents are to vote in the upcoming election. At every step of the survey, Sienna/NYT uses the information in the datasets to try to ensure that they have the right number of Democrats and Republicans, young people and old people, the right ratio of people with different income levels, and a diverse mix of different races and regions. Once the survey is complete, they compare their respondents to the voter file and use a process known as weighting to ensure that the sample reflects the broader voting population. This combination of historical data and weighted adjustments ensures the poll is designed to predict election outcomes as accurately as possible.
+
+The New York Times/Siena College pollsters handle non-response by using weighting and adjusting their sample to correct for any biases that might emerge due to individuals not responding. Specifically, they adjust on multiple demographic and political variables such as age, gender, education, race/ethnicity, and party affiliation. They also account for variations in voter likelihood and previous voting patterns, ensuring that the sample represents the likely electorate as accurately as possible. This helps reduce the potential bias from non-response, especially since certain demographic groups or political affiliations may be less likely to respond to polls. By rebalancing the sample, they ensure that even if some groups have lower response rates, their representation in the final poll results aligns with what is expected based on historical trends and current voter enthusiasm.
+
+# Idealized Methodology
+To represent our idealized methodology, we generated a survey on the 2024 US Presidential election, which can be accessed via [@US-election-survey]. 
+
+## Sampling Approach
+
+Using data from voter files, which contain demographic information about registered voters, we aim to ensure that our sample accurately represents the population. To achieve this, we will use stratified random sampling. Given the importance of state-level forecasts due to the Electoral College system, we will first stratify by state. Within each state, we will apply stratified sampling again, dividing the population into 6 groups and selecting 100 random samples from each stratum within those groups, ensuring our sample captures key demographic critical for predicting voter behavior. The groups and their respective strata include age groups (18-29, 30-44, 45-64, and 65+), gender (Male, Female, and Other), and race/ethnicity (White, Black, Latino, Asian, and Other). Additionally, household status will be categorized as either renting or owning, with home ownership serving as a proxy for wealth. Voting history will be classified into those who voted in the previous election and non-voters, while party registration will include Democrats, Republicans, and Independents. 
+
+For recruiting participants, we will begin by sending survey invitations to our selected voters via email, offering a $20 incentive to encourage participation. To improve response rates and reduce non-response bias, we will send a reminder email three days later. This approach helps minimize labor costs to some extent. If we do not receive a response within a week(7 days), we will follow up by phone to reach those who did not respond to the email invitation.
+
+## Data Validation
+
+After completing the survey, we will adjust the data through weighting to ensure the sample accurately reflects the broader population for predictive purposes. More weight will be assigned proportionally to each stratum based on its size, and additional weight will be given to respondents from strata that are less likely to participate in surveys. And to avoid duplicate responses, each voter will be assigned a unique ID with only the first response from each ID being retained. To ensure the selected voters are completing the survey correctly, we will  track responses in real-time using a centralized system. Additionally, we will include validation questions in the survey to catch careless or fraudulent responses.
 
 \newpage
 
