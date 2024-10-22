@@ -260,7 +260,6 @@ Placeholder
 # Model details {#sec-model-details}
 
 ## Diagnostics {#sec-model-diagnostics}
-
 Out-of-sample testing was conducted to test our model’s reliability in predicting potential presidential election outcomes. We train our model on a training set of our data and then test its performance on the test set of our data, we evaluate how well the model generalizes to new data that it was not trained on. This process helps reveal whether the model is overfitting to the training data or truly capturing the underlying patterns that apply more broadly. The test produces an accuracy score, RMSE, and a confusion matrix, each measuring different aspects of the model’s prediction. Accuracy is the proportion of correctly predicted outcomes compared to the total number of predictions made in the test set. 
 
 ```{r}
@@ -310,6 +309,7 @@ colnames(conf_matrix) <- c("Actual 0 (Harris)", "Actual 1 (Trump)")
 
 ```
 
+### Model Diagnostics Result
 [@fig-barplot-diagnostics] displays the performance of the Bayesian logistic regression model used to predict the outcome of the 2024 presidential election. The model's accuracy is approximately 75%, indicating that 75% of the test set's state-level outcomes were correctly predicted. The RMSE (Root Mean Squared Error) is about 0.5, showing the average error in predicting the winning candidate across states. This suggests the model performs reasonably well, but there is some error in predicting the exact outcome in certain states, which may be due to variations in polling data or other unaccounted factors.
 
 ```{r}
@@ -334,7 +334,7 @@ ggplot(accuracy_rmse_df, aes(x = Metric, y = Value)) +
 
 
 ```
-
+### Confusion Matrix
 [@tbl-confusion-matrix] displays the model's predictive performance in distinguishing between state-level wins for Trump (coded as 1) and Harris (coded as 0). In this case, the model correctly predicted 12 Harris wins and 15 Trump wins (true positives and true negatives). However, there were 5 instances where the model incorrectly predicted a Trump win when Harris won (false positives), and 3 instances where it predicted a Harris win when Trump won (false negatives). This breakdown helps assess not only the overall accuracy but also how well the model distinguishes between close contests in different states, which is critical for predicting the outcome of the 2024 presidential election.
 
 ```{r}
