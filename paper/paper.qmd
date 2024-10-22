@@ -226,6 +226,7 @@ summary_table <- state_average %>%
 
 knitr::kable(summary_table, escape = TRUE)
 ```
+
 The results of our predictive model suggest that Donald Trump is likely to win key states such as Florida, Missouri, and Montana, while Kamala Harris is expected to secure victories in states like Michigan, Virginia, and Pennsylvania. Close contests are predicted in battleground states like Nevada and North Carolina, where Trump holds a slight edge. 
 
 # Discussion {#sec-discussion}
@@ -255,6 +256,7 @@ To address these weaknesses and improve the prediction, we propose several next 
 
 # Additional Data Details
 Given the nature of the presidential election, the electoral college is more impactful and influential on the possible outcome compared to the nationwide popular votes. Therefore, the majority of the pollsters choose to focus on the battleground states to perform their polling, to gain more insight into the public sentiment specific to certain states. For instance, Sienna/NYT mentions that they have in-state interviewers who call their respondents in states such as Arizona, Georgia, Michigan, Nevada, Pennsylvania, and Wisconsin. This could explain the discrepancies in our dataset, where there are many missing values from states other than the battleground ones. Furthermore, many pollsters focus on state-wide polls instead of nationwide polls given the nature of the election, resulting in fewer data points or missing data for nationwide poll results. Even though the national popular vote and the results in the electoral college don’t line up a lot of the time, the popular votes can still provide information about issues and opinions that are shaping the election as a whole. Therefore, even if we are focusing on selective states, results from other states and popular votes still remain relevant to outcome prediction. 
+Additionally, during our data cleaning process, we added constraints of high numeric grades as well as high transparency scores which led to fewer data points for us to build the model on. For example, for the state of Colorado, when we set the transparency score to higher than 5, and the numeric grade to larger and equal to 3, there are no data points for Kamala Harris. This is represented by the empty row in [@fig-averagetable].  		
 
 # Model details {#sec-model-details}
 
