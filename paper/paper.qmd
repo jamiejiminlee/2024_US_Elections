@@ -237,9 +237,9 @@ Since the electoral college system makes state-level forecasts crucial, and the 
 
 ## Model Performance {#sec-model-performance}
 
-Out-of-sample testing results [Appendix -@sec-model-diagnostics] demonstrate the effectiveness and reliability of our Bayesian logistic regression model in predicting state-level outcomes for the 2024 U.S. presidential election. Our accuracy test generated a 75% score for the model, indicating our model's high reliability for making predictions about state-level election outcomes. Since presidential elections hinge on state-level wins, a reliable state-by-state prediction would imply a reliable national outcome prediction. 
+Out-of-sample testing results [Appendix @sec-model-diagnostics] demonstrate the effectiveness and reliability of our Bayesian logistic regression model in predicting state-level outcomes for the 2024 U.S. presidential election. Our accuracy test generated a 75% score for the model, indicating our model's high reliability for making predictions about state-level election outcomes. Since presidential elections hinge on state-level wins, a reliable state-by-state prediction would imply a reliable national outcome prediction. 
 
-The RMSE value generated for our model is 0.5, which indicates that the model-predicted probabilities are close to the true outcomes. The confusion matrix breaks down the model’s predictions into four categories: 1. correctly predicted Trump wins, 2. correctly predicted Harris wins, 3. Incorrectly predicted Trump wins, 4. Incorrectly predicted Harris wins. The generated confusion matrix for our model all had values of 0 to 2 for all four categories, indicating a balanced prediction between the two candidates, and suggesting the reliability of our model. Out-of-sample testing was conducted to test the reliability of our model, with further details provided in [Apppendix -@sec-model-diagnostics]. 
+The RMSE value generated for our model is 0.5, which indicates that the model-predicted probabilities are close to the true outcomes. The confusion matrix breaks down the model’s predictions into four categories: 1. correctly predicted Trump wins, 2. correctly predicted Harris wins, 3. Incorrectly predicted Trump wins, 4. Incorrectly predicted Harris wins. The generated confusion matrix for our model all had values of 0 to 2 for all four categories, indicating a balanced prediction between the two candidates, and suggesting the reliability of our model. Out-of-sample testing was conducted to test the reliability of our model, with further details provided in [Apppendix @sec-model-diagnostics]. 
 
 ## Weaknesses and Next Steps
 
@@ -259,7 +259,7 @@ It is important to note that several states remain uncolored (in gray), indicati
 
 # Model details {#sec-model-details}
 
-## Diagnostics {#-sec-model-diagnostics}
+## Diagnostics {#sec-model-diagnostics}
 
 Out-of-sample testing was conducted to test our model’s reliability in predicting potential presidential election outcomes. We train our model on a training set of our data and then test its performance on the test set of our data, we evaluate how well the model generalizes to new data that it was not trained on. This process helps reveal whether the model is overfitting to the training data or truly capturing the underlying patterns that apply more broadly. The test produces an accuracy score, RMSE, and a confusion matrix, each measuring different aspects of the model’s prediction. Accuracy is the proportion of correctly predicted outcomes compared to the total number of predictions made in the test set. 
 
@@ -305,16 +305,18 @@ rmse_message <- paste("Test RMSE: ", round(rmse_value, 4))
 
 # Confusion Matrix for additional diagnostics
 conf_matrix <- table(Predicted = test_pred_binary, Actual = test_data$winner)
+rownames(conf_matrix) <- c("Predicted 0 (Harris)", "Predicted 1 (Trump)")
+colnames(conf_matrix) <- c("Actual 0 (Harris)", "Actual 1 (Trump)")
 
 
 ```
 
-[@barplot-diagnostics] displays the performance of the Bayesian logistic regression model used to predict the outcome of the 2024 presidential election. The model's accuracy is approximately 75%, indicating that 75% of the test set's state-level outcomes were correctly predicted. The RMSE (Root Mean Squared Error) is about 0.5, showing the average error in predicting the winning candidate across states. This suggests the model performs reasonably well, but there is some error in predicting the exact outcome in certain states, which may be due to variations in polling data or other unaccounted factors.
+[@fig-barplot-diagnostics] displays the performance of the Bayesian logistic regression model used to predict the outcome of the 2024 presidential election. The model's accuracy is approximately 75%, indicating that 75% of the test set's state-level outcomes were correctly predicted. The RMSE (Root Mean Squared Error) is about 0.5, showing the average error in predicting the winning candidate across states. This suggests the model performs reasonably well, but there is some error in predicting the exact outcome in certain states, which may be due to variations in polling data or other unaccounted factors.
 
 ```{r}
 #| echo: false
 #| eval: true
-#| label: barplot-diagnostics
+#| label: fig-barplot-diagnostics
 #| fig-cap: "Model: Diagnostics: Accuracy and RMSE"
 #| warning: false
 #| message: false
@@ -362,7 +364,7 @@ The New York Times/Siena College pollsters handle non-response by using weightin
 
 # Idealized Methodology
 
-Building on our discussion of the New York Times/Siena College Poll, we now present an idealized methodology that aims to enhance the accuracy and reliability of our predictions. This approach incorporates best practices and innovative techniques to ensure a comprehensive prediction of voter behavior in the upcoming 2024 U.S. presidential election. To represent our idealized methodology, we generated a survey on the 2024 US Presidential election, which can be accessed via [@US-election-survey]. 
+Building on our discussion of the New York Times/Siena College Poll, we now present an idealized methodology that aims to enhance the accuracy and reliability of our predictions. This approach incorporates best practices and innovative techniques to ensure a comprehensive prediction of voter behavior in the upcoming 2024 U.S. presidential election. To represent our idealized methodology, we generated a survey on the 2024 US Presidential election, which can be accessed via the following url: https://docs.google.com/forms/d/1S6aN5Q82orjKYJI4i7001sPyn5jhRkgNIkI9teiQq_o/edit [@US-election-survey]. 
 
 ## Sampling Approach
 
