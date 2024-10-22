@@ -312,12 +312,12 @@ conf_matrix <- table(Predicted = test_pred_binary, Actual = test_data$winner)
 [@barplot-diagnostics] displays the performance of the Bayesian logistic regression model used to predict the outcome of the 2024 presidential election. The model's accuracy is approximately 75%, indicating that 75% of the test set's state-level outcomes were correctly predicted. The RMSE (Root Mean Squared Error) is about 0.5, showing the average error in predicting the winning candidate across states. This suggests the model performs reasonably well, but there is some error in predicting the exact outcome in certain states, which may be due to variations in polling data or other unaccounted factors.
 
 ```{r}
+#| echo: false
+#| eval: true
 #| label: barplot-diagnostics
 #| fig-cap: "Model: Diagnostics: Accuracy and RMSE"
-#| echo: false
 #| warning: false
 #| message: false
-#| cache: false
 
 # Visualizing the RMSE and accuracy in a plot
 accuracy_rmse_df <- data.frame(
@@ -361,13 +361,14 @@ To refine their sample, Siena College adjusts the data by key demographic and po
 The New York Times/Siena College pollsters handle non-response by using weighting and adjusting their sample to correct for any biases that might emerge due to individuals not responding. Specifically, they adjust on multiple demographic and political variables such as age, gender, education, race/ethnicity, and party affiliation. They also account for variations in voter likelihood and previous voting patterns, ensuring that the sample represents the likely electorate as accurately as possible. This helps reduce the potential bias from non-response, especially since certain demographic groups or political affiliations may be less likely to respond to polls. By rebalancing the sample, they ensure that even if some groups have lower response rates, their representation in the final poll results aligns with what is expected based on historical trends and current voter enthusiasm.
 
 # Idealized Methodology
-To represent our idealized methodology, we generated a survey on the 2024 US Presidential election, which can be accessed via [@US-election-survey]. 
+
+Building on our discussion of the New York Times/Siena College Poll, we now present an idealized methodology that aims to enhance the accuracy and reliability of our predictions. This approach incorporates best practices and innovative techniques to ensure a comprehensive prediction of voter behavior in the upcoming 2024 U.S. presidential election. To represent our idealized methodology, we generated a survey on the 2024 US Presidential election, which can be accessed via [@US-election-survey]. 
 
 ## Sampling Approach
 
 Using data from voter files, which contain demographic information about registered voters, we aim to ensure that our sample accurately represents the population. To achieve this, we will use stratified random sampling. Given the importance of state-level forecasts due to the Electoral College system, we will first stratify by state. Within each state, we will apply stratified sampling again, dividing the population into 6 groups and selecting 100 random samples from each stratum within those groups, ensuring our sample captures key demographic critical for predicting voter behavior. The groups and their respective strata include age groups (18-29, 30-44, 45-64, and 65+), gender (Male, Female, and Other), and race/ethnicity (White, Black, Latino, Asian, and Other). Additionally, household status will be categorized as either renting or owning, with home ownership serving as a proxy for wealth. Voting history will be classified into those who voted in the previous election and non-voters, while party registration will include Democrats, Republicans, and Independents. 
 
-For recruiting participants, we will begin by sending survey invitations to our selected voters via email, offering a $20 incentive to encourage participation. To improve response rates and reduce non-response bias, we will send a reminder email three days later. This approach helps minimize labor costs to some extent. If we do not receive a response within a week(7 days), we will follow up by phone to reach those who did not respond to the email invitation.
+For recruiting participants, we will begin by sending survey invitations to our selected voters via email, offering a $20 incentive to encourage participation. To improve response rates and reduce non-response bias, we will send a reminder email three days later. This approach helps minimize labor costs to some extent. If we do not receive a response within a week (7 days), we will follow up by phone to reach those who did not respond to the email invitation.
 
 ## Data Validation
 
