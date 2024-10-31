@@ -1,4 +1,4 @@
-# Forecasting the 2024 US Presidential Election: Trump vs. Harris
+# Forecasting the 2024 US Presidential Election: Harris vs. Trump
 
 ## Overview
 
@@ -18,4 +18,4 @@ The repo is structured as:
 
 ## Statement on LLM usage
 
-Aspects of the code were written with the help of the auto-complete tool, ChatGPT. The abstract and introduction were written with the help of ChatGPT and the entire chat history is available in inputs/llms/usage.txt.
+Aspects of the code were written with the assistance of ChatGPT. The data cleaning and modelling scripts were written with the help of ChatGPT and the entire chat history is available in inputs/llms/usage.txt.
