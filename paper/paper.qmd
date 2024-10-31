@@ -1,5 +1,6 @@
 ---
-title: "Forecasting the 2024 Election: Trump Dominates the South, Harris Leads in the Midwest"
+title: "Predicting a Trump Victory: A State-Level Analysis of the 2024 US Presidential Election Using Bayesian Modeling"
+subtitle: "State-by-State Insights on Voter Dynamics Favoring Trump Over Harris in Key Battlgrounds"
 author: 
   - Jimin Lee
   - Sarah Ding
@@ -7,7 +8,7 @@ author:
 thanks: "Code and data are available at: [https://github.com/jamiejiminlee/2024_US_Elections.git](https://github.com/jamiejiminlee/2024_US_Elections.git)."
 date: today
 date-format: long
-abstract: "This paper presents a predictive model for the 2024 United States Presidential Election using state-level polling data. By aggregating high-quality polls, we predict the likely winner between Donald Trump and Kamala Harris in each state. A logistic regression model estimates the probability of Trump winning, with polling percentages as predictor variables. The model’s results highlight key battleground states and offer insights into voter dynamics, while also reflecting on the limitations of polling data in forecasting political outcomes."
+abstract: "This paper presents a predictive model for the 2024 United States Presidential Election using state-level polling data. By aggregating high-quality polls, we predict the likely winner between Donald Trump and Kamala Harris in each state. A logistic regression model estimates the probability of Trump winning, with polling percentages as predictor variables. The model’s results highlight key battleground states and offer insights into voter dynamics, while also reflecting on the limitations of polling data in forecasting political outcomes. Our findings suggest that Trump holds an adantage in critical swing states, positinoning him as the likely winner of the election."
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -24,10 +25,8 @@ library(janitor)
 library(lubridate)
 library(modelsummary)
 library(rstanarm)
-library(readr)
-library(dplyr)
-library(ggplot2)
 library(usmap)
+library(arrow)
 ```
 
 # Introduction {#sec-introduction}
@@ -39,6 +38,8 @@ The estimand in this study is the probability that Donald Trump or Kamala Harris
 Our model utilizes the Bayesian logistic regression model to predict election outcomes by comparing the average polling percentages for Trump and Harris in each state. The results highlight the geographic distribution of support, with some states clearly favoring one candidate over the other. Swing states emerge as critical battlegrounds, where polling percentages are closely contested and could influence the final election result.
 
 Accurate election predictions provide valuable insights into voter dynamics and help political analysts, campaigns, and the public anticipate electoral outcomes. By focusing on high-quality polling data, our model improves the reliability of predictions and highlights key regions where voter sentiment may shift, ultimately affecting the election.
+
+The results of our model predict a victory for Donald Trump in the 2024 U.S. Presidential Election. Key battleground states, such as Florida, Ohio, and North Carolina, lean toward Trump, emphasizing his advantage in critical regions. Our analysis points to Trump as the probable winner, with swing states playing a decisive role in determining the final outcome.
 
 The remainder of this paper is structured as follows. In [@sec-data], we describe the data and variables used in the analysis. [@sec-model] outlines the model setup and estimation strategy. [@sec-results] presents the results, including the predicted election outcomes and visualizations. Finally, [@sec-discussion] discusses the implications and limitations of our findings.
 
@@ -69,7 +70,7 @@ The outcome variable in our analysis is the binary variable winner, which repres
 #| message: false
 
 # Load cleaned data
-clean_poll_data <- read_csv("/Users/jamielee/2024_US_Elections/data/02-analysis_data/analysis_data.csv")
+clean_poll_data <- read_parquet("/Users/jamielee/2024_US_Elections/data/02-analysis_data/analysis_data.parquet")
 
 # Aggregating polling percentages for Trump and Harris by state
 state_average <- clean_poll_data %>%
@@ -84,8 +85,13 @@ state_average <- state_average |>
   mutate(winner = ifelse(Trump_pct > Harris_pct, 1, 0))
 
 average_table <- state_average |>
-  select(state, Trump_pct, Harris_pct, winner) |>
-  mutate(predicted_winner = ifelse(winner == 1, "Trump", "Harris"))
+  select(
+    State = state, 
+    Trump = Trump_pct, 
+    Harris = Harris_pct, 
+    Winner = winner
+    ) |>
+  mutate(Winner = ifelse(Winner == 1, "Trump", "Harris"))
 
 # Render the simplest possible table
 knitr::kable(average_table)
@@ -111,10 +117,14 @@ stateaverage_long <- state_average %>%
                names_to = "candidate",
                values_to = "support_pct")
 
-ggplot(stateaverage_long, aes(x=reorder(state, -support_pct), y= support_pct, fill = candidate)) + 
+ggplot(stateaverage_long, aes(x = reorder(state, -support_pct), y = support_pct, fill = candidate)) + 
   geom_bar(stat = "identity", position = position_dodge(width = 0.8), color = "black") +
   labs(x = "State", y = "Average Percentage") +
-  scale_fill_manual(name = "Candidate", values = c("Trump_pct" = "red", "Harris_pct" = "blue")) +
+  scale_fill_manual(
+    name = "Candidate", 
+    values = c("Trump_pct" = "red", "Harris_pct" = "blue"),
+    labels = c("Trump_pct" = "Trump", "Harris_pct" = "Harris")
+  ) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
@@ -225,7 +235,9 @@ summary_table <- state_average %>%
 knitr::kable(summary_table, escape = TRUE)
 ```
 
-The results of our predictive model suggest that Donald Trump is likely to win key states such as Florida, Missouri, and Montana, while Kamala Harris is expected to secure victories in states like Michigan, Virginia, and Pennsylvania. Close contests are predicted in battleground states like Nevada and North Carolina, where Trump holds a slight edge. 
+The predictive model forecasts Donald Trump as the likely winner of the 2024 U.S. Presidential Election. By analyzing state-level polling data through a Bayesian logistic regression model, the study estimates the probability of Trump or Kamala Harris winning in each state. The model identifies a significant geographic split in voter support: Trump is expected to dominate in southern and midwestern states, where his polling percentages consistently surpass those of Harris. Key states projected to favor Trump include Florida, Georgia, and Ohio, which are pivotal in securing an Electoral College majority. Harris, on the other hand, holds stronger polling percentages in East Coast states and parts of the Midwest, yet these leads appear insufficient to overcome Trump’s advantage across the broader landscape of competitive states.
+
+In particular, battleground states show varied support but lean overall toward Trump, reflecting his edge in areas like Arizona, Nevada, and North Carolina. By aggregating high-quality polls filtered for transparency and reliability, the model underscores Trump’s stable base in regions that carry substantial electoral weight. The predictions suggest that while Harris may perform well in several Democratic strongholds, Trump’s consistent support across critical swing states positions him as the probable victor in the upcoming election.
 
 # Discussion {#sec-discussion}
 
@@ -260,7 +272,9 @@ Given the nature of the presidential election, the electoral college is more imp
 
 This could explain the discrepancies in our data, where there are many missing values from states other than the battleground ones. Furthermore, many pollsters focus on state-wide polls instead of nationwide polls given the nature of the election, resulting in fewer data points or missing data for nationwide poll results. Even though the national popular vote and the results in the electoral college don’t line up a lot of the time, the popular votes can still provide information about issues and opinions that are shaping the election as a whole. Therefore, even if we are focusing on selective states, results from other states and popular votes still remain relevant to outcome prediction. 
 
-Additionally, during our data cleaning process, we added constraints of high numeric grades as well as high transparency scores which led to fewer data points for us to build the model on. For example, for the state of Colorado, when we set the transparency score to higher than 5, and the numeric grade to larger and equal to 3, there are no data points for Kamala Harris. This is represented by the empty row in [@fig-averagetable].  		
+During our data cleaning process, we added constraints of high numeric grades and high transparency scores, leading to fewer data points for us to build the model on. A numeric grade is a numeric rating given to the pollster indicating their quality or reliability, with a highest rating of 3.0. The transparency score is a score reflecting the pollster’s transparency about their methodology where the highest score is 10. Therefore, to ensure high-quality and reliable data to build our model on, we filtered pollsters with numeric grades of 3.0 and transparency scores of 5 or higher. This is one of the reasons why there are no data points available for Kamala Harris for the state of Colorado, represented by the empty row @fig-averagetable. 
+
+Furthermore, in the full raw data set from 538 [@FiveThirtyEight], for the state of Colorado, even without any constraints for numeric grade or transparency scores, there are only 3 data points for Kamala Harris. After reviewing the datasets, we found that except for the 3 available data points, all the rest of the polls ended in June 2024, which is a month earlier than when Biden dropped out of the race before Harris entered the presidential election race. It would not be possible that there are data points available for Harris if she was not participating in the race yet. The state of Colorado is a blue state, with the Democrats winning the state in every presidential election since 2008. Since our paper focuses on mainly the battleground states to predict election outcomes, limited data from a blue state like Colorado would not be too influential on our results.    		
 
 # Model details {#sec-model-details}
 

@@ -11,8 +11,8 @@
 library(tidyverse)
 library(janitor)
 library(lubridate)
-library(readr)
-library(dplyr)
+library(arrow)
+
 
 #### Prepare Dataset ####
 clean_poll_data <- read_csv("data/01-raw_data/raw_data.csv") |>
@@ -24,10 +24,10 @@ clean_poll_data <- clean_poll_data |>
 
 # Filter data to Harris estimates based on high-quality polls after she declared
 clean_poll_data <- clean_poll_data |>
-  filter(numeric_grade >= 3, transparency_score > 5, candidate_name %in% c("Donald Trump", "Kamala Harris"))
+  filter(numeric_grade >= 2.7, transparency_score > 5, candidate_name %in% c("Donald Trump", "Kamala Harris"))
   
 head(clean_poll_data)
 
 #### Save data ####
-write_csv(clean_poll_data, "data/02-analysis_data/analysis_data.csv")
+write_parquet(clean_poll_data, "data/02-analysis_data/analysis_data.parquet")
 
