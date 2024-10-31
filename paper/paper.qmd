@@ -59,7 +59,7 @@ Therefore, to ensure the quality of the data, only polls from reputable pollster
 
 The outcome variable in our analysis is the binary variable winner, which represents the predicted winner of the 2024 US Presidential Election in each state. The value of winner is set to 1 if Donald Trump is predicted to win the state, and 0 if Kamala Harris is predicted to win. This binary outcome is determined by comparing the polling support for both candidates within each state. By setting up this binary variable, we aim to forecast which candidate will secure more votes in each state based on the aggregated polling data.
 
-@fig-averagetable provides an overview of the average support for Trump and Harris across all states, along with the predicted winner for each state based on our model. 
+[@fig-averagetable] provides an overview of the average support for Trump and Harris across all states, along with the predicted winner for each state based on our model. 
 
 ```{r}
 #| label: fig-averagetable
