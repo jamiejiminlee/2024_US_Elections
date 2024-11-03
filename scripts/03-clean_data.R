@@ -7,11 +7,11 @@
 # Pre-requisites: Downloaded data from url "https://projects.fivethirtyeight.com/polls/president-general/2024/national/"
 # Any other information needed? N/A
 
-
 # Load the necessary libraries
 library(tidyverse)
 library(janitor)
 library(lubridate)
+library(arrow)
 
 # Define battleground states
 battleground_states <- c("Arizona", "Georgia", "Michigan", "Nevada", 
@@ -23,20 +23,22 @@ poll_data <- read_csv("data/01-raw_data/raw_data.csv") |>
 
 # Filter and select relevant columns, including only battleground states
 clean_poll_data <- poll_data |>
-  select(state, end_date, pollster, numeric_grade, transparency_score, candidate_name, pct) |>
+  select(state, start_date, end_date, pollster, numeric_grade, transparency_score, candidate_name, pct) |>
   filter(
     !is.na(state),
     !is.na(numeric_grade),
     !is.na(transparency_score),
-    numeric_grade >= 3.0,          # numeric_grade threshold
+    numeric_grade >= 2.5,          # numeric_grade threshold
     transparency_score > 5,        # transparency_score threshold
     candidate_name %in% c("Donald Trump", "Kamala Harris"),
     state %in% battleground_states   # Filter to include only battleground states
   ) |>
   mutate(
+    start_date = as.Date(start_date, format = "%m/%d/%y"),
     end_date = as.Date(end_date, format = "%m/%d/%y"),
     end_date_num = as.numeric(end_date - min(end_date, na.rm = TRUE))
-  )
+  ) |>
+  filter(start_date > as.Date("2024-07-21"))  # Filter for start_date after July 21st
 
 # Replace "Nebraska CD-2" with "Nebraska" if it appears in the data
 clean_poll_data <- clean_poll_data |>
@@ -52,4 +54,4 @@ clean_poll_data <- clean_poll_data |>
 
 #### Save Data ####
 write_parquet(clean_poll_data, "data/02-analysis_data/analysis_data.parquet")
-print(clean_poll_data)
+

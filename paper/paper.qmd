@@ -32,6 +32,7 @@ library(Matrix)
 library(splines)
 library(kableExtra)
 library(broom.mixed)
+library(brms)
 ```
 
 
@@ -78,7 +79,7 @@ Once cleaned and weighted, data points are aggregated to determine overall candi
 To give an overview of the data, we provide summary statistics of the key variables, highlighting the characteristics of the polling support for each candidate across the battleground states.
 ```{r}
 #| label: fig-summarystatistics
-#| fig-cap: "Vertical Summary Statistics for Trump and Harris Polling Data. This table presents key summary statistics, including total polls, average support percentages, and the maximum and minimum polling levels for both candidates across the specified battleground states. All values are rounded to three decimal places, providing a concise overview of the polling landscape as of the selected election date."
+#| fig-cap: "Summary Statistics for Trump and Harris Polling Data. This table presents key summary statistics, including total polls, average support percentages, and the maximum and minimum polling levels for both candidates across the specified battleground states. All values are rounded to three decimal places, providing an overview of the polling landscape as of the selected election date."
 #| echo: false
 #| warning: false
 #| message: false
@@ -125,7 +126,8 @@ The predictive variables for this paper are each candidate’s support rate (‘
 
 ```{r}
 #| label: tbl-outcomevar
-#| fig-cap: "Average polling support percentages for Donald Trump and Kamala Harris across key battleground states. The table presents the average support levels, indicating Trump’s and Harris’s polling figures in states such as Wisconsin, North Carolina, Georgia, Arizona, Pennsylvania, Michigan, and Nevada. The comparative analysis highlights the varying levels of candidate support in these critical regions, providing insight into the electoral landscape ahead of the 2024 U.S. Presidential Election."
+#| fig-cap: "Summary of fixed effects estimates from the Bayesian hierarchical models for both Donald Trump and Kamala Harris. The table includes the estimated coefficients, standard errors, and 95% confidence intervals for each predictor, illustrating how various factors influence polling percentages. The significant intercept and time-related variables are crucial for understanding candidate support dynamics over the election period."
+
 #| echo: false
 #| warning: false
 #| message: false
@@ -284,7 +286,7 @@ EDIT - explain model summary table
 
 # Results {#sec-results}
 
-## State Level Support Trends Over Time
+## Polling Averages for Trump and Harris Over Time in Battleground States
 ```{r}
 #| echo: false
 #| eval: true
@@ -331,8 +333,6 @@ EDIT - explain results on graph
 
 
 ## Probability of Winning by State on Election Day 
-
-
 ```{r}
 #| echo: false
 #| eval: true
@@ -340,37 +340,48 @@ EDIT - explain results on graph
 #| fig-cap: "Probability of Trump Winning by State on Election Day."
 #| warning: false
 
-# Set election day or target prediction date
-election_day <- as.Date("2024-11-05")  # Example election day
+# Step 1: Prepare new data frame for November 5, 2024
+election_day <- as.Date("2024-11-05")
+min_date <- min(clean_poll_data$end_date, na.rm = TRUE)
+end_date_num_election <- as.numeric(election_day - min_date)
 
-# Predict probability of Trump and Harris winning by comparing posterior predictions for each state
-state_predictions <- clean_poll_data %>%
-  distinct(state) %>%
-  filter(state %in% battleground_states) %>%  # Only include battleground states
-  mutate(end_date = election_day, 
-         end_date_num = as.numeric(end_date - min(clean_poll_data$end_date)))
+# Create a data frame for predictions, one row per state
+new_data <- data.frame(
+  state = unique(clean_poll_data$state),
+  end_date_num = rep(end_date_num_election, length(unique(clean_poll_data$state)))
+)
 
-# Calculate probabilities of Trump and Harris winning in each state
+# Step 2: Generate predictions for both models
+trump_predictions <- posterior_predict(trump_model, newdata = new_data)
+harris_predictions <- posterior_predict(harris_model, newdata = new_data)
+
+# Step 3: Calculate winning percentages
+# Calculate mean predictions and convert to percentages
+trump_mean_pct <- apply(trump_predictions, 2, mean) * 100
+harris_mean_pct <- apply(harris_predictions, 2, mean) * 100
+
+# Combine results into a data frame
+state_predictions <- data.frame(
+  state = new_data$state,
+  trump_pct = trump_mean_pct,
+  harris_pct = harris_mean_pct
+)
+
+# Round the percentages to two decimal points
 state_predictions <- state_predictions %>%
-  rowwise() %>%
   mutate(
-    prob_trump_wins = mean(posterior_predict(trump_model, newdata = cur_data()) > 
-                           posterior_predict(harris_model, newdata = cur_data())),
-    prob_harris_wins = mean(posterior_predict(harris_model, newdata = cur_data()) > 
-                            posterior_predict(trump_model, newdata = cur_data()))
+    trump_pct = round(trump_pct, 2),
+    harris_pct = round(harris_pct, 2),
+    winner = ifelse(trump_pct > harris_pct, "Donald Trump", "Kamala Harris")
   )
 
-# Prepare the state predictions for the table
-state_summary_table <- state_predictions %>%
-  select(state, prob_trump_wins, prob_harris_wins) %>%
-  mutate(
-    prob_trump_wins = round(prob_trump_wins * 100, 2),  # Convert to percentage and round
-    prob_harris_wins = round(prob_harris_wins * 100, 2)  # Convert to percentage and round
-  )
-
-# Display state predictions in table
-knitr::kable(state_summary_table) %>%
-  kable_styling(full_width = FALSE, position = "center")
+# Print results in table
+kable(state_predictions, 
+      col.names = c("State", 
+                    "Predicted Harris Win (%)", 
+                    "Predicted Trump Win (%)", 
+                    "Predicted Winner")) %>%
+  kable_styling("striped", full_width = F)
 
 ```
 
@@ -385,27 +396,25 @@ EDIT - explain table results
 #| fig-cap: "Probability of Trump Winning by State on Election Day."
 #| warning: false
 
-# Reshape the data for plotting only for battleground states
-state_predictions_long <- state_predictions %>%
-  select(state, prob_trump_wins, prob_harris_wins) %>%
-  filter(state %in% battleground_states) %>%  # Ensure we're only working with battleground states
-  pivot_longer(cols = starts_with("prob"), 
-               names_to = "Candidate", 
-               values_to = "Probability") %>%
-  mutate(Candidate = recode(Candidate, 
-                            prob_trump_wins = "Trump", 
-                            prob_harris_wins = "Harris"))
+# Reshape the data for ggplot
+state_predictions_long <- predicted_results %>%
+  pivot_longer(cols = c(harris_pct, trump_pct), 
+               names_to = "candidate", 
+               values_to = "winning_probability") %>%
+  mutate(candidate = recode(candidate, 
+                            harris_pct = "Kamala Harris", 
+                            trump_pct = "Donald Trump"))
 
-# Plot double bar graph of predicted winning percentages by state
-ggplot(state_predictions_long, aes(x = reorder(state, Probability), y = Probability * 100, fill = Candidate)) +
-  geom_col(position = "dodge") +  # Use dodge for side-by-side bars
-  coord_flip() +  # Flip coordinates for better readability
-  scale_fill_manual(values = c("Trump" = "red", "Harris" = "blue")) +
-  labs(title = "Predicted Winning Percentages by Battleground State on Election Day", 
-       x = "State", 
-       y = "Winning Probability (%)") +
+# Create the bar chart
+ggplot(state_predictions_long, aes(x = state, y = winning_probability, fill = candidate)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  coord_flip() +  # Flip coordinates for horizontal bars
+  scale_fill_manual(values = c("blue", "red")) +  # Specify colors
+  labs(title = "Predicted Winning Percentages by Battleground State on Election Day",
+       x = "Winning Probability (%)",
+       y = "State") +
   theme_minimal() +
-  theme(legend.position = "right")
+  theme(legend.title = element_blank())  # Remove legend title
 
 ```
 EDIT - explain graph results
@@ -419,18 +428,20 @@ EDIT - explain graph results
 #| fig-cap: "Predicted Winner by Battleground State on Election Day."
 #| warning: false
 
-# Add predicted winner column based on `prob_trump_wins`
-state_predictions <- state_predictions %>%
-  filter(state %in% battleground_states) %>%  # Ensure we only include battleground states
-  mutate(predicted_winner = ifelse(prob_trump_wins > 0.5, "Trump", "Harris"))
+# Step 4: Plot the US map with predicted winner for each state
+# Convert state names to lowercase to match the map data
+state_predictions$state <- tolower(state_predictions$state)
 
-# Plot the US map with predicted winner for each state
-plot_usmap(data = state_predictions, values = "predicted_winner", regions = "states") +
-  scale_fill_manual(values = c("Trump" = "red", "Harris" = "blue")) +
-  labs(title = "Predicted Winner by Battleground State on Election Day", fill = "Predicted Winner") +
+# Create the map
+us_map <- plot_usmap(data = state_predictions, values = "winner", regions = "states") +
+  scale_fill_manual(values = c("Donald Trump" = "red", "Kamala Harris" = "blue", "NA" = "gray"), 
+                    na.value = "gray") +
+  labs(title = "Predicted Winner by Battleground State on Election Day", 
+       fill = "Predicted Winner") +
   theme(legend.position = "right")
 
-
+# Print the map
+print(us_map)
 ```
 
 EDIT - explain map results
