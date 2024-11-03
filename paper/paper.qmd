@@ -93,11 +93,12 @@ As our focus is to analyze and predict voter support for Kamala Harris and Donal
 
 To give an overview of the outcome variable, divided per candidate, we provide summary statistics of this key variable, highlighting the characteristics of the polling support for each candidate across the battleground states. 
 ```{r}
-#| label: tbl-outcomevar
-#| fig-cap: "Summary Statistics for Trump and Harris Polling Data - Presents key summary statistics, including total polls, average support percentages, and the maximum and minimum polling levels for both candidates across the specified battleground states. All values are rounded to three decimal places, providing an overview of the polling landscape as of the selected election date."
 #| echo: false
+#| eval: true
 #| warning: false
 #| message: false
+#| label: tbl-outcomevar
+#| fig-cap: "Summary Statistics for Trump and Harris Polling Data - Presents key summary statistics, including total polls, average support percentages, and the maximum and minimum polling levels for both candidates across the specified battleground states. All values are rounded to three decimal places, providing an overview of the polling landscape as of the selected election date."
 
 # Summary statistics for the relevant columns in clean_poll_data
 summary_statistics <- clean_poll_data %>%
@@ -134,6 +135,7 @@ It is important to note that since ‘pct’ stands for percentage, there may be
 The state variable indicates the U.S. state where the poll was conducted or targeted. In the context of the U.S. presidential election, the outcome is frequently determined by several key states. In the current 2024 election cycle, there are seven battleground states that are pivotal in the contest between Kamala Harris, representing the Democratic Party, and Donald Trump, representing the Republican Party. To enhance our model and refine our predictions, we focused exclusively on these seven battleground states. The polling results from each of these states play a crucial role in predicting electoral outcomes, as the percentage of support is evaluated on a state-by-state basis.
 ```{r}
 #| echo: false
+#| eval: true
 #| warning: false
 #| message: false
 #| label: fig-state-distribution
@@ -144,7 +146,6 @@ The state variable indicates the U.S. state where the poll was conducted or targ
 ggplot(clean_poll_data, aes(x = state)) +
   geom_bar(fill = "steelblue") +  # Bar plot with specified fill color
   labs(
-    title = "Distribution of State Variable in Polling Data",
     x = "State",
     y = "Count of Observations"
   ) +
@@ -160,6 +161,7 @@ The distribution of the state variable is visualized in @fig-state-distribution 
 Another predictive variable is 'end-date'
 ```{r}
 #| echo: false
+#| eval: true
 #| warning: false
 #| message: false
 #| label: fig-end-date-distribution
@@ -169,7 +171,6 @@ Another predictive variable is 'end-date'
 ggplot(clean_poll_data, aes(x = end_date)) +
   geom_histogram(binwidth = 5, fill = "steelblue", color = "white") +  # Histogram with specified binwidth
   labs(
-    title = "Distribution of Polling End Dates",
     x = "End Date",
     y = "Count of Polls"
   ) +
@@ -184,7 +185,7 @@ ggplot(clean_poll_data, aes(x = end_date)) +
 
 ### Other Variables
 
-'numeric grade'
+#### Numeric Grade
 ```{r}
 #| echo: false
 #| eval: true
@@ -203,7 +204,7 @@ ggplot(clean_poll_data, aes(x = numeric_grade)) +
 
 ```
 
-'transparency score'
+#### Transparency Score
 ```{r}
 #| echo: false
 #| eval: true
@@ -223,7 +224,7 @@ ggplot(clean_poll_data, aes(x = transparency_score)) +
 ```
 
 
-'pollster'
+#### Pollster
 ```{r}
 #| echo: false
 #| eval: true
@@ -237,14 +238,14 @@ ggplot(clean_poll_data, aes(x = factor(pollster))) +  # Convert to factor to ens
   geom_bar(fill = "purple") +
   labs(
        x = "Count of Polls",
-       y = "Pollster") +  # Notice the labels are switched for horizontal orientation
+       y = "Pollster") +  
   theme_minimal() +
-  coord_flip() +  # Flip the coordinates for a horizontal bar graph
-  theme(axis.text.y = element_text(angle = 0, hjust = 1))  # Adjust y-axis text if necessary
+  coord_flip() +  
+  theme(axis.text.y = element_text(angle = 0, hjust = 1))  
 ```
 
 
-'start_date'
+#### Start Date
 ```{r}
 #| echo: false
 #| eval: true
