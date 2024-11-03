@@ -134,7 +134,7 @@ It is important to note that since ‘pct’ stands for percentage, there may be
 
 ### Predictive Variables
 #### State
-The state variable indicates the U.S. state where the poll was conducted or targeted. In the context of the U.S. presidential election, the outcome is frequently determined by several key states. In the current 2024 election cycle, there are seven battleground states that are pivotal in the contest between Kamala Harris, representing the Democratic Party, and Donald Trump, representing the Republican Party. To enhance our model and refine our predictions, we focused exclusively on these seven battleground states. The polling results from each of these states play a crucial role in predicting electoral outcomes, as the percentage of support is evaluated on a state-by-state basis.
+One of the paper's predictive variables is the 'state' variable indicates the U.S. state where the poll was conducted or targeted. In the context of the U.S. presidential election, the outcome is frequently determined by several key states. In the current 2024 election cycle, there are seven battleground states that are pivotal in the contest between Kamala Harris, representing the Democratic Party, and Donald Trump, representing the Republican Party. To enhance our model and refine our predictions, we focused exclusively on these seven battleground states. The polling results from each of these states play a crucial role in predicting electoral outcomes, as the percentage of support is evaluated on a state-by-state basis.
 ```{r}
 #| echo: false
 #| eval: true
@@ -160,7 +160,7 @@ ggplot(clean_poll_data, aes(x = state)) +
 The distribution of the state variable is visualized in @fig-state-distribution and indicates that some states, such as Pennsylvania, North Carolina and Wisconsin have more polling observations compared to others, like Nevada. This variability reflects differences in polling frequency and interest among these battleground states. States with more polling observations provide a larger sample size, potentially leading to more stable and reliable predictions for those states in the model. 
 
 #### End Date
-Another predictive variable is 'end-date'
+The variable 'end_date' represents the date the poll ended, essentially the date the poll stopped collecting data from electorates. In the context of our paper, the end date of each poll serves as one of the predictive variables and is used to assess changes in voter support over time. Including end date as a variable in our model can help us identify patterns in voter support as Election Day approaches, potentially reflecting the impact of campaign events, debates, or other political developments. @fig-end-date-distribution displays the distribution of polling end dates from July 2024 to October 2024.
 ```{r}
 #| echo: false
 #| eval: true
@@ -184,9 +184,9 @@ ggplot(clean_poll_data, aes(x = end_date)) +
   )
 
 ```
+We filtered for the earliest end date as July 2024 since Harris officially announced her presidential campaign on July 21, 2024. Therefore, any polls that has an end date before July would not contain polling results for Harris. The data from [@FiveThirtyEight] is last updated on October 15, 2024, thus the latest end date being October 21, 2024. Furthermore, @fig-end-date-distribution also reveals that polling activity is not evenly distributed over time. There are clear peaks where the number of polls conducted is higher, notably in early September, late Semptember, as well as early October. This concentration of polls likely corresponds to period of heightened political interest or significant campaign events that prompt increased polling. 
 
 ### Other Variables
-
 #### Numeric Grade
 ```{r}
 #| echo: false
@@ -673,6 +673,6 @@ After completing the survey, we will adjust the data through weighting to ensure
 \newpage
 
 
-# References {sec-references}
+# References {#sec-references}
 
 
