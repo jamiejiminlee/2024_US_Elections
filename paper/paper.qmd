@@ -74,7 +74,6 @@ Each respondent’s answers and demographic details are grouped and saved in a s
 
 Once cleaned and weighted, data points are aggregated to determine overall candidate support, often producing metrics such as the percentage of respondents supporting each candidate by state or other specific demographics. Each pollster would have a database with all the weighted and aggregated data, and Project 538 presents a compilation of the databases obtained from various pollsters. 
 
-
 ## Variables
 To give an overview of the data, we provide summary statistics of the key variables, highlighting the characteristics of the polling support for each candidate across the battleground states.
 ```{r}
@@ -164,46 +163,32 @@ WRITE SECTION
 
 # Model {#sec-model}
 
-The goal of our modeling strategy is to predict the winner of the 2024 US Presidential Election in each state based on polling data, while also assessing the likelihood of Donald Trump or Kamala Harris winning. We use a Bayesian hierarchical modeling approach with natural splines to capture time-dependent trends in support and random effects to account for state-level variability. This strategy enables us to model changes in candidate support over time across states, allowing for more nuanced, probabilistic predictions of each candidate’s support levels and overall election outcomes.
+In this analysis, we develop separate Bayesian models for candidates Donald Trump and Kamala Harris to predict their respective probabilities of winning in the 2024 U.S. Presidential Election. The use of distinct models allows us to capture the unique polling dynamics and voter preferences for each candidate across key battleground states, which include Arizona, Georgia, Michigan, Nevada, North Carolina, Pennsylvania, and Wisconsin. By analyzing polling data collected from various sources, we aim to provide a comprehensive assessment of each candidate’s electoral prospects.
 
-Separate models are fit for each candidate’s polling support, with state-specific random intercepts and a natural spline for time, allowing the model to capture state-level deviations from the national average as well as time-based changes in support. This hierarchical Bayesian approach enables partial pooling across states, stabilizing predictions for states with limited polling data. Further background details, model specifications, and diagnostics are included in [Appendix -@sec-model-details].
+The models are built using state-level polling data, which is aggregated to ensure robustness in the predictions. Each candidate's model incorporates temporal factors through natural splines applied to the numeric representation of the end date, allowing us to observe changes in voter support over time. This approach provides a nuanced understanding of how public sentiment evolves as the election date approaches. Further background details, model specifications, and diagnostics are included in [Appendix -@sec-model-details].
 
-## Model set-up
-The binary outcome variable $y_i$ represents whether Donald Trump is predicted to lead in state $i$ based on polling averages for both candidates over time. Here, $y_i = 1$ indicates a Trump lead in state $i$, and $y_i = 0$ indicates a lead for Kamala Harris. The model estimates the support levels for each candidate based on polling data using a Gaussian likelihood function, with time trends captured by a natural spline and state-level variation captured through random intercepts.
+## Model Setup
+The primary estimand in our models is the probability of victory for each candidate in the selected battleground states, expressed through a logistic regression framework. The model is formulated as follows:
 
-The predictor variables are $Trump\_pct_i$ and $Harris\_pct_i$, which represent the predicted percentages of support for Donald Trump and Kamala Harris in state $i$. A separate model is fit for each candidate’s support over time, capturing the time-varying nature of support with a natural spline function and allowing for state-specific random effects.
-
-The model is specified as follows:
-
-\[
-\begin{align*}
-\text{Trump\_pct}_i &\sim \text{Normal}(\mu_{\text{Trump}, i}, \sigma_{\text{Trump}}) \\
-\mu_{\text{Trump}, i} &= \alpha_{\text{Trump}} + f(\text{end\_date\_num}_i) + u_{\text{state}}^{\text{Trump}} \\
-u_{\text{state}}^{\text{Trump}} &\sim \text{Normal}(0, \tau_{\text{Trump}}) \\
-\text{Harris\_pct}_i &\sim \text{Normal}(\mu_{\text{Harris}, i}, \sigma_{\text{Harris}}) \\
-\mu_{\text{Harris}, i} &= \alpha_{\text{Harris}} + f(\text{end\_date\_num}_i) + u_{\text{state}}^{\text{Harris}} \\
-u_{\text{state}}^{\text{Harris}} &\sim \text{Normal}(0, \tau_{\text{Harris}})
-\end{align*}
-\]
+$$
+P(\text{Victory}_i) = \frac{e^{\beta_0 + \beta_1 \cdot \text{end\_date\_num}_i + u_{\text{state}}}}{1 + e^{\beta_0 + \beta_1 \cdot \text{end\_date\_num}_i + u_{\text{state}}}}
+$$
 
 Where:
+- \(P(\text{Victory}_i)\) is the predicted probability of winning for candidate \(i\).
+- \(\beta_0\) represents the intercept, reflecting the baseline log-odds of winning.
+- \(\beta_1\) is the coefficient for the natural spline transformation of the numeric end date (\( \text{end\_date\_num}_i \)), capturing nonlinear trends in voter support over time.
+- \(u_{\text{state}}\) is the random effect associated with each state, accounting for variations in voter preferences.
 
-- \begin{equation}
-  \text{Trump\_pct}_i \text{ and } \text{Harris\_pct}_i \text{ are the polling support levels for Donald Trump and Kamala Harris in state } i.
-  \end{equation}
-- \begin{equation}
-  f(\text{end\_date\_num}_i) \text{ is a natural spline function of time (measured as } \text{end\_date\_num}, \text{ with 4 degrees of freedom, capturing the non-linear time trends in support.}
-  \end{equation}
-- \begin{equation}
-  \alpha_{\text{Trump}} \text{ and } \alpha_{\text{Harris}} \text{ are intercepts for the models, representing the baseline support levels for each candidate.}
-  \end{equation}
-- \begin{equation}
-  u_{\text{state}}^{\text{Trump}} \text{ and } u_{\text{state}}^{\text{Harris}} \text{ are state-level random effects, accounting for differences in baseline support across states.}
-  \end{equation}
+Data preparation involved creating two distinct datasets from the cleaned polling data: one for Donald Trump and another for Kamala Harris. Each dataset included the state, end date, and corresponding polling percentage, with the end date converted into a numeric format representing the number of days since the earliest date in the dataset. This allows the model to effectively capture the evolving nature of voter sentiment as the election approaches.
 
-For both models, we use weakly informative Normal priors. The intercepts $ \alpha_{\text{Trump}} $ and $ \alpha_{\text{Harris}} $ are given Normal priors with a mean of 0 and a standard deviation of 10, reflecting prior uncertainty about the baseline support levels. The time trend coefficients are also given Normal priors with mean 0 and standard deviation 5, allowing for flexibility in capturing the temporal changes in support. State-level random effects for each candidate are modeled with a Normal distribution centered at 0, with the variance estimated from the data.
+We implemented the models using the `brms` package in R, selecting a Beta distribution with a logit link function to accurately model the proportions of support for each candidate:
 
-The model was implemented in R using the `brms` package, which allows for Bayesian inference using `Stan` as the backend. This approach captures the dynamic nature of polling support over time, while accounting for state-specific variability and allowing us to estimate the probability of Trump or Harris leading in each state.
+\[
+y_i \sim \text{Beta}(\mu_i, \phi)
+\]
+
+Here, \(y_i\) represents the proportion of support for candidate \(i\) in a given state.
 
 ```{r}
 #| echo: false
@@ -222,13 +207,12 @@ harris_model <-
 
 ## Model Justification
 
-We expect a positive relationship between each candidate's polling support over time and their likelihood of winning a given state. As Donald Trump’s polling percentage in a state increases, his probability of leading in that state rises, while higher support for Kamala Harris increases her probability of winning. By modeling each candidate's support trends over time, we capture shifts in voter sentiment that reflect campaign dynamics, national events, and other time-dependent factors influencing support levels.
+The decision to utilize Bayesian logistic regression models stems from their flexibility and the ability to incorporate prior beliefs into the estimation process. This approach is particularly valuable in the context of electoral forecasting, where uncertainty is a significant factor. We defined the following priors for the model parameters:
 
-A Bayesian hierarchical model was chosen for its ability to handle the complexity of election forecasting, where both temporal trends and state-specific variations play significant roles. Bayesian inference allows us to incorporate prior beliefs and uncertainties about candidate support, while the hierarchical structure enables partial pooling across states. This is particularly useful for states with sparse data, as the model can "borrow strength" from the national trend, stabilizing predictions.
+- For the intercept \(\beta_0\), we specified \( \beta_0 \sim \text{Normal}(0, 10)\), providing a relatively uninformative prior that allows the data to inform the estimation of baseline log-odds.
+- For the slope \(\beta_1\), we used \( \beta_1 \sim \text{Normal}(0, 5)\), reflecting reasonable expectations regarding the influence of polling trends over time.
 
-The inclusion of a natural spline for time allows us to model non-linear changes in support, capturing important shifts in polling trends as the election approaches. Random effects for each state account for baseline differences in support levels, reflecting the unique political climate of each state and reducing the risk of overfitting by allowing state-level deviations from the national average.
-
-This model assumes that polling data reasonably reflects voter intentions and that each state’s outcome can be modeled independently of others, though regional trends are partially addressed by state-level random effects. Potential biases inherent in polling data, such as underrepresented demographics or sampling error, could affect our predictions. The model was implemented in R using the brms package, which provides Bayesian inference via Stan, allowing for flexible, probabilistic predictions of each candidate's support across states.
+Natural splines were chosen to model the effect of the end date due to the observed nonlinearities in voter support, allowing the model to adapt to changing public opinion. Key assumptions include the independence of observations within states and the appropriateness of the Beta distribution for modeling proportions. However, potential limitations include the reliance on the accuracy of polling data and the assumption that historical voting patterns are indicative of future behavior.
 
 ## Model Summary - Harris Model
 ```{r}
@@ -255,7 +239,8 @@ knitr::kable(harris_summary) %>%
 
 ```
 
-EDIT - explain model summary table
+The model summary for Kamala Harris indicates that the intercept estimate is \(-0.1508\) with a standard error of \(0.0279\). This intercept value suggests a negative baseline log-odds for her victory, reflecting the starting point of her support in the absence of any other predictors. The model shows that the coefficients for the natural spline terms (\(nsenddatenum\)) are particularly informative, with the first spline term (\(nsendatenum\_df41\)) yielding a positive estimate of \(0.1225\), suggesting that as time progresses, Harris’s probability of winning increases, particularly during key moments captured by the polling data. This is also reflected in the confidence intervals, with the upper limit of the confidence interval for this term reaching \(0.1903\). In contrast, the estimates for the second spline term (\(nsenddatenum\_df42\)) indicate a smaller effect, suggesting fluctuations in her support that may w
+
 
 ## Model summary - Trump Model
 ```{r}
@@ -281,11 +266,12 @@ knitr::kable(trump_summary) %>%
   kable_styling(full_width = FALSE, position = "center")
 ```
 
-EDIT - explain model summary table
+In comparison, the model summary for Donald Trump presents a different picture. The intercept for Trump's model is \(-0.0923\) with a standard error of \(0.0306\), indicating a similarly negative baseline log-odds of victory as Harris. However, Trump's model demonstrates more pronounced increases in support as reflected by the estimates for the natural spline terms. For example, the second spline term (\(nsenddatenum\_df42\)) has a positive coefficient of \(0.0803\), highlighting a significant upward trend in support over time. This trend is further supported by the confidence interval, which ranges from \(0.0179\) to \(0.1426\), indicating a substantial increase in his predicted probabilities as the election approaches. The fourth spline term (\(nsenddatenum\_df44\)) also shows a positive coefficient (\(0.0789\)), suggesting that the support for Trump remains resilient over the polling period. Overall, both models reveal complex interactions between time and voter sentiment, with implications for the electoral dynamics leading up to the election.
 
 # Results {#sec-results}
 
 ## Polling Averages for Trump and Harris Over Time in Battleground States
+@fit-state-polling-average provides a visual comparison of the current polling support for Donald Trump and Kamala Harris across key battleground states, tracked over time from August 2024 to October 2024. Each line plot represents the average polling percentages for both candidates in a specific state, with red lines denoting Trump’s support and blue lines representing Harris’s support. Across several states, there are noticeably increased fluctuations in polling averages for both candidates closer to the election particularly from late September to October. This pattern may indicate heightened voter interest and engagement as the election date approaches which is November 4th, 2024, it could also reflect changes in public opinion due to campaign events, political debates, or other external factors.
 ```{r}
 #| echo: false
 #| eval: true
@@ -327,9 +313,7 @@ ggplot(polling_average, aes(x = end_date)) +
   )
 
 ```
-
-EDIT - explain results on graph
-
+Out of the seven battleground states, Arizona and Georgia display a clear leading win by Trump while Nevada and North Carolina display a clear leading win by Harris. Michigan, Pennsylvania, and Wisconsin are the three states that don’t have a clear leading winner. Therefore, these three states are the key states that could determine the election outcome as it approaches election day. Election outcomes could be easily flipped if either of the candidates can sweep more than one out of the three states. Candidates should focus on strategizing their campaigns to increase their voters' support at critical moments. The frequent fluctuations of greater margins also indicate the uncertainty and instability of voters’ attitudes towards both candidates. Thus, it is difficult to conclude a definitive predictive outcome by simply observing the current data.  
 
 ## Probability of Winning by State on Election Day 
 ```{r}
