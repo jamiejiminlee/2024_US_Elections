@@ -163,10 +163,12 @@ u_{\text{state}}^{\text{Harris}} &\sim \text{Normal}(0, \tau_{\text{Harris}})
 
 Where:
 
-- $ \text{Trump\_pct}_i $ and $ \text{Harris\_pct}_i $ are the polling support levels for Donald Trump and Kamala Harris in state $ i $.
-- $ f(\text{end\_date\_num}_i) $ is a natural spline function of time (measured as `end_date_num`), with 4 degrees of freedom, capturing the non-linear time trends in support.
+- $ \text{Trump\_pct}\_i $ and $ \text{Harris\_pct}\_i $ are the polling support levels for Donald Trump and Kamala Harris in state $ i $.
+- $ f(\text{end\_date\_num}\_i) $ is a natural spline function of time (measured as $ \text{end\_date\_num} $), with 4 degrees of freedom, capturing the non-linear time trends in support.
 - $ \alpha_{\text{Trump}} $ and $ \alpha_{\text{Harris}} $ are intercepts for the models, representing the baseline support levels for each candidate.
 - $ u_{\text{state}}^{\text{Trump}} $ and $ u_{\text{state}}^{\text{Harris}} $ are state-level random effects, accounting for differences in baseline support across states.
+
+
 
 For both models, we use weakly informative Normal priors. The intercepts $ \alpha_{\text{Trump}} $ and $ \alpha_{\text{Harris}} $ are given Normal priors with a mean of 0 and a standard deviation of 10, reflecting prior uncertainty about the baseline support levels. The time trend coefficients are also given Normal priors with mean 0 and standard deviation 5, allowing for flexibility in capturing the temporal changes in support. State-level random effects for each candidate are modeled with a Normal distribution centered at 0, with the variance estimated from the data.
 
