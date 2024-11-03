@@ -137,6 +137,10 @@ ggplot(stateaverage_long, aes(x = reorder(state, -support_pct), y = support_pct,
 
 REWRITE
 
+## Other Variables
+
+REWRITE
+
 # Model {#sec-model}
 
 The goal of our modeling strategy is to predict the winner of the 2024 US Presidential Election in each state based on polling data, while also assessing the likelihood of Donald Trump or Kamala Harris winning. We use a Bayesian hierarchical modeling approach with natural splines to capture time-dependent trends in support and random effects to account for state-level variability. This strategy enables us to model changes in candidate support over time across states, allowing for more nuanced, probabilistic predictions of each candidate’s support levels and overall election outcomes.
@@ -163,10 +167,23 @@ u_{\text{state}}^{\text{Harris}} &\sim \text{Normal}(0, \tau_{\text{Harris}})
 
 Where:
 
-- $ \text{Trump\_pct}_i $ and $ \text{Harris\_pct}_i $ are the polling support levels for Donald Trump and Kamala Harris in state $ i $.
-- $ f(\text{end\_date\_num}_i) $ is a natural spline function of time (measured as $ \text{end\_date\_num} $), with 4 degrees of freedom, capturing the non-linear time trends in support.
-- $ \alpha_{\text{Trump}} $ and $ \alpha_{\text{Harris}} $ are intercepts for the models, representing the baseline support levels for each candidate.
-- $ u_{\text{state}}^{\text{Trump}} $ and $ u_{\text{state}}^{\text{Harris}} $ are state-level random effects, accounting for differences in baseline support across states.
+- \begin{equation}
+  \text{Trump\_pct}_i \text{ and } \text{Harris\_pct}_i \text{ are the polling support levels for Donald Trump and Kamala Harris in state } i.
+  \end{equation}
+
+- \begin{equation}
+  f(\text{end\_date\_num}_i) \text{ is a natural spline function of time (measured as } \text{end\_date\_num}, \text{ with 4 degrees of freedom, capturing the non-linear time trends in support.}
+  \end{equation}
+
+- \begin{equation}
+  \alpha_{\text{Trump}} \text{ and } \alpha_{\text{Harris}} \text{ are intercepts for the models, representing the baseline support levels for each candidate.}
+  \end{equation}
+
+- \begin{equation}
+  u_{\text{state}}^{\text{Trump}} \text{ and } u_{\text{state}}^{\text{Harris}} \text{ are state-level random effects, accounting for differences in baseline support across states.}
+  \end{equation}
+
+
 
 For both models, we use weakly informative Normal priors. The intercepts $ \alpha_{\text{Trump}} $ and $ \alpha_{\text{Harris}} $ are given Normal priors with a mean of 0 and a standard deviation of 10, reflecting prior uncertainty about the baseline support levels. The time trend coefficients are also given Normal priors with mean 0 and standard deviation 5, allowing for flexibility in capturing the temporal changes in support. State-level random effects for each candidate are modeled with a Normal distribution centered at 0, with the variance estimated from the data.
 
