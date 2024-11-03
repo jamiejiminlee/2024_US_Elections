@@ -27,6 +27,11 @@ library(modelsummary)
 library(rstanarm)
 library(usmap)
 library(arrow)
+library(knitr)
+library(Matrix)
+library(splines)
+library(kableExtra)
+library(broom.mixed)
 ```
 
 # Introduction {#sec-introduction}
@@ -64,39 +69,47 @@ The outcome variable in our analysis is the binary variable winner, which repres
 
 ```{r}
 #| label: fig-averagetable
-#| fig-cap: Summary Table of Polling Averages by State
+#| fig-cap: Summary of 2024 U.S. Presidential Election Polling Averages by State for Trump and Harris, with Indicated Leading Candidate. States with missing data, such as Colorado, are labeled as "NA."
 #| echo: false
 #| warning: false
 #| message: false
-
 # Load cleaned data
 clean_poll_data <- read_parquet("/Users/jamielee/2024_US_Elections/data/02-analysis_data/analysis_data.parquet")
+
 
 # Aggregating polling percentages for Trump and Harris by state
 state_average <- clean_poll_data %>%
   group_by(state) %>%
   summarise(
-    Trump_pct = mean(pct[candidate_name == "Donald Trump"], na.rm = TRUE),
-    Harris_pct = mean(pct[candidate_name == "Kamala Harris"], na.rm = TRUE)
+    Trump_pct = mean(Trump_pct, na.rm = TRUE),
+    Harris_pct = mean(Harris_pct, na.rm = TRUE)
   )
 
 # Create winner column: 1 if Trump_pct is greater than Harris_pct, 0 otherwise
 state_average <- state_average |>
   mutate(winner = ifelse(Trump_pct > Harris_pct, 1, 0))
 
+# Prepare table for display with rounding to 1 decimal place
 average_table <- state_average |>
+  mutate(
+    Trump_pct = round(Trump_pct, 1),
+    Harris_pct = round(Harris_pct, 1)
+  ) |>
   select(
     State = state, 
-    Trump = Trump_pct, 
-    Harris = Harris_pct, 
+    "Trump %" = Trump_pct, 
+    "Harris %" = Harris_pct, 
     Winner = winner
-    ) |>
+  ) |>
   mutate(Winner = ifelse(Winner == 1, "Trump", "Harris"))
 
-# Render the simplest possible table
+# Render the table
 knitr::kable(average_table)
 
+
 ```
+
+Based on the table provided, Trump is predicted to win in the states of Arizona, Florida, Georgia, Missouri, Montana, Nevada, Ohio, and Texas, while Harris is predicted to win in Michigan, Nebraska, North Carolina, Pennsylvania, Virginia, and Wisconsin. However, this does not necessarily determine the overall winner of the election, as U.S. presidential elections are decided by the Electoral College rather than by a simple majority in each state. Each state carries a different number of electoral votes, and a candidate must secure at least 270 electoral votes to win the presidency. To predict the overall winner, it would be necessary to assign each state’s electoral votes to the respective predicted winner and calculate the total for each candidate. With the electoral vote counts for each state, we could determine which candidate is projected to win the election.
 
 ## Predictor variables
 
@@ -107,7 +120,7 @@ To further illustrate the distribution of support, a side-by-side bar graph is p
 
 ```{r}
 #| label: fig-barplot
-#| fig-cap: Average Poll Percentage by State
+#| fig-cap: "Comparison of 2024 U.S. Presidential Election Polling Averages for Trump and Harris by State. Bars represent the average polling percentages for each candidate, with states missing data, such as Colorado, labeled accordingly."
 #| echo: false
 #| warning: false
 
@@ -123,29 +136,48 @@ ggplot(stateaverage_long, aes(x = reorder(state, -support_pct), y = support_pct,
   scale_fill_manual(
     name = "Candidate", 
     values = c("Trump_pct" = "red", "Harris_pct" = "blue"),
-    labels = c("Trump_pct" = "Trump", "Harris_pct" = "Harris")
+    labels = c("Trump_pct" = "Trump %", "Harris_pct" = "Harris %")
   ) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
-The comparison shows significant variability in support for each candidate. In some states like **Montana** and **Missouri**, Trump’s support is notably higher, with a clear margin over Harris. In contrast, **Colorado** stands out as having nearly equal polling support for both candidates, suggesting a closely contested race in that state. Swing states such as **Florida**, **North Carolina**, and **Pennsylvania** exhibit relatively close polling percentages, indicating that the election outcomes in these states could be pivotal and difficult to predict. The plot also includes states like **Virginia** and **Texas**, where the support levels are more balanced, though Trump seems to hold a slight lead. The state labeled as **NA** at the end may indicate missing or incomplete data, emphasizing the need for comprehensive polling coverage in all states for more reliable predictions.
+
+@fig-bar-plot illustrates the state-by-state polling data by comparing the average support percentages for Trump and Harris. In each state, the red bar represents Trump's average polling percentage, while the blue bar represents Harris's. Trump shows stronger support in states like **Montana**, **Missouri**, **Florida**, and **Nevada**, where his average polling percentage surpasses that of Harris. Conversely, Harris has a slight edge in states such as **Wisconsin**, **North Carolina**, **Nebraska**, **Pennsylvania**, and **Virginia**. Some states, like Ohio and **Georgia**, exhibit closely matched polling averages, indicating a tighter race. This visualization underscores the regional variation in candidate support across states, reflecting diverse voter preferences that could influence the final outcome based on the Electoral College distribution.
 
 # Model {#sec-model}
 
-The goal of our modeling strategy is to predict the winner of the 2024 US Presidential Election in each state based on polling data, while also assessing the likelihood of Donald Trump or Kamala Harris winning. We employ a Bayesian logistic regression model, which allows for probabilistic predictions of binary outcomes, making it well-suited for the task of predicting election results. Background details and diagnostics are included in [Appendix -@sec-model-details]. 
+The goal of our modeling strategy is to predict the winner of the 2024 US Presidential Election in each state based on polling data, while also assessing the likelihood of Donald Trump or Kamala Harris winning. We use a Bayesian hierarchical modeling approach with natural splines to capture time-dependent trends in support and random effects to account for state-level variability. This strategy enables us to model changes in candidate support over time across states, allowing for more nuanced, probabilistic predictions of each candidate’s support levels and overall election outcomes.
+
+Separate models are fit for each candidate’s polling support, with state-specific random intercepts and a natural spline for time, allowing the model to capture state-level deviations from the national average as well as time-based changes in support. This hierarchical Bayesian approach enables partial pooling across states, stabilizing predictions for states with limited polling data. Further background details, model specifications, and diagnostics are included in [Appendix -@sec-model-details].
 
 ## Model set-up
-The binary outcome variable $y_i$ is defined as 1 if Donald Trump is predicted to win state $i$, and 0 if Kamala Harris is predicted to win. The predictor variables are $\beta_i$, which represents the average percentage of polling support for Donald Trump in state $i$, and $\gamma_i$, the average percentage of support for Kamala Harris in state $i$. The relationship between these variables and the outcome is captured through a logistic link function.
+The binary outcome variable \( y_i \) represents whether Donald Trump is predicted to lead in state \( i \) based on polling averages for both candidates over time. Here, \( y_i = 1 \) indicates a Trump lead in state \( i \), and \( y_i = 0 \) indicates a lead for Kamala Harris. The model estimates the support levels for each candidate based on polling data using a Gaussian likelihood function, with time trends captured by a natural spline and state-level variation captured through random intercepts.
 
+The predictor variables are \( \text{Trump\_pct}_i \), the predicted percentage of support for Donald Trump in state \( i \), and \( \text{Harris\_pct}_i \), the predicted percentage of support for Kamala Harris in state \( i \). A separate model is fit for each candidate’s support over time, capturing the time-varying nature of support with a natural spline function and allowing for state-specific random effects.
+
+The model is specified as follows:
+
+\[
 \begin{align*}
-y_i | \mu_i &\sim \text{Bernoulli}(\mu_i) \\
-\mu_i &= \alpha + \beta_i + \gamma_i \\
-\alpha &\sim \text{Normal}(0, 2.5) \\
-\beta_i &\sim \text{Normal}(0, 2.5) \\
-\gamma_i &\sim \text{Normal}(0, 2.5)
+\text{Trump\_pct}_i &\sim \text{Normal}(\mu_{\text{Trump}, i}, \sigma_{\text{Trump}}) \\
+\mu_{\text{Trump}, i} &= \alpha_{\text{Trump}} + f(\text{end\_date\_num}_i) + u_{\text{state}}^{\text{Trump}} \\
+u_{\text{state}}^{\text{Trump}} &\sim \text{Normal}(0, \tau_{\text{Trump}}) \\
+\text{Harris\_pct}_i &\sim \text{Normal}(\mu_{\text{Harris}, i}, \sigma_{\text{Harris}}) \\
+\mu_{\text{Harris}, i} &= \alpha_{\text{Harris}} + f(\text{end\_date\_num}_i) + u_{\text{state}}^{\text{Harris}} \\
+u_{\text{state}}^{\text{Harris}} &\sim \text{Normal}(0, \tau_{\text{Harris}})
 \end{align*}
+\]
 
-We use weakly informative Normal priors for the intercept ($\alpha_i$) and the coefficients ($\beta_i$) and $\gamma_i$), centered around zero with a standard deviation of 2.5. These priors were chosen to reflect the assumption that, before seeing the data, there is no strong reason to favor one candidate over the other across states, but to allow room for the data to adjust predictions as polling percentages differ. We run the model in R [@citeR] using the `rstanarm` package [@rstanarm]. The model uses default priors from `rstanarm`, and estimates the likelihood of Donald Trump winning each state based on polling averages for both candidates.
+where:
+- \( \text{Trump\_pct}_i \) and \( \text{Harris\_pct}_i \) are the polling support levels for Donald Trump and Kamala Harris in state \( i \).
+- \( f(\text{end\_date\_num}_i) \) is a natural spline function of time (measured as `end_date_num`), with 4 degrees of freedom, capturing the non-linear time trends in support.
+- \( \alpha_{\text{Trump}} \) and \( \alpha_{\text{Harris}} \) are intercepts for the models, representing the baseline support levels for each candidate.
+- \( u_{\text{state}}^{\text{Trump}} \) and \( u_{\text{state}}^{\text{Harris}} \) are state-level random effects, accounting for differences in baseline support across states.
+
+For both models, we use weakly informative Normal priors. The intercepts \( \alpha_{\text{Trump}} \) and \( \alpha_{\text{Harris}} \) are given Normal priors with a mean of 0 and a standard deviation of 10, reflecting prior uncertainty about the baseline support levels. The time trend coefficients are also given Normal priors with mean 0 and standard deviation 5, allowing for flexibility in capturing the temporal changes in support. State-level random effects for each candidate are modeled with a Normal distribution centered at 0, with the variance estimated from the data.
+
+The model was implemented in R using the `brms` package, which allows for Bayesian inference using `Stan` as the backend. This approach captures the dynamic nature of polling support over time, while accounting for state-specific variability and allowing us to estimate the probability of Trump or Harris leading in each state.
+
 
 ```{r}
 #| echo: false
@@ -155,89 +187,226 @@ We use weakly informative Normal priors for the intercept ($\alpha_i$) and the c
 
 library(rstanarm)
 
-logistic_model <-
-  readRDS(file = here::here("models/first_model.rds"))
+trump_model <-
+  readRDS(file = here::here("models/trump_model.rds"))
+
+harris_model <-
+  readRDS(file = here::here("models/harris_model.rds"))
 ```
 
 ## Model Justification
 
-We expect a positive relationship between polling support for each candidate and their probability of winning a state. As Donald Trump’s polling percentage ($\beta_i$) increases, the likelihood of him winning state $i$ rises. Similarly, as Kamala Harris's polling percentage ($\gamma_i$) increases, her chances of winning that state increase. 
+We expect a positive relationship between each candidate's polling support over time and their likelihood of winning a given state. As Donald Trump’s polling percentage in a state increases, his probability of leading in that state rises, while higher support for Kamala Harris increases her probability of winning. By modeling each candidate's support trends over time, we capture shifts in voter sentiment that reflect campaign dynamics, national events, and other time-dependent factors influencing support levels.
 
-Bayesian logistic regression was chosen for its ability to model binary outcomes like win/loss predictions while incorporating prior knowledge and uncertainty, helping mitigate overfitting through regularization with priors. This model strikes a balance between flexibility and interpretability, given that polling percentages are continuous and the outcome is binary. The model assumes polling data accurately reflects voter intentions and that state outcomes are independent of each other, although it does not account for interactions between states or regional voting trends. Potential biases in polling data could also affect predictions. The model was implemented using the 'rstanarm' [@rstanarm] package in R [@citeR], which supports Bayesian inference with default priors for logistic regression. 
+A Bayesian hierarchical model was chosen for its ability to handle the complexity of election forecasting, where both temporal trends and state-specific variations play significant roles. Bayesian inference allows us to incorporate prior beliefs and uncertainties about candidate support, while the hierarchical structure enables partial pooling across states. This is particularly useful for states with sparse data, as the model can "borrow strength" from the national trend, stabilizing predictions.
 
-# Results {#sec-results}
-## Predicted Election Winner By State
-@fig-statemap shows the predicted winner of the 2024 US Presidential Election by state on the US map [@usmap], based on a logistic regression model using aggregated polling data for Donald Trump and Kamala Harris. States where Trump is predicted to win are shown in red, while states where Harris is predicted to win are displayed in blue. States in gray represent missing or incomplete polling data, where predictions were not possible. 
-```{r}
-#| label: fig-statemap
-#| fig-cap: Predicted Winner of 2024 US Presidential Election by State
-#| echo: false
-#| warning: false
-#| message: false
-#| cache: false
+The inclusion of a natural spline for time allows us to model non-linear changes in support, capturing important shifts in polling trends as the election approaches. Random effects for each state account for baseline differences in support levels, reflecting the unique political climate of each state and reducing the risk of overfitting by allowing state-level deviations from the national average.
 
-#### Workspace setup ####
-library(tidyverse)
-library(usmap)
-library(ggplot2)
-library(rstanarm)
+This model assumes that polling data reasonably reflects voter intentions and that each state’s outcome can be modeled independently of others, though regional trends are partially addressed by state-level random effects. Potential biases inherent in polling data, such as underrepresented demographics or sampling error, could affect our predictions. The model was implemented in R using the brms package, which provides Bayesian inference via Stan, allowing for flexible, probabilistic predictions of each candidate's support across states.
 
-# Check for missing values in state_average and ensure data is clean
-state_average <- state_average %>%
-  filter(!is.na(Trump_pct) & !is.na(Harris_pct)) %>%
-  ungroup()
-
-# Proceed with prediction after ensuring the data is clean
-predicted_prob <- predict(logistic_model, newdata = state_average, type = "response")
-
-# Ensure predicted_prob matches the number of rows in state_average
-if (length(predicted_prob) != nrow(state_average)) {
-  stop("Mismatch between predicted_prob and state_average rows")
-}
-
-# Add predicted_prob to state_average
-state_average <- state_average %>%
-  mutate(predicted_prob = predicted_prob)
-
-# Classify the predicted winner: Trump if probability > 0.5, else Harris
-state_average <- state_average %>%
-  mutate(predicted_winner = ifelse(predicted_prob > 0.5, "Trump", "Harris"))
-
-# Map visualization showing predicted winner by state
-plot_usmap(data = state_average, values = "predicted_winner", regions = "states") +
-  scale_fill_manual(values = c("Trump" = "red", "Harris" = "blue"), name = "Predicted Winner") +
-  theme(legend.position = "right")
-```
-
-According to the model, Trump is expected to win key states, including Florida, Missouri, and Montana, while Harris is forecasted to lead in Michigan, Virginia, and Pennsylvania. The results highlight the geographic divide between the two candidates. Trump is predicted to perform well in southern and midwestern states, where his polling averages are significantly higher. Harris, on the other hand, is projected to win in the Midwest and along the East Coast, with stronger polling percentages in traditionally Democratic-leaning regions.
-
-## Summary of Predicted Election Results by State
-@tbl-modelresults further breaks down the polling data by state, showing the average polling percentages for each candidate and the predicted win probability for Trump. For example, in Florida, Trump’s polling average is 53%, and his predicted win probability is almost certain at 99.93%. Conversely, in Michigan, Harris leads with an average of 46.27% of the vote, resulting in a 96.77% predicted probability that she will win the state. In swing states like North Carolina and Nevada, where the polling percentages are closer, Trump is still predicted to win with probabilities of 94.36% and 51.23%, respectively. These battleground states show tighter polling averages and thus greater uncertainty in the predicted outcomes.
+## Model Summary Results
 ```{r}
 #| echo: false
 #| eval: true
-#| label: tbl-modelresults
-#| tbl-cap: "Predicted 2024 US Presidential Election outcomes by state, based on polling percentages for Trump and Harris"
+#| label: tbl-fixed-effects-summary
+#| tbl-cap: "Fixed Effects Summary for Trump and Harris Models."
 #| warning: false
 
+# Load necessary libraries
+library(dplyr)
+library(broom)        # For the tidy function
+library(knitr)
+library(kableExtra)
 
-#### Create and Display the Summary Table ####
-summary_table <- state_average %>%
-  select(state, Trump_pct, Harris_pct, predicted_prob, predicted_winner) %>%
+#| echo: false
+#| eval: true
+#| label: tbl-fixed-effects-summary
+#| tbl-cap: "Fixed Effects Summary for Trump and Harris Models."
+#| warning: false
+
+# Load necessary libraries
+library(dplyr)
+library(broom)        # For the tidy function
+library(knitr)
+library(kableExtra)
+
+# Summarize fixed effects for Trump model
+trump_summary <- tidy(trump_model, effects = "fixed", conf.int = TRUE) %>%
+  select(term, estimate, std.error, conf.low, conf.high) %>%
   rename(
-    "State" = state,
-    "Trump Polling (%)" = Trump_pct,
-    "Harris Polling (%)" = Harris_pct,
-    "Predicted Trump Win Probability" = predicted_prob,
-    "Predicted Winner" = predicted_winner
-  )
+    Estimate = estimate,
+    `Std. Error` = std.error,
+    `Lower 95% CI` = conf.low,
+    `Upper 95% CI` = conf.high
+  ) %>%
+  mutate(term = gsub("[^[:alnum:] ]", "", term))  # Remove non-alphanumeric characters
 
-knitr::kable(summary_table, escape = TRUE)
+# Summarize fixed effects for Harris model
+harris_summary <- tidy(harris_model, effects = "fixed", conf.int = TRUE) %>%
+  select(term, estimate, std.error, conf.low, conf.high) %>%
+  rename(
+    Estimate = estimate,
+    `Std. Error` = std.error,
+    `Lower 95% CI` = conf.low,
+    `Upper 95% CI` = conf.high
+  ) %>%
+  mutate(term = gsub("[^[:alnum:] ]", "", term))  # Remove non-alphanumeric characters
+
+# Combine summaries into one table
+model_summary_table <- full_join(trump_summary, harris_summary, by = "term", suffix = c(" Trump", " Harris"))
+
+# Display the table with kable
+kable(model_summary_table, caption = "Fixed Effects Summary for Trump and Harris Models") %>%
+  kable_styling(full_width = FALSE, position = "center", font_size = 8)
+
 ```
 
-The predictive model forecasts Donald Trump as the likely winner of the 2024 U.S. Presidential Election. By analyzing state-level polling data through a Bayesian logistic regression model, the study estimates the probability of Trump or Kamala Harris winning in each state. The model identifies a significant geographic split in voter support: Trump is expected to dominate in southern and midwestern states, where his polling percentages consistently surpass those of Harris. Key states projected to favor Trump include Florida, Georgia, and Ohio, which are pivotal in securing an Electoral College majority. Harris, on the other hand, holds stronger polling percentages in East Coast states and parts of the Midwest, yet these leads appear insufficient to overcome Trump’s advantage across the broader landscape of competitive states.
+# Results {#sec-results}
 
-In particular, battleground states show varied support but lean overall toward Trump, reflecting his edge in areas like Arizona, Nevada, and North Carolina. By aggregating high-quality polls filtered for transparency and reliability, the model underscores Trump’s stable base in regions that carry substantial electoral weight. The predictions suggest that while Harris may perform well in several Democratic strongholds, Trump’s consistent support across critical swing states positions him as the probable victor in the upcoming election.
+## National Support Trends Over Time
+
+```{r}
+#| echo: false
+#| eval: true
+#| label: fig-national-trend
+#| fig-cap: "National Support Trends Over Time for the 2024 U.S. Presidential Election. The plot displays the predicted national average support for Donald Trump (red) and Kamala Harris (blue) over time, based on a Bayesian hierarchical model with a natural spline fit. The trends show changes in polling support for both candidates throughout 2024, highlighting key shifts in public opinion as the election approaches."
+#| warning: false
+
+# Generate a sequence of dates for national predictions
+prediction_dates <- seq.Date(min(clean_poll_data$end_date), max(clean_poll_data$end_date), by = "1 week")
+
+# Predict national support for each date
+national_trend <- prediction_dates %>%
+  map_dfr(~ {
+    data <- data.frame(state = unique(clean_poll_data$state), end_date = .x)
+    data$end_date_num <- as.numeric(data$end_date - min(clean_poll_data$end_date))
+    
+    trump_pred <- mean(posterior_predict(trump_model, newdata = data))
+    harris_pred <- mean(posterior_predict(harris_model, newdata = data))
+    
+    tibble(date = .x, Trump = trump_pred, Harris = harris_pred)
+  })
+
+# Plot national support trends
+ggplot(national_trend, aes(x = date)) +
+  geom_line(aes(y = Trump, color = "Trump")) +
+  geom_line(aes(y = Harris, color = "Harris")) +
+  labs(title = "National Support Trends Over Time", y = "Predicted Support", x = "Date") +
+  scale_color_manual(values = c("Trump" = "red", "Harris" = "blue")) +
+  theme_minimal()
+
+
+```
+
+## State Level Support Trends Over Time
+```{r}
+#| echo: false
+#| eval: true
+#| label: fig-state-trend
+#| fig-cap: "State-Level Support Trends for Trump and Harris Over Time."
+#| warning: false
+
+# Generate predictions for each state and date
+state_dates <- seq.Date(min(clean_poll_data$end_date), max(clean_poll_data$end_date), by = "1 week")
+state_prediction_grid <- expand.grid(state = unique(clean_poll_data$state), end_date = state_dates) %>%
+  mutate(end_date_num = as.numeric(end_date - min(clean_poll_data$end_date)))
+
+# Predict support for each state and date
+state_predictions <- state_prediction_grid %>%
+  rowwise() %>%
+  mutate(
+    Trump_Support = mean(posterior_predict(trump_model, newdata = cur_data())),
+    Harris_Support = mean(posterior_predict(harris_model, newdata = cur_data()))
+  )
+
+# Plot state-level support trends over time with adjusted x-axis labels
+ggplot(state_predictions, aes(x = end_date)) +
+  geom_line(aes(y = Trump_Support, color = "Trump")) +
+  geom_line(aes(y = Harris_Support, color = "Harris")) +
+  labs(title = "State-Level Support Trends for Trump and Harris Over Time", y = "Predicted Support", x = "Date") +
+  facet_wrap(~ state) +
+  scale_color_manual(values = c("Trump" = "red", "Harris" = "blue")) +
+  scale_x_date(date_labels = "%b %Y", date_breaks = "3 months") +  # Set date format and break frequency
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 45, hjust = 1),  # Rotate x-axis labels
+    strip.text = element_text(size = 10),  # Control facet label size if needed
+    panel.spacing = unit(0.5, "lines"),    # Add spacing between facets
+    panel.grid.major = element_line(linewidth = 0.3)  # Adjust gridline thickness
+  )
+
+
+```
+## Election Day Predictions
+
+
+
+
+
+
+## Probability of Winning by State on Election Day 
+
+
+```{r}
+#| echo: false
+#| eval: true
+#| label: fig-state-probabilities
+#| fig-cap: "Probability of Trump Winning by State on Election Day."
+#| warning: false
+
+# Set election day or target prediction date
+election_day <- as.Date("2024-11-05")  # Example election day
+
+# Predict probability of Trump winning by comparing posterior predictions for each state
+state_predictions <- clean_poll_data %>%
+  distinct(state) %>%
+  mutate(end_date = election_day, end_date_num = as.numeric(election_day - min(clean_poll_data$end_date)))
+
+# Calculate probability of Trump winning in each state
+state_predictions <- state_predictions %>%
+  rowwise() %>%
+  mutate(
+    prob_trump_wins = mean(posterior_predict(trump_model, newdata = cur_data()) >
+                           posterior_predict(harris_model, newdata = cur_data()))
+  )
+
+# Plot probability of winning by state
+ggplot(state_predictions, aes(x = reorder(state, prob_trump_wins), y = prob_trump_wins, fill = prob_trump_wins > 0.5)) +
+  geom_col() +
+  coord_flip() +
+  scale_fill_manual(values = c("TRUE" = "red", "FALSE" = "blue"), labels = c("Harris", "Trump")) +
+  labs(title = "Probability of Trump Winning by State on Election Day", x = "State", y = "Probability Trump Wins") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+```
+
+
+
+## US Map Showing Predicted Winner by State on Election Day
+
+```{r}
+
+#| echo: false
+#| eval: true
+#| label: fig-us-map
+#| fig-cap: "Predicted Winner by State on Election Day."
+#| warning: false
+
+# Add predicted winner column based on `prob_trump_wins`
+state_predictions <- state_predictions %>%
+  mutate(predicted_winner = ifelse(prob_trump_wins > 0.5, "Trump", "Harris"))
+
+# Plot the US map with predicted winner for each state
+plot_usmap(data = state_predictions, values = "predicted_winner", regions = "states") +
+  scale_fill_manual(values = c("Trump" = "red", "Harris" = "blue")) +
+  labs(title = "Predicted Winner by State on Election Day", fill = "Predicted Winner") +
+  theme(legend.position = "right")
+
+
+```
+
 
 # Discussion {#sec-discussion}
 
@@ -283,96 +452,18 @@ Out-of-sample testing was conducted to test our model’s reliability in predict
 
 This process helps reveal whether the model is over-fitting to the training data or truly capturing the underlying patterns that apply more broadly. The test produces an accuracy score, RMSE, and a confusion matrix, each measuring different aspects of the model’s prediction. Accuracy is the proportion of correctly predicted outcomes compared to the total number of predictions made in the test set. The testing was implemented using the following packages in R [@citeR]: caret [@caret], rstanarm [@rstanarm], ggplot2 [@ggplot2], dplyr [@dplyr]. 
 
-```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
-# Out-of-Sample Testing of Our Model
-# Load necessary libraries
-library(caret)
-library(rstanarm)
-library(ggplot2)
-library(dplyr)
-
-
-# Split the data into training (70%) and test (30%) sets
-set.seed(123)  # For reproducibility
-trainIndex <- createDataPartition(state_average$winner, p = 0.7, list = FALSE)
-train_data <- state_average[trainIndex, ]
-test_data <- state_average[-trainIndex, ]
-
-# Train the Bayesian logistic regression model on the training data
-logistic_model_train <- stan_glm(winner ~ Trump_pct + Harris_pct, data = train_data, 
-                                 family = binomial, prior = student_t(df = 7), 
-                                 chains = 4, iter = 2000, refresh = 0, verbose = FALSE)
-
-# Make predictions on the test set
-test_predictions <- posterior_predict(logistic_model_train, newdata = test_data, draws = 1)
-
-# Convert predictions to binary outcome (1 if Trump wins, 0 if Harris wins)
-test_pred_binary <- ifelse(colMeans(test_predictions) > 0.5, 1, 0)
-
-# Calculate accuracy
-accuracy <- mean(test_pred_binary == test_data$winner)
-accuracy_message <- paste("Test Accuracy: ", round(accuracy * 100, 2), "%")
-
-
-# Optionally, calculate RMSE
-rmse_value <- sqrt(mean((test_pred_binary - test_data$winner)^2))
-rmse_message <- paste("Test RMSE: ", round(rmse_value, 4))
-
-
-# Confusion Matrix for additional diagnostics
-conf_matrix <- table(Predicted = test_pred_binary, Actual = test_data$winner)
-rownames(conf_matrix) <- c("Predicted 0 (Harris)", "Predicted 1 (Trump)")
-colnames(conf_matrix) <- c("Actual 0 (Harris)", "Actual 1 (Trump)")
-
-```
-
 
 ### Model Diagnostics Result
 
 [@fig-barplot-diagnostics] displays the performance of the Bayesian logistic regression model used to predict the outcome of the 2024 presidential election. The model's accuracy is approximately 75%, indicating that 75% of the test set's state-level outcomes were correctly predicted. The RMSE (Root Mean Squared Error) is about 0.5, showing the average error in predicting the winning candidate across states.
 
-```{r}
-#| echo: false
-#| eval: true
-#| label: fig-barplot-diagnostics
-#| fig-cap: "Model: Diagnostics: Accuracy and RMSE"
-#| warning: false
-#| message: false
 
-# Visualizing the RMSE and accuracy in a plot
-accuracy_rmse_df <- data.frame(
-  Metric = c("Accuracy", "RMSE"),
-  Value = c(accuracy, rmse_value)
-)
-
-# Visualizing the RMSE and accuracy in a plot with skinnier bars
-ggplot(accuracy_rmse_df, aes(x = Metric, y = Value)) +
-  geom_bar(stat = "identity", fill = "steelblue", width = 0.2) +  # Adjusted width for skinnier bars
-  labs(y = "Value") +
-  theme_light()
-```
 This suggests the model performs reasonably well, but there is some error in predicting the exact outcome in certain states, which may be due to variations in polling data or other unaccounted factors.
 
 ### Confusion Matrix
 [@tbl-confusion-matrix] displays the model's predictive performance in distinguishing between state-level wins for Trump (coded as 1) and Harris (coded as 0). 
 
-```{r}
-#| echo: false
-#| eval: true
-#| label: tbl-confusion-matrix
-#| tbl-cap: "Confusion Matrix of Test Predictions"
-#| warning: false
 
-
-# Visualizing the confusion matrix as a table
-library(knitr)
-kable(conf_matrix)
-
-```
 In this case, the model correctly predicted 12 Harris wins and 15 Trump wins (true positives and true negatives). However, there were 5 instances where the model incorrectly predicted a Trump win when Harris won (false positives), and 3 instances where it predicted a Harris win when Trump won (false negatives). This breakdown helps assess not only the overall accuracy but also how well the model distinguishes between close contests in different states, which is critical for predicting the outcome of the 2024 presidential election.
 
 # Pollster Methodology Overview and Evaluation
