@@ -75,9 +75,23 @@ Each respondent’s answers and demographic details are grouped and saved in a s
 Once cleaned and weighted, data points are aggregated to determine overall candidate support, often producing metrics such as the percentage of respondents supporting each candidate by state or other specific demographics. Each pollster would have a database with all the weighted and aggregated data, and Project 538 presents a compilation of the databases obtained from various pollsters. 
 
 ## Variables
+The collected dataset contains several key variables relevant to the analysis:
+
+- **State**: Indicates the state where the polling took place, critical for understanding regional support dynamics.
+- **Polling Date**: The date when the poll was conducted, which helps in analyzing trends over time.
+- **Pollster**: The organization conducting the poll, providing insight into the reliability and methodology of the polling data.
+- **Numeric Grade**: A score assigned to each poll based on its methodology and historical accuracy, which assists in filtering out less reliable polls.
+- **Transparency Score**: A measure indicating how transparent the pollster is regarding their methodology, further enhancing data credibility.
+- **Candidate Name**: Identifies the candidate being polled, specifically focusing on Donald Trump and Kamala Harris.
+- **Percentage of Support (pct)**: Represents the percentage of respondents supporting each candidate, which is the primary outcome variable of interest.
+
+To ensure the quality of the analysis, only those polls that meet specific thresholds were included - refer to [@sec-appendix].
+
+### Outcome Variable
+
 To give an overview of the data, we provide summary statistics of the key variables, highlighting the characteristics of the polling support for each candidate across the battleground states.
 ```{r}
-#| label: fig-summarystatistics
+#| label: tbl-outcomevar
 #| fig-cap: "Summary Statistics for Trump and Harris Polling Data. This table presents key summary statistics, including total polls, average support percentages, and the maximum and minimum polling levels for both candidates across the specified battleground states. All values are rounded to three decimal places, providing an overview of the polling landscape as of the selected election date."
 #| echo: false
 #| warning: false
@@ -113,53 +127,19 @@ kable(summary_statistics_long) %>%
 
 ```
 
-@tbl-summarystatistics reveals a total of 34 polls conducted, with an average support level of 46.321% for Trump and 46.661% for Harris. Trump's support peaked at 51.000%, while the lowest recorded support was 42.500%. For Harris, the maximum support also reached 51.000%, with a minimum of 42.000%. These statistics illustrate the competitive landscape in these critical states, emphasizing the narrow margins that could ultimately influence the election outcome. The data reflects the volatility of voter sentiment leading up to the 2024 Presidential Election, underscoring the importance of these battleground states in determining the final result.
+MISSING - explain table
 
-### Outcome Variable
-The outcome variable in our model is ‘predicted_winner’, which is a binary indicator, specifically constructed to represent the predicted winner of the 2024 U.S. Presidential Election based on polling data from key battleground states. This variable categorizes the election outcome into two distinct categories: a value of "Trump" indicates that Donald Trump is predicted to win, while a value of "Harris" denotes a predicted victory for Kamala Harris. The classification is derived from a conditioning statement that assigns the predicted winner based on the probability of Trump winning; if this probability exceeds 0.5, the predicted winner is labeled as Trump, otherwise, it is labeled as Harris.
-
-The ‘predicted_winner’ variable in our model is a constructed binary indicator derived from the pct variable based on our model. The “pct” variable represents the percentage of support for each candidate, Harris and Trump, within each state. To create the “winner” variable, we compare the “pct” values: if Trump’s percentage of support in a given state is higher than Harris’s, the “winner” variable is assigned a value indicating Trump as the predicted winner for the given state; otherwise, it is assigned to Harris. This construction allows us to translate individual support levels from the raw data into a binary prediction of each state’s likely outcome. 
-
-### Predictive Variable
-The predictive variables for this paper are each candidate’s support rate (‘pct’), which directly influences the “winner” variable. The ‘pct’ variable represents the percentage of the vote or support that each candidate received in the poll. Understanding these polling percentages is crucial, as they provide insight into the electoral landscape and help evaluate which candidate may hold an advantage in the upcoming election. The battleground states presented in the table are particularly significant due to their historical tendency to swing between parties, making them vital focal points for campaign efforts. By examining the outcome variable through these polling percentages, we enhance our predictive modeling and gain a deeper understanding of the factors influencing the election. This comparison not only contextualizes the current political climate but also highlights the critical role these battleground states play in determining the overall election results. As the campaign unfolds, these insights will be invaluable for strategizing and gauging voter sentiment in these pivotal areas.
-
-```{r}
-#| label: tbl-outcomevar
-#| fig-cap: "Summary of fixed effects estimates from the Bayesian hierarchical models for both Donald Trump and Kamala Harris. The table includes the estimated coefficients, standard errors, and 95% confidence intervals for each predictor, illustrating how various factors influence polling percentages. The significant intercept and time-related variables are crucial for understanding candidate support dynamics over the election period."
-#| echo: false
-#| warning: false
-#| message: false
-
-# Aggregating polling percentages for Trump and Harris by state
-state_average <- clean_poll_data %>%
-  group_by(state) %>%
-  summarise(
-    Trump_pct = mean(Trump_pct, na.rm = TRUE),
-    Harris_pct = mean(Harris_pct, na.rm = TRUE)
-  )
+### Predictive Var
+The predictive variable in our model are 'time' and 'state'
 
 
-# Prepare table for display with rounding to 1 decimal place
-average_table <- state_average |>
-  mutate(
-    Trump_pct = round(Trump_pct, 1),
-    Harris_pct = round(Harris_pct, 1)
-  ) |>
-  select(
-    State = state, 
-    "Trump %" = Trump_pct, 
-    "Harris %" = Harris_pct, 
-  ) 
 
-# Render the table
-knitr::kable(average_table)
 
-```
-@tbl-predictivevar highlights the average support levels for both Donald Trump and Kamala Harris across key battleground states, including Wisconsin, North Carolina, Georgia, Arizona, Pennsylvania, Michigan, and Nevada. The values reflect the polling percentages for each candidate, based on 'pct', providing a straightforward comparison of the predictive variables in each battleground state. It is important to note that since ‘pct’ stands for percentage, there may be a misconception that the values for Trump and Harris will always add up to 100%. In reality, as seen in Arizona, the combined ‘pct’ for Trump and Harris is 92.9%, with the remaining 7.1% likely reflecting support for other candidates in the race.
 
 ## Other Variables
 
-WRITE SECTION
+'numeric grade', 'transparency score', 'pollster'
+
 
 # Model {#sec-model}
 
@@ -313,13 +293,16 @@ ggplot(polling_average, aes(x = end_date)) +
   )
 
 ```
-Out of the seven battleground states, Arizona and Georgia display a clear leading win by Trump while Nevada and North Carolina display a clear leading win by Harris. Michigan, Pennsylvania, and Wisconsin are the three states that don’t have a clear leading winner. Therefore, these three states are the key states that could determine the election outcome as it approaches election day. Election outcomes could be easily flipped if either of the candidates can sweep more than one out of the three states. Candidates should focus on strategizing their campaigns to increase their voters' support at critical moments. The frequent fluctuations of greater margins also indicate the uncertainty and instability of voters’ attitudes towards both candidates. Thus, it is difficult to conclude a definitive predictive outcome by simply observing the current data.  
+Out of the seven battleground states, Arizona and Georgia display a clear leading win by Trump while Nevada and North Carolina display a clear leading win by Harris. Michigan, Pennsylvania, and Wisconsin are the three states that don’t have a clear leading winner. Therefore, these three states are the key states that could determine the election outcome as it approaches election day. Election outcomes could be easily flipped if either of the candidates can sweep more than one out of the three states. Candidates should focus on strategizing their campaigns to increase their voters' support at critical moments. The frequent fluctuations of greater margins also indicate the uncertainty and instability of voters’ attitudes towards both candidates. 
 
-## Probability of Winning by State on Election Day 
+Since it is difficult to conclude a definitive predictive outcome by observing the current data, we utilize our models, described in [@sec-model] to predict the possible outcomes by incorporating the given data. By using the current data, the model can identify the state-specific trends thus generating more accurate predictions of the outcome. Relevant prediction results are provided below.
+
+## State-Level Probability of Trump Winning on Election Day
+By incorporating our Bayesian models, we generate the predicted probabilities of winner for both Donald Trump and Kamala Harris in key battleground states, on Election Day (November 5th, 2024). @fig-state-probabilities provides a visual summary of these predicted probabilities.
 ```{r}
 #| echo: false
 #| eval: true
-#| label: tbl-state-probabilities
+#| label: fig-state-probabilities
 #| fig-cap: "Probability of Trump Winning by State on Election Day."
 #| warning: false
 
@@ -350,35 +333,6 @@ state_predictions <- data.frame(
   harris_pct = harris_mean_pct
 )
 
-# Round the percentages to two decimal points
-state_predictions <- state_predictions %>%
-  mutate(
-    trump_pct = round(trump_pct, 2),
-    harris_pct = round(harris_pct, 2),
-    winner = ifelse(trump_pct > harris_pct, "Donald Trump", "Kamala Harris")
-  )
-
-# Print results in table
-kable(state_predictions, 
-      col.names = c("State", 
-                    "Predicted Trump Win (%)", 
-                    "Predicted Harris Win (%)", 
-                    "Predicted Winner")) %>%
-  kable_styling("striped", full_width = F)
-
-```
-
-
-EDIT - explain table results
-
-
-```{r}
-#| echo: false
-#| eval: true
-#| label: fig-state-probabilities
-#| fig-cap: "Probability of Trump Winning by State on Election Day."
-#| warning: false
-
 # Reshape the data for ggplot
 state_predictions_long <- state_predictions %>%
   pivot_longer(cols = c(harris_pct, trump_pct), 
@@ -400,9 +354,41 @@ ggplot(state_predictions_long, aes(x = state, y = winning_probability, fill = ca
   theme(legend.title = element_blank())  # Remove legend title
 
 ```
-EDIT - explain graph results
+These predictions are based on polling data collected up to October 19th, 2024 to forecast each candidate's support within these critical states. Each state’s political dynamics are unique, and this is reflected in the model’s predictions. States like Arizona and Georgia show relatively close probabilities for both candidates, marking them as key states to focus on as they are the most influential on the election outcomes. The five other states all show relatively distinct leading support for Harris, suggesting that Harris’s support base in those states has been consistently strong in the polls leading up to Election Day.
+
+## Probability of Winning by State on Election Day 
+@tbl-fig-probabilities displays the numeric percentage of the probabilities of winning for Trump and Harris. By comparing the predicted probabilities, the predicted winner for each state is assigned accordingly. For instance, the table displays that Trump has a 49.48% predicted probability of winning Arizona compared to 49.24% of Harris’s, making Trump the predicted winner in Arizona. For all six other states, Harris has a higher predicted probability of winning than Trump.
+```{r}
+#| echo: false
+#| eval: true
+#| label: tbl-state-probabilities
+#| fig-cap: "Probability of Trump Winning by State on Election Day."
+#| warning: false
+
+
+# Round the percentages to two decimal points
+state_predictions <- state_predictions %>%
+  mutate(
+    trump_pct = round(trump_pct, 2),
+    harris_pct = round(harris_pct, 2),
+    winner = ifelse(trump_pct > harris_pct, "Donald Trump", "Kamala Harris")
+  )
+
+# Print results in table
+kable(state_predictions, 
+      col.names = c("State", 
+                    "Predicted Trump Win (%)", 
+                    "Predicted Harris Win (%)", 
+                    "Predicted Winner")) %>%
+  kable_styling("striped", full_width = F)
+
+```
 
 ## US Map Showing Predicted Winner by State on Election Day
+To visualize the colour distribution of the predicted results, we emloy the US map from [@usmap] to display the results from @tbl-state-probabilities. 
+
+- 'Predicted Winner' column is Donald Trump: State filled red
+- 'Predicted Winner' column is Kamala Harris: State filled blue
 
 ```{r}
 #| echo: false
@@ -426,13 +412,10 @@ us_map <- plot_usmap(data = state_predictions, values = "winner", regions = "sta
 # Print the map
 print(us_map)
 ```
-
-EDIT - explain map results
+According to @fig-us-map, Arizona is the only state where Trump has a leading win while all the other six states are led by Harris. Since Harris has a six-to-one lead in the predicted percentage of support for all battleground states, we conclude that Harris is the predicted winner for the 2024 cycle of Presidential Election. 
 
 # Discussion {#sec-discussion}
-
 ## Interpretation of Results {#sec-results-interpretation}
-
 Since the electoral college system makes state-level forecasts crucial, and the U.S. operates under a predominantly two-party system, the focus of election predictions should be on battleground states. While many states are strongly aligned with either the Democratic or Republican party, a handful of key battleground states—where neither party has overwhelming dominance—will likely determine the overall outcome of the election. These battleground states, often evenly split in voter sentiment, hold immense significance because their electoral votes can swing the election in favor of one candidate or the other. 
 
 The results of our model underscore the critical role that these battleground states will play in the 2024 election. Although many states are predictably stable due to their party loyalty, it is the six battleground states that will serve as the main arena for competition. In these states, where voter preferences are not as firmly entrenched, even minor shifts in public opinion or turnout could lead to vastly different outcomes. As a result, a comprehensive and precise prediction of voting behavior in these battleground states is far more important than in states where the result is a foregone conclusion.
