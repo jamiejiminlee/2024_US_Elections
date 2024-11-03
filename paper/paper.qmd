@@ -1,6 +1,6 @@
 ---
-title: "Predicting the 2024 U.S. Presidential Election: Trump’s Likely Victory Based on Polling Analysis"
-subtitle: "A Bayesian Approach Reveals Strong Support for Donald Trump Across Key Battleground States, Highlighting Critical Trends in Voter Preferences Leading Up to Election Day"
+title: "Forecasting the 2024 U.S. Presidential Election: Kamala Harris' Projected Victory"
+subtitle: A Bayesian Analysis of Polling Data from Key Battleground States"
 author: 
   - Jimin Lee
   - Sarah Ding
@@ -8,12 +8,11 @@ author:
 thanks: "Code and data are available at: [https://github.com/jamiejiminlee/2024_US_Elections.git](https://github.com/jamiejiminlee/2024_US_Elections.git)."
 date: today
 date-format: long
-abstract: "This paper presents a predictive model for the 2024 United States Presidential Election, utilizing state-level polling data to focus specifically on key battleground states. By employing a Bayesian approach, we estimate the outcomes between Donald Trump and Kamala Harris, incorporating high-quality polls from reputable sources. Our Bayesian hierarchical model, featuring time-dependent splines and state-specific random effects, effectively captures shifts in candidate support over time. The analysis reveals that Trump is projected to win in critical battleground states such as Arizona, Georgia, Michigan, Nevada, North Carolina, Pennsylvania, and Wisconsin, highlighting his advantage in these pivotal regions. These findings underscore the significance of battleground states in determining electoral outcomes, particularly in a highly polarized political landscape. We also discuss the model’s performance, accuracy, and limitations, reflecting on the unique challenges inherent in forecasting electoral outcomes in these crucial areas."
+abstract: "This paper presents a predictive model for the 2024 United States Presidential Election, focusing on critical battleground states. Utilizing a Bayesian approach with state-level polling data, we estimate the winning probabilities for candidates Donald Trump and Kamala Harris. Our findings reveal that Harris is projected to win in six out of seven key battleground states, including Michigan, Nevada, and North Carolina, with predicted winning percentages surpassing 50%. Given this significant advantage, we predict Kamala Harris to be the likely winner of the election. This analysis underscores the importance of battleground states in shaping electoral outcomes and provides valuable insights into voter sentiment as Election Day approaches."
 format: pdf
 number-sections: true
 bibliography: references.bib
 ---
-
 
 ```{r}
 #| include: false
@@ -37,15 +36,16 @@ library(brms)
 
 
 # Introduction
+The 2024 United States Presidential Election is shaping up to be a critical event, particularly as battleground states emerge as pivotal areas influencing the electoral outcome. As candidates Donald Trump and Kamala Harris intensify their campaigns, understanding voter preferences in these key regions becomes essential for predicting the election results. This paper utilizes state-level polling data to build a predictive model that estimates the likelihood of victory for each candidate in several key battleground states, including Arizona, Georgia, Michigan, Nevada, North Carolina, Pennsylvania, and Wisconsin.
 
-EDIT & ELABORATE - gpt generated
-The 2024 United States Presidential Election presents a unique opportunity to examine the dynamics of voter preferences in key battleground states. With a highly polarized electorate and the stakes at an all-time high, accurately predicting the outcome of this election is crucial for political analysts, campaigns, and the public. This paper develops a predictive model that leverages state-level polling data to forecast the likely winner between Donald Trump and Kamala Harris, using a Bayesian hierarchical approach to accommodate variations across states.
+The primary estimand in this study is the probability that either Donald Trump or Kamala Harris will win each battleground state, based on aggregated polling averages. Our model employs a Bayesian hierarchical approach with natural splines to capture the nuances of voter sentiment over time, allowing for the estimation of winning probabilities across these crucial states. By comparing the predicted winning probabilities for both candidates, we can ascertain the likely winner based on the prevailing voter support patterns.
 
-The central estimand of this study is the probability of victory for each candidate in battleground states, defined by the binary outcome variable indicating a predicted win for Trump (1) or Harris (0). To achieve this, we utilize aggregated polling percentages as predictor variables, allowing us to capture shifts in voter sentiment over time. By employing logistic regression and accounting for state-specific random effects, our model not only identifies trends in polling data but also highlights critical regions that could determine the overall election outcome.
+Our analysis reveals that Kamala Harris is projected to win in six out of the seven battleground states examined, indicating a favorable voter sentiment in states such as Michigan and Nevada. Conversely, Donald Trump shows a competitive stance in Arizona, where he is also predicted to secure a slight edge. The calculation of the predicted winner is determined by comparing the estimated probabilities for each candidate, which underscores Harris's overall advantage in the election.
 
-In our analysis, we focused on key battleground states—Arizona, Georgia, Michigan, Nevada, North Carolina, Pennsylvania, and Wisconsin—where the margins are often razor-thin and can swing the election in favor of one candidate or another. Our findings indicate that Trump is predicted to win in these crucial states, positioning him as the likely overall victor in the 2024 election. This is significant as it underscores the importance of battleground states in shaping the electoral landscape and highlights the intricate dynamics of voter preferences that can influence the final result.
+Understanding these predictions is vital as it offers insights into the dynamics of voter behavior and the potential implications for election outcomes. This information can help political analysts, campaign strategists, and the public anticipate how these battleground states may influence the overall results. Accurate predictions not only inform campaign strategies but also highlight regions where voter sentiment may shift in the lead-up to Election Day.
 
-The structure of this paper is as follows: we begin by detailing the data sources and methodology used for the analysis. Next, we present the results, focusing on the predicted probabilities of each candidate winning in the targeted battleground states. Finally, we discuss the implications of our findings and the limitations of our model, contributing to a better understanding of voter dynamics in the 2024 U.S. Presidential Election.
+The remainder of this paper is structured as follows. In Section 2, we describe the data and variables used in the analysis. Section 3 outlines the model setup and estimation strategy. Section 4 presents the results, including the predicted election outcomes and visualizations. Finally, Section 5 discusses the implications and limitations of our findings
+
 
 # Data {#sec-data}
 ## Overview
@@ -127,7 +127,6 @@ The predictive variables for this paper are each candidate’s support rate (‘
 ```{r}
 #| label: tbl-outcomevar
 #| fig-cap: "Summary of fixed effects estimates from the Bayesian hierarchical models for both Donald Trump and Kamala Harris. The table includes the estimated coefficients, standard errors, and 95% confidence intervals for each predictor, illustrating how various factors influence polling percentages. The significant intercept and time-related variables are crucial for understanding candidate support dynamics over the election period."
-
 #| echo: false
 #| warning: false
 #| message: false
@@ -378,8 +377,8 @@ state_predictions <- state_predictions %>%
 # Print results in table
 kable(state_predictions, 
       col.names = c("State", 
-                    "Predicted Harris Win (%)", 
                     "Predicted Trump Win (%)", 
+                    "Predicted Harris Win (%)", 
                     "Predicted Winner")) %>%
   kable_styling("striped", full_width = F)
 
