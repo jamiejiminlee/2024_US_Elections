@@ -1,6 +1,6 @@
 ---
-title: "Predicting a Trump Victory: A State-Level Analysis of the 2024 US Presidential Election Using Bayesian Modeling"
-subtitle: "State-by-State Insights on Voter Dynamics Favoring Trump Over Harris in Key Battlgrounds"
+title: "Predicting the 2024 U.S. Presidential Election: Trump’s Likely Victory Based on Polling Analysis"
+subtitle: "A Bayesian Approach Reveals Strong Support for Donald Trump Across Key States, Highlighting Critical Trends in Voter Preferences Leading Up to Election Day"
 author: 
   - Jimin Lee
   - Sarah Ding
@@ -204,42 +204,13 @@ The inclusion of a natural spline for time allows us to model non-linear changes
 
 This model assumes that polling data reasonably reflects voter intentions and that each state’s outcome can be modeled independently of others, though regional trends are partially addressed by state-level random effects. Potential biases inherent in polling data, such as underrepresented demographics or sampling error, could affect our predictions. The model was implemented in R using the brms package, which provides Bayesian inference via Stan, allowing for flexible, probabilistic predictions of each candidate's support across states.
 
-## Model Summary Results
+## Model Summary - Harris Model
 ```{r}
 #| echo: false
 #| eval: true
-#| label: tbl-fixed-effects-summary
-#| tbl-cap: "Fixed Effects Summary for Trump and Harris Models."
+#| label: tbl-harris-fixed-effects
+#| tbl-cap: "Fixed Effects Summary for Harris Model."
 #| warning: false
-
-# Load necessary libraries
-library(dplyr)
-library(broom)        # For the tidy function
-library(knitr)
-library(kableExtra)
-
-#| echo: false
-#| eval: true
-#| label: tbl-fixed-effects-summary
-#| tbl-cap: "Fixed Effects Summary for Trump and Harris Models."
-#| warning: false
-
-# Load necessary libraries
-library(dplyr)
-library(broom)        # For the tidy function
-library(knitr)
-library(kableExtra)
-
-# Summarize fixed effects for Trump model
-trump_summary <- tidy(trump_model, effects = "fixed", conf.int = TRUE) %>%
-  select(term, estimate, std.error, conf.low, conf.high) %>%
-  rename(
-    Estimate = estimate,
-    `Std. Error` = std.error,
-    `Lower 95% CI` = conf.low,
-    `Upper 95% CI` = conf.high
-  ) %>%
-  mutate(term = gsub("[^[:alnum:] ]", "", term))  # Remove non-alphanumeric characters
 
 # Summarize fixed effects for Harris model
 harris_summary <- tidy(harris_model, effects = "fixed", conf.int = TRUE) %>%
@@ -250,16 +221,41 @@ harris_summary <- tidy(harris_model, effects = "fixed", conf.int = TRUE) %>%
     `Lower 95% CI` = conf.low,
     `Upper 95% CI` = conf.high
   ) %>%
-  mutate(term = gsub("[^[:alnum:] ]", "", term))  # Remove non-alphanumeric characters
+  mutate(term = gsub("[^[:alnum:] ]", "", term))  # Clean up term names
 
-# Combine summaries into one table
-model_summary_table <- full_join(trump_summary, harris_summary, by = "term", suffix = c(" Trump", " Harris"))
-
-# Display the table with kable
-kable(model_summary_table, caption = "Fixed Effects Summary for Trump and Harris Models") %>%
-  kable_styling(full_width = FALSE, position = "center", font_size = 8)
+# Display the Harris model summary table
+knitr::kable(harris_summary) %>%
+  kable_styling(full_width = FALSE, position = "center")
 
 ```
+
+EDIT - explain model summary table
+
+## Model summary - Trump Model
+```{r}
+#| echo: false
+#| eval: true
+#| label: tbl-trump-fixed-effects
+#| tbl-cap: "Fixed Effects Summary for Trump Model."
+#| warning: false
+
+# Summarize fixed effects for Trump model
+trump_summary <- tidy(trump_model, effects = "fixed", conf.int = TRUE) %>%
+  select(term, estimate, std.error, conf.low, conf.high) %>%
+  rename(
+    Estimate = estimate,
+    `Std. Error` = std.error,
+    `Lower 95% CI` = conf.low,
+    `Upper 95% CI` = conf.high
+  ) %>%
+  mutate(term = gsub("[^[:alnum:] ]", "", term))  # Clean up term names
+
+# Display the Trump model summary table
+knitr::kable(trump_summary) %>%
+  kable_styling(full_width = FALSE, position = "center")
+```
+
+EDIT - explain model summary table
 
 # Results {#sec-results}
 
@@ -297,6 +293,7 @@ ggplot(national_trend, aes(x = date)) +
 
 
 ```
+EDIT - explain results on graph
 
 ## State Level Support Trends Over Time
 ```{r}
@@ -338,14 +335,54 @@ ggplot(state_predictions, aes(x = end_date)) +
 
 
 ```
-## Election Day Predictions
-
-
-
-
+EDIT - explain results on graph
 
 
 ## Probability of Winning by State on Election Day 
+
+
+```{r}
+#| echo: false
+#| eval: true
+#| label: tbl-state-probabilities
+#| fig-cap: "Probability of Trump Winning by State on Election Day."
+#| warning: false
+
+# Set election day or target prediction date
+election_day <- as.Date("2024-11-05")  # Example election day
+
+# Predict probability of Trump and Harris winning by comparing posterior predictions for each state
+state_predictions <- clean_poll_data %>%
+  distinct(state) %>%
+  mutate(end_date = election_day, end_date_num = as.numeric(election_day - min(clean_poll_data$end_date)))
+
+# Calculate probabilities of Trump and Harris winning in each state
+state_predictions <- state_predictions %>%
+  rowwise() %>%
+  mutate(
+    prob_trump_wins = mean(posterior_predict(trump_model, newdata = cur_data()) > 
+                           posterior_predict(harris_model, newdata = cur_data())),
+    prob_harris_wins = mean(posterior_predict(harris_model, newdata = cur_data()) > 
+                            posterior_predict(trump_model, newdata = cur_data()))
+  )
+
+# Prepare the state predictions for the table
+state_summary_table <- state_predictions %>%
+  select(state, prob_trump_wins, prob_harris_wins) %>%
+  mutate(
+    prob_trump_wins = round(prob_trump_wins * 100, 2),  # Convert to percentage and round
+    prob_harris_wins = round(prob_harris_wins * 100, 2)  # Convert to percentage and round
+  )
+
+
+# Display state predictions i n table
+knitr::kable(state_summary_table) %>%
+  kable_styling(full_width = FALSE, position = "center")
+
+```
+
+
+EDIT - explain table results
 
 
 ```{r}
@@ -355,34 +392,28 @@ ggplot(state_predictions, aes(x = end_date)) +
 #| fig-cap: "Probability of Trump Winning by State on Election Day."
 #| warning: false
 
-# Set election day or target prediction date
-election_day <- as.Date("2024-11-05")  # Example election day
+# Reshape the data for plotting
+state_predictions_long <- state_predictions %>%
+  select(state, prob_trump_wins, prob_harris_wins) %>%
+  pivot_longer(cols = starts_with("prob"), 
+               names_to = "Candidate", 
+               values_to = "Probability") %>%
+  mutate(Candidate = recode(Candidate, 
+                            prob_trump_wins = "Trump", 
+                            prob_harris_wins = "Harris"))
 
-# Predict probability of Trump winning by comparing posterior predictions for each state
-state_predictions <- clean_poll_data %>%
-  distinct(state) %>%
-  mutate(end_date = election_day, end_date_num = as.numeric(election_day - min(clean_poll_data$end_date)))
-
-# Calculate probability of Trump winning in each state
-state_predictions <- state_predictions %>%
-  rowwise() %>%
-  mutate(
-    prob_trump_wins = mean(posterior_predict(trump_model, newdata = cur_data()) >
-                           posterior_predict(harris_model, newdata = cur_data()))
-  )
-
-# Plot probability of winning by state
-ggplot(state_predictions, aes(x = reorder(state, prob_trump_wins), y = prob_trump_wins, fill = prob_trump_wins > 0.5)) +
-  geom_col() +
-  coord_flip() +
-  scale_fill_manual(values = c("TRUE" = "red", "FALSE" = "blue"), labels = c("Harris", "Trump")) +
-  labs(title = "Probability of Trump Winning by State on Election Day", x = "State", y = "Probability Trump Wins") +
+# Plot double bar graph of predicted winning percentages by state
+ggplot(state_predictions_long, aes(x = reorder(state, Probability), y = Probability * 100, fill = Candidate)) +
+  geom_col(position = "dodge") +  # Use dodge for side-by-side bars
+  coord_flip() +  # Flip coordinates for better readability
+  scale_fill_manual(values = c("Trump" = "red", "Harris" = "blue")) +
+  labs(title = "Predicted Winning Percentages by State on Election Day", 
+       x = "State", 
+       y = "Winning Probability (%)") +
   theme_minimal() +
-  theme(legend.position = "none")
-
+  theme(legend.position = "right")
 ```
-
-
+EDIT - explain graph results
 
 ## US Map Showing Predicted Winner by State on Election Day
 
@@ -407,6 +438,7 @@ plot_usmap(data = state_predictions, values = "predicted_winner", regions = "sta
 
 ```
 
+EDIT - explain map results
 
 # Discussion {#sec-discussion}
 
