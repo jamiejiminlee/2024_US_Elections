@@ -89,7 +89,7 @@ The collected dataset contains several key variables relevant to the analysis:
 To ensure the quality of the analysis, only those polls that meet specific thresholds were included - refer to [@sec-appendix].
 
 ### Outcome Variable
-Outcome variable is 'pct'
+As our focus is to analyze and predict voter support for Kamala Harris and Donald Trump during the current presidential election cycle, the primary outcome variables of interest are the percentages of support for each candidate, denoted as ‘pct’.The pct is categorized by candidate and scaled to a proportion by diving by 100. This variable represents the proportion of voter support for each candidate based on polling data. Through understanding the percentage of support (pct) for each candidate, we can observe and infer the candidate that has a leading advantage in winning the presidential election race. 
 
 To give an overview of the outcome variable, divided per candidate, we provide summary statistics of this key variable, highlighting the characteristics of the polling support for each candidate across the battleground states.
 ```{r}
@@ -125,8 +125,9 @@ kable(summary_statistics_long) %>%
   kable_styling(full_width = FALSE, position = "center")
 
 ```
+For instance, @fig-summarystatistics reveals a total of 107 polls conducted, calculated as the total count of rows in our cleaned dataset. ‘Total polls’ reflects the total number of unique poll entries after filtering for only battleground states, polls with sufficient data quality, and polls that report support percentages for both Trump and Harris. The 107 polls conducted display an average support level of 47.801% for Trump and 47.999% for Harris. This suggests that based on the dataset, Trump has a leading advantage in winning the presidential election race by having a slighty higher average level of support than Harris. The highest percentage of support for Trump in the 107 polls was 51.700% while the lowest recorded support was 43%. For Harris, the highest percentage of support also reached 51.200%, with a minimum of 43.600%. These statistics illustrate the competitive landscape of the presidential election race, without a clear leading candidate in the current race.
 
-
+It is important to note that since ‘pct’ stands for percentage, there may be a misconception that the values for Trump and Harris will always add up to 100%. For instance, in the summary statistics presented in Table 1, the average support for Donald Trump is 47.801%, while the average support for Kamala Harris is 47.999%. This results in a combined average support of 95.800%, indicating that there is a significant portion of respondents who are either undecided or supporting other candidates. This highlights the competitive nature of the election and emphasizes the necessity of examining not only the percentages attributed to the main candidates but also the context of voter preferences that could influence the final outcome.
 
 ### Predictive Variables
 The predictive variables is 'state' 
@@ -284,9 +285,9 @@ Data preparation involved creating two distinct datasets from the cleaned pollin
 
 We implemented the models using the **`brms`** package in R, selecting a **Beta distribution** with a **logit link function** to accurately model the proportions of support for each candidate:
 
-\[
+$$
 y_i \sim \text{Beta}(\mu_i, \phi)
-\]
+$$
 
 In this model:
 
@@ -315,8 +316,8 @@ harris_model <-
 
 The decision to utilize Bayesian logistic regression models stems from their flexibility and the ability to incorporate prior beliefs into the estimation process. This approach is particularly valuable in the context of electoral forecasting, where uncertainty is a significant factor. We defined the following priors for the model parameters:
 
-- For the intercept \(\beta_0\), we specified \( \beta_0 \sim \text{Normal}(0, 10)\), providing a relatively uninformative prior that allows the data to inform the estimation of baseline log-odds.
-- For the slope \(\beta_1\), we used \( \beta_1 \sim \text{Normal}(0, 5)\), reflecting reasonable expectations regarding the influence of polling trends over time.
+- For the intercept $\beta_0$, we specified $\beta_0 \sim \text{Normal}(0, 10)$, providing a relatively uninformative prior that allows the data to inform the estimation of baseline log-odds.
+- For the slope $\beta_1$, we used $\beta_1 \sim \text{Normal}(0, 5)$, reflecting reasonable expectations regarding the influence of polling trends over time.
 
 Natural splines were chosen to model the effect of the end date due to the observed nonlinearities in voter support, allowing the model to adapt to changing public opinion. Key assumptions include the independence of observations within states and the appropriateness of the Beta distribution for modeling proportions. However, potential limitations include the reliance on the accuracy of polling data and the assumption that historical voting patterns are indicative of future behavior.
 
@@ -345,7 +346,7 @@ knitr::kable(harris_summary) %>%
 
 ```
 
-The model summary for Kamala Harris indicates that the intercept estimate is \(-0.1508\) with a standard error of \(0.0279\). This intercept value suggests a negative baseline log-odds for her victory, reflecting the starting point of her support in the absence of any other predictors. The model shows that the coefficients for the natural spline terms (\(nsenddatenum\)) are particularly informative, with the first spline term (\(nsendatenum\_df41\)) yielding a positive estimate of \(0.1225\), suggesting that as time progresses, Harris’s probability of winning increases, particularly during key moments captured by the polling data. This is also reflected in the confidence intervals, with the upper limit of the confidence interval for this term reaching \(0.1903\). In contrast, the estimates for the second spline term (\(nsenddatenum\_df42\)) indicate a smaller effect, suggesting fluctuations in her support that may w
+The model summary for Kamala Harris indicates that the intercept estimate is $-0.1508$ with a standard error of $0.0279$. This intercept value suggests a negative baseline log-odds for her victory, reflecting the starting point of her support in the absence of any other predictors. The model shows that the coefficients for the natural spline terms ($nsendate_{num}$) are particularly informative, with the first spline term ($nsendate_{num\_df41}$) yielding a positive estimate of $0.1225$, suggesting that as time progresses, Harris’s probability of winning increases, particularly during key moments captured by the polling data. This is also reflected in the confidence intervals, with the upper limit of the confidence interval for this term reaching $0.1903$. In contrast, the estimates for the second spline term ($nsendate_{num\_df42}$) indicate a smaller effect, suggesting fluctuations in her support that may warrant further investigation.
 
 
 ## Model summary - Trump Model
@@ -372,10 +373,9 @@ knitr::kable(trump_summary) %>%
   kable_styling(full_width = FALSE, position = "center")
 ```
 
-In comparison, the model summary for Donald Trump presents a different picture. The intercept for Trump's model is \(-0.0923\) with a standard error of \(0.0306\), indicating a similarly negative baseline log-odds of victory as Harris. However, Trump's model demonstrates more pronounced increases in support as reflected by the estimates for the natural spline terms. For example, the second spline term (\(nsenddatenum\_df42\)) has a positive coefficient of \(0.0803\), highlighting a significant upward trend in support over time. This trend is further supported by the confidence interval, which ranges from \(0.0179\) to \(0.1426\), indicating a substantial increase in his predicted probabilities as the election approaches. The fourth spline term (\(nsenddatenum\_df44\)) also shows a positive coefficient (\(0.0789\)), suggesting that the support for Trump remains resilient over the polling period. Overall, both models reveal complex interactions between time and voter sentiment, with implications for the electoral dynamics leading up to the election.
+In comparison, the model summary for Donald Trump presents a different picture. The intercept for Trump's model is $-0.0923$ with a standard error of $0.0306$, indicating a similarly negative baseline log-odds of victory as Harris. However, Trump's model demonstrates more pronounced increases in support as reflected by the estimates for the natural spline terms. For example, the second spline term ($nsendate_{num\_df42}$) has a positive coefficient of $0.0803$, highlighting a significant upward trend in support over time. This trend is further supported by the confidence interval, which ranges from $0.0179$ to $0.1426$, indicating a substantial increase in his predicted probabilities as the election approaches. The fourth spline term ($nsendate_{num\_df44}$) also shows a positive coefficient of $0.0789$, suggesting that the support for Trump remains resilient over the polling period. Overall, both models reveal complex interactions between time and voter sentiment, with implications for the electoral dynamics leading up to the election.
 
 # Results {#sec-results}
-
 ## State-Level Polling Averages for Trump and Harris
 WRITE - explain why we are showing this average table first and what the table reveals
 ```{r}
