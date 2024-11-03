@@ -130,7 +130,8 @@ For instance, @tbl-outcomevar reveals a total of 107 polls conducted, calculated
 It is important to note that since ‘pct’ stands for percentage, there may be a misconception that the values for Trump and Harris will always add up to 100%. For instance, in the summary statistics presented in Table 1, the average support for Donald Trump is 47.801%, while the average support for Kamala Harris is 47.999%. This results in a combined average support of 95.800%, indicating that there is a significant portion of respondents who are either undecided or supporting other candidates. This highlights the competitive nature of the election and emphasizes the necessity of examining not only the percentages attributed to the main candidates but also the context of voter preferences that could influence the final outcome.
 
 ### Predictive Variables
-The predictive variables is 'state' 
+#### State
+The state variable indicates the U.S. state where the poll was conducted or targeted. In the context of the U.S. presidential election, the outcome is frequently determined by several key states. In the current 2024 election cycle, there are seven battleground states that are pivotal in the contest between Kamala Harris, representing the Democratic Party, and Donald Trump, representing the Republican Party. To enhance our model and refine our predictions, we focused exclusively on these seven battleground states. The polling results from each of these states play a crucial role in predicting electoral outcomes, as the percentage of support is evaluated on a state-by-state basis.
 ```{r}
 #| echo: false
 #| warning: false
@@ -153,7 +154,9 @@ ggplot(clean_poll_data, aes(x = state)) +
     plot.title = element_text(hjust = 0.5)  # Center the plot title
   )
 ```
+The distribution of the state variable is visualized in @fig-state-distribution and indicates that some states, such as Pennsylvania, North Carolina and Wisconsin have more polling observations compared to others, like Nevada. This variability reflects differences in polling frequency and interest among these battleground states. States with more polling observations provide a larger sample size, potentially leading to more stable and reliable predictions for those states in the model. 
 
+#### End Date
 Another predictive variable is 'end-date'
 ```{r}
 #| echo: false
