@@ -52,8 +52,9 @@ The remainder of this paper is structured as follows. In Section 2, we describe 
 
 # Data {#sec-data}
 ## Overview
-NEEDS EDIT & ELABORATE - This paper utilizes the dataset of the 2024 Presidential Election cycle, obtained from [@FiveThirtyEight]. The dataset is periodically updated throughout the presidential election campaign to reflect current and most up-to-date polling results. It consists of polling information from various pollsters such as the New York Times, ActiVote, Morning Consult, etc. For every pollster, relevant variables such as state, polling date, transparency score, candidate name, and percentage of support for the appropriate candidate are included. The dataset compiles data from all major pollsters in the US and provides us with an understanding of the current state of the presidential election. 
+The dataset of the 2024 Presidential Election cycle is obtained from Project 538 (cite). The dataset is periodically updated throughout the presidential election campaign to reflect current and most up-to-date polling results. It consists of polling information from various pollsters such as the New York Times, ActiVote, Morning Consult, etc. For every poll conducted, relevant variables such as state, start_date, end_date, transparency_score, candidate_name, and percentage of support (pct) for the appropriate candidates are included. The dataset compiles data from all major pollsters in the US and provides us with an understanding of the current state of the presidential election. 
 
+The paper focuses on Donald Trump and Kamala Harris, the two leading candidates in the current presidential election race. For all the following variables mentioned, we collected observations for both of the candidates. We collect observations from the dataset where the ‘candidate_name’ is Trump and Harris. We are interested in the support for both candidates over time, for each state, therefore, we collect observations of ‘end_date’, and ‘state’, as well as the electorate support for each candidate is denoted as ‘pct’. Furthermore, since there are many pollsters present in the dataset, we extracted pollsters with high-quality data that is reliable, which is denoted as having a high ‘numeric_grade’ and ‘transparency_score’, details of data cleaning are further explained in {additional data details}. 
 
 ## Measurement
 In the current presidential election cycle,  Americans’ opinions on voting for their preferred candidate are transformed into data points through a series of steps that involve surveying, data processing, and structuring responses. Pollsters then store these responses in structured databases for analysis. In the dataset obtained from Project 538, each entry in the dataset corresponds to a poll conducted by each pollster, capturing the percentage of respondents who express support for each candidate. Each pollster has different approaches to sampling respondents, recruiting respondents, as well as questionnaire types, which affects each pollster’s reliability and data quality. 
@@ -93,7 +94,7 @@ Outcome variable is 'pct'
 To give an overview of the outcome variable, divided per candidate, we provide summary statistics of this key variable, highlighting the characteristics of the polling support for each candidate across the battleground states.
 ```{r}
 #| label: tbl-outcomevar
-#| fig-cap: "Summary Statistics for Trump and Harris Polling Data. This table presents key summary statistics, including total polls, average support percentages, and the maximum and minimum polling levels for both candidates across the specified battleground states. All values are rounded to three decimal places, providing an overview of the polling landscape as of the selected election date."
+#| fig-cap: "Summary Statistics for Trump and Harris Polling Data - Presents key summary statistics, including total polls, average support percentages, and the maximum and minimum polling levels for both candidates across the specified battleground states. All values are rounded to three decimal places, providing an overview of the polling landscape as of the selected election date."
 #| echo: false
 #| warning: false
 #| message: false
@@ -273,20 +274,27 @@ P(\text{Victory}_i) = \frac{e^{\beta_0 + \beta_1 \cdot \text{end\_date\_num}_i +
 $$
 
 Where:
-- \(P(\text{Victory}_i)\) is the predicted probability of winning for candidate \(i\).
-- \(\beta_0\) represents the intercept, reflecting the baseline log-odds of winning.
-- \(\beta_1\) is the coefficient for the natural spline transformation of the numeric end date (\( \text{end\_date\_num}_i \)), capturing nonlinear trends in voter support over time.
-- \(u_{\text{state}}\) is the random effect associated with each state, accounting for variations in voter preferences.
+
+- \( P(\text{Victory}_i) \) is the predicted probability of winning for candidate \( i \).
+- \( \beta_0 \) represents the intercept, reflecting the baseline log-odds of winning.
+- \( \beta_1 \) is the coefficient for the natural spline transformation of the numeric end date \( (\text{end\_date\_num}_i) \), capturing nonlinear trends in voter support over time.
+- \( u_{\text{state}} \) is the random effect associated with each state, accounting for variations in voter preferences.
 
 Data preparation involved creating two distinct datasets from the cleaned polling data: one for Donald Trump and another for Kamala Harris. Each dataset included the state, end date, and corresponding polling percentage, with the end date converted into a numeric format representing the number of days since the earliest date in the dataset. This allows the model to effectively capture the evolving nature of voter sentiment as the election approaches.
 
-We implemented the models using the `brms` package in R, selecting a Beta distribution with a logit link function to accurately model the proportions of support for each candidate:
+We implemented the models using the **`brms`** package in R, selecting a **Beta distribution** with a **logit link function** to accurately model the proportions of support for each candidate:
 
 \[
 y_i \sim \text{Beta}(\mu_i, \phi)
 \]
 
-Here, \(y_i\) represents the proportion of support for candidate \(i\) in a given state.
+In this model:
+
+- \(y_i\) represents the proportion of support for candidate \(i\) in a given state.
+- \(\mu_i\) is the mean of the Beta distribution, reflecting the expected support proportion.
+- \(\phi\) is the precision parameter, indicating the variability around the mean.
+
+This approach allows us to effectively capture the dynamics of voter support in various states as we approach the election.
 
 ```{r}
 #| echo: false
