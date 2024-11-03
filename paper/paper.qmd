@@ -284,77 +284,38 @@ EDIT - explain model summary table
 
 # Results {#sec-results}
 
-## National Support Trends Over Time
-
-```{r}
-#| echo: false
-#| eval: true
-#| label: fig-national-trend
-#| fig-cap: "National Support Trends Over Time for the 2024 U.S. Presidential Election. The plot displays the predicted national average support for Donald Trump (red) and Kamala Harris (blue) over time, based on a Bayesian hierarchical model with a natural spline fit. The trends show changes in polling support for both candidates throughout 2024, highlighting key shifts in public opinion as the election approaches."
-#| warning: false
-
-# Generate a sequence of dates for national predictions
-prediction_dates <- seq.Date(min(clean_poll_data$end_date), max(clean_poll_data$end_date), by = "1 week")
-
-# Predict national support for each date
-national_trend <- prediction_dates %>%
-  map_dfr(~ {
-    data <- data.frame(state = unique(clean_poll_data$state), end_date = .x)
-    data$end_date_num <- as.numeric(data$end_date - min(clean_poll_data$end_date))
-    
-    trump_pred <- mean(posterior_predict(trump_model, newdata = data))
-    harris_pred <- mean(posterior_predict(harris_model, newdata = data))
-    
-    tibble(date = .x, Trump = trump_pred, Harris = harris_pred)
-  })
-
-# Plot national support trends
-ggplot(national_trend, aes(x = date)) +
-  geom_line(aes(y = Trump, color = "Trump")) +
-  geom_line(aes(y = Harris, color = "Harris")) +
-  labs(title = "National Support Trends Over Time", y = "Predicted Support", x = "Date") +
-  scale_color_manual(values = c("Trump" = "red", "Harris" = "blue")) +
-  theme_minimal()
-
-
-```
-EDIT - explain results on graph
-
 ## State Level Support Trends Over Time
 ```{r}
 #| echo: false
 #| eval: true
-#| label: fig-state-trend
-#| fig-cap: "State-Level Support Trends for Trump and Harris Over Time."
+#| label: fig-state-polling-average
+#| fig-cap: "Polling Averages for Trump and Harris Over Time in Battleground States."
 #| warning: false
 
 # Define battleground states
 battleground_states <- c("Arizona", "Georgia", "Michigan", "Nevada", 
                           "North Carolina", "Pennsylvania", "Wisconsin")
 
-# Generate predictions for each state and date
-state_dates <- seq.Date(min(clean_poll_data$end_date), max(clean_poll_data$end_date), by = "1 week")
-state_prediction_grid <- expand.grid(state = battleground_states, end_date = state_dates) %>%
-  mutate(end_date_num = as.numeric(end_date - min(clean_poll_data$end_date)))
-
-# Predict support for each state and date
-state_predictions <- state_prediction_grid %>%
-  rowwise() %>%
-  mutate(
-    Trump_Support = mean(posterior_predict(trump_model, newdata = cur_data())),
-    Harris_Support = mean(posterior_predict(harris_model, newdata = cur_data()))
+# Calculate average polling percentages over time for battleground states
+polling_average <- clean_poll_data %>%
+  filter(state %in% battleground_states) %>%
+  group_by(end_date, state) %>%
+  summarise(
+    Average_Trump = mean(Trump_pct, na.rm = TRUE),
+    Average_Harris = mean(Harris_pct, na.rm = TRUE),
+    .groups = 'drop'
   )
 
-# Plot state-level support trends over time with adjusted x-axis labels
-ggplot(state_predictions, aes(x = end_date)) +
-  geom_line(aes(y = Trump_Support, color = "Trump")) +
-  geom_line(aes(y = Harris_Support, color = "Harris")) +
-  labs(title = "State-Level Support Trends for Trump and Harris Over Time (Battleground States)", 
-       y = "Predicted Support", 
+# Plot polling averages over time for each battleground state
+ggplot(polling_average, aes(x = end_date)) +
+  geom_line(aes(y = Average_Trump, color = "Trump")) +
+  geom_line(aes(y = Average_Harris, color = "Harris")) +
+  labs(title = "Polling Averages for Trump and Harris Over Time in Battleground States", 
+       y = "Average Support (%)", 
        x = "Date") +
   facet_wrap(~ state) +
   scale_color_manual(values = c("Trump" = "red", "Harris" = "blue")) +
-  scale_x_date(date_labels = "%b %Y", date_breaks = "3 months") +  # Set date format and break frequency
+  scale_x_date(date_labels = "%b %Y", date_breaks = "1 month") +  # Set date format and break frequency
   theme_minimal() +
   theme(
     legend.position = "none",
@@ -365,6 +326,7 @@ ggplot(state_predictions, aes(x = end_date)) +
   )
 
 ```
+
 EDIT - explain results on graph
 
 
