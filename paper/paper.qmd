@@ -32,6 +32,9 @@ library(splines)
 library(kableExtra)
 library(broom.mixed)
 library(brms)
+
+# Load cleaned data
+clean_poll_data <- read_parquet("/Users/jamielee/2024_US_Elections/data/02-analysis_data/analysis_data.parquet")
 ```
 
 
@@ -51,43 +54,6 @@ The remainder of this paper is structured as follows. In Section 2, we describe 
 ## Overview
 NEEDS EDIT & ELABORATE - This paper utilizes the dataset of the 2024 Presidential Election cycle, obtained from [@FiveThirtyEight]. The dataset is periodically updated throughout the presidential election campaign to reflect current and most up-to-date polling results. It consists of polling information from various pollsters such as the New York Times, ActiVote, Morning Consult, etc. For every pollster, relevant variables such as state, polling date, transparency score, candidate name, and percentage of support for the appropriate candidate are included. The dataset compiles data from all major pollsters in the US and provides us with an understanding of the current state of the presidential election. 
 
-To give an overview of the data, we provide summary statistics of the key variables, highlighting the characteristics of the polling support for each candidate across the battleground states.
-```{r}
-#| label: tbl-outcomevar
-#| fig-cap: "Summary Statistics for Trump and Harris Polling Data. This table presents key summary statistics, including total polls, average support percentages, and the maximum and minimum polling levels for both candidates across the specified battleground states. All values are rounded to three decimal places, providing an overview of the polling landscape as of the selected election date."
-#| echo: false
-#| warning: false
-#| message: false
-
-# Load cleaned data
-clean_poll_data <- read_parquet("/Users/jamielee/2024_US_Elections/data/02-analysis_data/analysis_data.parquet")
-
-# Summary statistics for the relevant columns in clean_poll_data
-summary_statistics <- clean_poll_data %>%
-  summarize(
-    `Total Polls` = n(),
-    `Average Trump Support` = round(mean(Trump_pct, na.rm = TRUE), 3),
-    `Max Trump Support` = round(max(Trump_pct, na.rm = TRUE), 3),
-    `Min Trump Support` = round(min(Trump_pct, na.rm = TRUE), 3),
-    
-    `Average Harris Support` = round(mean(Harris_pct, na.rm = TRUE), 3),
-    `Max Harris Support` = round(max(Harris_pct, na.rm = TRUE), 3),
-    `Min Harris Support` = round(min(Harris_pct, na.rm = TRUE), 3)
-  )
-
-# Reshape the summary statistics to a vertical format
-summary_statistics_long <- pivot_longer(
-  summary_statistics,
-  cols = everything(),
-  names_to = "Statistic",
-  values_to = "Value"
-)
-
-# Display vertical summary statistics in a kable table
-kable(summary_statistics_long) %>%
-  kable_styling(full_width = FALSE, position = "center")
-
-```
 
 ## Measurement
 In the current presidential election cycle,  Americans’ opinions on voting for their preferred candidate are transformed into data points through a series of steps that involve surveying, data processing, and structuring responses. Pollsters then store these responses in structured databases for analysis. In the dataset obtained from Project 538, each entry in the dataset corresponds to a poll conducted by each pollster, capturing the percentage of respondents who express support for each candidate. Each pollster has different approaches to sampling respondents, recruiting respondents, as well as questionnaire types, which affects each pollster’s reliability and data quality. 
@@ -122,53 +88,176 @@ The collected dataset contains several key variables relevant to the analysis:
 To ensure the quality of the analysis, only those polls that meet specific thresholds were included - refer to [@sec-appendix].
 
 ### Outcome Variable
+Outcome variable is 'pct'
+
+To give an overview of the outcome variable, divided per candidate, we provide summary statistics of this key variable, highlighting the characteristics of the polling support for each candidate across the battleground states.
+```{r}
+#| label: tbl-outcomevar
+#| fig-cap: "Summary Statistics for Trump and Harris Polling Data. This table presents key summary statistics, including total polls, average support percentages, and the maximum and minimum polling levels for both candidates across the specified battleground states. All values are rounded to three decimal places, providing an overview of the polling landscape as of the selected election date."
+#| echo: false
+#| warning: false
+#| message: false
+
+# Summary statistics for the relevant columns in clean_poll_data
+summary_statistics <- clean_poll_data %>%
+  summarize(
+    `Total Polls` = n(),
+    `Average Trump Support` = round(mean(Trump_pct, na.rm = TRUE), 3),
+    `Max Trump Support` = round(max(Trump_pct, na.rm = TRUE), 3),
+    `Min Trump Support` = round(min(Trump_pct, na.rm = TRUE), 3),
+    
+    `Average Harris Support` = round(mean(Harris_pct, na.rm = TRUE), 3),
+    `Max Harris Support` = round(max(Harris_pct, na.rm = TRUE), 3),
+    `Min Harris Support` = round(min(Harris_pct, na.rm = TRUE), 3)
+  )
+
+# Reshape the summary statistics to a vertical format
+summary_statistics_long <- pivot_longer(
+  summary_statistics,
+  cols = everything(),
+  names_to = "Statistic",
+  values_to = "Value"
+)
+
+# Display vertical summary statistics in a kable table
+kable(summary_statistics_long) %>%
+  kable_styling(full_width = FALSE, position = "center")
+
+```
 
 
+
+### Predictive Variables
+The predictive variables is 'state' 
 ```{r}
 #| echo: false
 #| warning: false
 #| message: false
-#| label: tbl-stateaverage
-#| fig-cap: "Table displaying the percentage of support for Donald Trump and Kamala Harris across key battleground states in the lead-up to the 2024 United States Presidential Election. The table lists states with their respective support percentages, highlighting the competitive landscape as voters prepare to make their decisions on Election Day. Notably, Trump maintains a slight lead in states such as Arizona and Georgia, while Harris shows stronger support in states like Michigan and Nevada. This data provides insight into the current polling dynamics and potential electoral outcomes in these critical states."
+#| label: fig-state-distribution
+#| fig-cap: "Bar plot showing the distribution of observations across key battleground states in the 2024 United States Presidential Election polling data. The plot illustrates the count of polling observations for each state, highlighting states with more frequent polling activity. This visualization aids in understanding the level of engagement and data collection in each battleground state leading up to the election."
 
-  
-# Aggregating polling percentages for Trump and Harris by state
-state_average <- clean_poll_data %>%
-   group_by(state) %>%
-   summarise(
-     Trump_pct = mean(Trump_pct, na.rm = TRUE),
-     Harris_pct = mean(Harris_pct, na.rm = TRUE)
-   )
- 
- 
- # Prepare table for display with rounding to 1 decimal place
- average_table <- state_average |>
-   mutate(
-     Trump_pct = round(Trump_pct, 1),
-     Harris_pct = round(Harris_pct, 1)
-   ) |>
-   select(
-     State = state, 
-     "Trump %" = Trump_pct, 
-     "Harris %" = Harris_pct, 
-   ) 
- 
- # Render the table
- knitr::kable(average_table)
+
+# Visualize the distribution of the state variable
+ggplot(clean_poll_data, aes(x = state)) +
+  geom_bar(fill = "steelblue") +  # Bar plot with specified fill color
+  labs(
+    title = "Distribution of State Variable in Polling Data",
+    x = "State",
+    y = "Count of Observations"
+  ) +
+  theme_minimal() +  # Use a minimal theme
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),  # Rotate x-axis labels for better readability
+    plot.title = element_text(hjust = 0.5)  # Center the plot title
+  )
+```
+
+Another predictive variable is 'end-date'
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| label: fig-end-date-distribution
+#| fig-cap: "Histogram illustrating the distribution of polling end dates for key battleground states in the lead-up to the 2024 United States Presidential Election. The histogram shows the frequency of polls conducted over time, providing insight into the timing of polling activities and potential trends in voter sentiment as Election Day approaches. This visualization is crucial for understanding how polling data correlates with the election timeline."
+
+# Visualize the distribution of end_date
+ggplot(clean_poll_data, aes(x = end_date)) +
+  geom_histogram(binwidth = 5, fill = "steelblue", color = "white") +  # Histogram with specified binwidth
+  labs(
+    title = "Distribution of Polling End Dates",
+    x = "End Date",
+    y = "Count of Polls"
+  ) +
+  scale_x_date(date_labels = "%b %d, %Y", date_breaks = "1 week") +  # Format date labels and breaks
+  theme_minimal() +  # Use a minimal theme
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),  # Rotate x-axis labels for better readability
+    plot.title = element_text(hjust = 0.5)  # Center the plot title
+  )
+
+```
+
+###Other Variables
+
+'numeric grade'
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-numgrade-distribution
+#| fig-cap: "Histogram illustrating the distribution of polling end dates for key battleground states in the lead-up to the 2024 United States Presidential Election. Displays the frequency of polls conducted over time, providing insight into the timing of polling activities and potential trends in voter sentiment as Election Day approaches. This visualization is crucial for understanding how polling data correlates with the election timeline."
+
+# Density plot for numeric grade
+ggplot(clean_poll_data, aes(x = numeric_grade)) +
+  geom_density(fill = "lightgreen", alpha = 0.5) +
+  labs(
+       x = "Numeric Grade",
+       y = "Density") +
+  theme_minimal()
+
+```
+
+'transparency score'
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-transparency-score-distribution
+#| fig-cap: "Histogram illustrating the distribution of transparency scores for polls in key battleground states. Reveals the frequency of different transparency ratings, providing insight into the reliability of polling data. Understanding the distribution of transparency scores is crucial for evaluating the credibility of the polling results as Election Day approaches."
+
+# Distribution of transparency score
+ggplot(clean_poll_data, aes(x = transparency_score)) +
+  geom_histogram(binwidth = 1, fill = "orange", color = "black") +
+  labs(
+       x = "Transparency Score",
+       y = "Count") +
+  theme_minimal()
+
 ```
 
 
-### Predictive Var
-The predictive variable in our model are 'time' and 'state'
+'pollster'
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-pollster-distribution
+#| fig-cap: "Horizontal bar graph illustrating the distribution of polls by various pollsters in key battleground states. Displays the count of polls conducted by each pollster, highlighting the most frequently utilized polling organizations. Understanding the diversity of pollsters is essential for assessing the reliability and variance in polling data as Election Day approaches."
+
+# Horizontal bar graph for the distribution of pollsters
+ggplot(clean_poll_data, aes(x = factor(pollster))) +  # Convert to factor to ensure proper categorization
+  geom_bar(fill = "purple") +
+  labs(
+       x = "Count of Polls",
+       y = "Pollster") +  # Notice the labels are switched for horizontal orientation
+  theme_minimal() +
+  coord_flip() +  # Flip the coordinates for a horizontal bar graph
+  theme(axis.text.y = element_text(angle = 0, hjust = 1))  # Adjust y-axis text if necessary
+```
 
 
+'start_date'
+```{r}
+#| echo: false
+#| eval: true
+#| warning: false
+#| message: false
+#| label: fig-start-date-distribution
+#| fig-cap: "Histogram illustrating the distribution of polling start dates for key battleground states in the lead-up to the 2024 United States Presidential Election. This visualization displays the frequency of polls conducted over time, providing insights into when polling activities were initiated and potential trends in voter sentiment as Election Day approaches. Understanding the timing of polls is crucial for evaluating the relevance of the polling data."
 
 
-
-## Other Variables
-
-'numeric grade', 'transparency score', 'pollster'
-
+# Distribution of start_date with x-axis labels every 15 days
+ggplot(clean_poll_data, aes(x = start_date)) +
+  geom_histogram(bins = 30, fill = "lightblue", color = "black") +
+  labs(
+       x = "Start Date",
+       y = "Count") +
+  scale_x_date(date_breaks = "15 days", date_labels = "%b %d") +  # Adjust x-axis labels
+  theme_minimal()
+```
 
 # Model {#sec-model}
 
@@ -278,6 +367,41 @@ knitr::kable(trump_summary) %>%
 In comparison, the model summary for Donald Trump presents a different picture. The intercept for Trump's model is \(-0.0923\) with a standard error of \(0.0306\), indicating a similarly negative baseline log-odds of victory as Harris. However, Trump's model demonstrates more pronounced increases in support as reflected by the estimates for the natural spline terms. For example, the second spline term (\(nsenddatenum\_df42\)) has a positive coefficient of \(0.0803\), highlighting a significant upward trend in support over time. This trend is further supported by the confidence interval, which ranges from \(0.0179\) to \(0.1426\), indicating a substantial increase in his predicted probabilities as the election approaches. The fourth spline term (\(nsenddatenum\_df44\)) also shows a positive coefficient (\(0.0789\)), suggesting that the support for Trump remains resilient over the polling period. Overall, both models reveal complex interactions between time and voter sentiment, with implications for the electoral dynamics leading up to the election.
 
 # Results {#sec-results}
+
+## State-Level Polling Averages for Trump and Harris
+WRITE - explain why we are showing this average table first and what the table reveals
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| label: tbl-stateaverage
+#| fig-cap: "Table displaying the percentage of support for Donald Trump and Kamala Harris across key battleground states in the lead-up to the 2024 United States Presidential Election. The table lists states with their respective support percentages, highlighting the competitive landscape as voters prepare to make their decisions on Election Day. Notably, Trump maintains a slight lead in states such as Arizona and Georgia, while Harris shows stronger support in states like Michigan and Nevada. This data provides insight into the current polling dynamics and potential electoral outcomes in these critical states."
+
+  
+# Aggregating polling percentages for Trump and Harris by state
+state_average <- clean_poll_data %>%
+   group_by(state) %>%
+   summarise(
+     Trump_pct = mean(Trump_pct, na.rm = TRUE),
+     Harris_pct = mean(Harris_pct, na.rm = TRUE)
+   )
+ 
+ 
+ # Prepare table for display with rounding to 1 decimal place
+ average_table <- state_average |>
+   mutate(
+     Trump_pct = round(Trump_pct, 1),
+     Harris_pct = round(Harris_pct, 1)
+   ) |>
+   select(
+     State = state, 
+     "Trump %" = Trump_pct, 
+     "Harris %" = Harris_pct, 
+   ) 
+ 
+ # Render the table
+ knitr::kable(average_table)
+```
 
 ## Polling Averages for Trump and Harris Over Time in Battleground States
 @fit-state-polling-average provides a visual comparison of the current polling support for Donald Trump and Kamala Harris across key battleground states, tracked over time from August 2024 to October 2024. Each line plot represents the average polling percentages for both candidates in a specific state, with red lines denoting Trump’s support and blue lines representing Harris’s support. Across several states, there are noticeably increased fluctuations in polling averages for both candidates closer to the election particularly from late September to October. This pattern may indicate heightened voter interest and engagement as the election date approaches which is November 4th, 2024, it could also reflect changes in public opinion due to campaign events, political debates, or other external factors.
@@ -470,6 +594,8 @@ Another weakness of our model is the lack of consideration for the national vote
 # Appendix {-}
 
 # Additional Data Details
+
+
 Given the nature of the presidential election, the electoral college is more impactful and influential on the possible outcome compared to the nationwide popular votes. Therefore, the majority of the pollsters choose to focus on the battleground states to perform their polling, to gain more insight into the public sentiment specific to certain states. For instance, Sienna/NYT mentions that they have in-state interviewers who call their respondents in states such as Arizona, Georgia, Michigan, Nevada, Pennsylvania, and Wisconsin. 
 
 This could explain the discrepancies in our data, where there are many missing values from states other than the battleground ones. Furthermore, many pollsters focus on state-wide polls instead of nationwide polls given the nature of the election, resulting in fewer data points or missing data for nationwide poll results. Even though the national popular vote and the results in the electoral college don’t line up a lot of the time, the popular votes can still provide information about issues and opinions that are shaping the election as a whole. Therefore, even if we are focusing on selective states, results from other states and popular votes still remain relevant to outcome prediction. 

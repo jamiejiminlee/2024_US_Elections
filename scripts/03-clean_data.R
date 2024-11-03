@@ -44,12 +44,18 @@ clean_poll_data <- poll_data |>
 clean_poll_data <- clean_poll_data |>
   mutate(state = str_replace(state, "Nebraska CD-2", "Nebraska"))
 
-# Aggregate pct values by averaging for unique combinations before pivoting
+# Aggregate pct values by averaging for unique combinations, while keeping additional columns
 clean_poll_data <- clean_poll_data |>
-  group_by(state, end_date, end_date_num, candidate_name) |>
-  summarize(pct = mean(pct, na.rm = TRUE), .groups = "drop") |>
-  pivot_wider(names_from = candidate_name, values_from = pct, values_fill = 0) |>
-  rename(Trump_pct = `Donald Trump`, Harris_pct = `Kamala Harris`) |>
+  group_by(state, end_date, end_date_num) |>
+  summarize(
+    Trump_pct = mean(pct[candidate_name == "Donald Trump"], na.rm = TRUE),
+    Harris_pct = mean(pct[candidate_name == "Kamala Harris"], na.rm = TRUE),
+    start_date = first(start_date),
+    pollster = first(pollster),
+    numeric_grade = first(numeric_grade),
+    transparency_score = first(transparency_score),
+    .groups = "drop"
+  ) |>
   filter(Trump_pct > 0 & Harris_pct > 0)  # Retain rows with both candidates’ support data
 
 #### Save Data ####
