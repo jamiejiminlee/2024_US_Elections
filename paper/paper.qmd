@@ -397,7 +397,7 @@ EDIT - explain table results
 #| warning: false
 
 # Reshape the data for ggplot
-state_predictions_long <- predicted_results %>%
+state_predictions_long <- state_predictions %>%
   pivot_longer(cols = c(harris_pct, trump_pct), 
                names_to = "candidate", 
                values_to = "winning_probability") %>%
@@ -409,7 +409,7 @@ state_predictions_long <- predicted_results %>%
 ggplot(state_predictions_long, aes(x = state, y = winning_probability, fill = candidate)) +
   geom_bar(stat = "identity", position = "dodge") +
   coord_flip() +  # Flip coordinates for horizontal bars
-  scale_fill_manual(values = c("blue", "red")) +  # Specify colors
+  scale_fill_manual(values = c("red", "blue")) +  # Specify colors
   labs(title = "Predicted Winning Percentages by Battleground State on Election Day",
        x = "Winning Probability (%)",
        y = "State") +
