@@ -20,6 +20,7 @@ bibliography: references.bib
 #| warning: false
 #| message: false
 
+# Workplace SetUp
 library(tidyverse)
 library(janitor)
 library(lubridate)
@@ -99,7 +100,7 @@ To give an overview of the outcome variable, divided per candidate, we provide s
 #| warning: false
 #| message: false
 #| label: tbl-outcomevar
-#| fig-cap: "Summary Statistics for Trump and Harris Polling Data - Presents key summary statistics, including total polls, average support percentages, and the maximum and minimum polling levels for both candidates across the specified battleground states. All values are rounded to three decimal places, providing an overview of the polling landscape as of the selected election date."
+#| tbl-cap: "Summary Statistics for Trump and Harris Polling Data - Presents key summary statistics, including total polls, average support percentages, and the maximum and minimum polling levels for both candidates across the specified battleground states. All values are rounded to three decimal places, providing an overview of the polling landscape as of the selected election date."
 
 # Summary statistics for the relevant columns in clean_poll_data
 summary_statistics <- clean_poll_data %>%
@@ -389,7 +390,7 @@ WRITE - explain why we are showing this average table first and what the table r
 #| warning: false
 #| message: false
 #| label: tbl-stateaverage
-#| fig-cap: "Table displaying the percentage of support for Donald Trump and Kamala Harris across key battleground states in the lead-up to the 2024 United States Presidential Election. The table lists states with their respective support percentages, highlighting the competitive landscape as voters prepare to make their decisions on Election Day. Notably, Trump maintains a slight lead in states such as Arizona and Georgia, while Harris shows stronger support in states like Michigan and Nevada. This data provides insight into the current polling dynamics and potential electoral outcomes in these critical states."
+#| tbl-cap: "Table displaying the percentage of support for Donald Trump and Kamala Harris across key battleground states in the lead-up to the 2024 United States Presidential Election. The table lists states with their respective support percentages, highlighting the competitive landscape as voters prepare to make their decisions on Election Day. Notably, Trump maintains a slight lead in states such as Arizona and Georgia, while Harris shows stronger support in states like Michigan and Nevada. This data provides insight into the current polling dynamics and potential electoral outcomes in these critical states."
 
   
 # Aggregating polling percentages for Trump and Harris by state
@@ -529,7 +530,7 @@ These predictions are based on polling data collected up to October 19th, 2024 t
 #| echo: false
 #| eval: true
 #| label: tbl-state-probabilities
-#| fig-cap: "Probability of Trump Winning by State on Election Day."
+#| tbl-cap: "Probability of Trump Winning by State on Election Day."
 #| warning: false
 
 
