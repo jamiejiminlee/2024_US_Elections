@@ -8,17 +8,20 @@
 # Any other information needed? N/A
 
 
-#### Data Cleaning Script ####
-# Load necessary libraries
+# Load the necessary libraries
 library(tidyverse)
 library(janitor)
 library(lubridate)
+
+# Define battleground states
+battleground_states <- c("Arizona", "Georgia", "Michigan", "Nevada", 
+                         "North Carolina", "Pennsylvania", "Wisconsin")
 
 # Load the dataset
 poll_data <- read_csv("data/01-raw_data/raw_data.csv") |>
   clean_names()  
 
-# Filter and select relevant columns
+# Filter and select relevant columns, including only battleground states
 clean_poll_data <- poll_data |>
   select(state, end_date, pollster, numeric_grade, transparency_score, candidate_name, pct) |>
   filter(
@@ -27,14 +30,15 @@ clean_poll_data <- poll_data |>
     !is.na(transparency_score),
     numeric_grade >= 3.0,          # numeric_grade threshold
     transparency_score > 5,        # transparency_score threshold
-    candidate_name %in% c("Donald Trump", "Kamala Harris")
+    candidate_name %in% c("Donald Trump", "Kamala Harris"),
+    state %in% battleground_states   # Filter to include only battleground states
   ) |>
   mutate(
     end_date = as.Date(end_date, format = "%m/%d/%y"),
     end_date_num = as.numeric(end_date - min(end_date, na.rm = TRUE))
   )
 
-# Replace "Nebraska CD-2" with "Nebraska"
+# Replace "Nebraska CD-2" with "Nebraska" if it appears in the data
 clean_poll_data <- clean_poll_data |>
   mutate(state = str_replace(state, "Nebraska CD-2", "Nebraska"))
 
@@ -48,6 +52,4 @@ clean_poll_data <- clean_poll_data |>
 
 #### Save Data ####
 write_parquet(clean_poll_data, "data/02-analysis_data/analysis_data.parquet")
-
-
-
+print(clean_poll_data)

@@ -1,6 +1,6 @@
 ---
 title: "Predicting the 2024 U.S. Presidential Election: Trump’s Likely Victory Based on Polling Analysis"
-subtitle: "A Bayesian Approach Reveals Strong Support for Donald Trump Across Key States, Highlighting Critical Trends in Voter Preferences Leading Up to Election Day"
+subtitle: "A Bayesian Approach Reveals Strong Support for Donald Trump Across Key Battleground States, Highlighting Critical Trends in Voter Preferences Leading Up to Election Day"
 author: 
   - Jimin Lee
   - Sarah Ding
@@ -8,7 +8,7 @@ author:
 thanks: "Code and data are available at: [https://github.com/jamiejiminlee/2024_US_Elections.git](https://github.com/jamiejiminlee/2024_US_Elections.git)."
 date: today
 date-format: long
-abstract: "This paper presents a predictive model for the 2024 United States Presidential Election using state-level polling data, with a Bayesian approach to estimate the outcomes between Donald Trump and Kamala Harris. By focusing on high-quality polls from reputable sources, we aggregated data to predict the likely winner in each state. Our Bayesian hierarchical model, incorporating time-dependent splines and state-specific random effects, captures shifts in candidate support over time. The results underscore Trump’s advantage in critical swing states such as Florida, Ohio, and North Carolina, positioning him as the predicted overall winner of the 2024 election. We discuss the model’s performance, accuracy, and limitations, reflecting on the challenges inherent in electoral forecasting."
+abstract: "This paper presents a predictive model for the 2024 United States Presidential Election, utilizing state-level polling data to focus specifically on key battleground states. By employing a Bayesian approach, we estimate the outcomes between Donald Trump and Kamala Harris, incorporating high-quality polls from reputable sources. Our Bayesian hierarchical model, featuring time-dependent splines and state-specific random effects, effectively captures shifts in candidate support over time. The analysis reveals that Trump is projected to win in critical battleground states such as Arizona, Georgia, Michigan, Nevada, North Carolina, Pennsylvania, and Wisconsin, highlighting his advantage in these pivotal regions. These findings underscore the significance of battleground states in determining electoral outcomes, particularly in a highly polarized political landscape. We also discuss the model’s performance, accuracy, and limitations, reflecting on the unique challenges inherent in forecasting electoral outcomes in these crucial areas."
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -36,41 +36,96 @@ library(broom.mixed)
 
 
 # Introduction
-This paper develops a predictive model for the 2024 US Presidential Election using state-level polling data [@FiveThirtyEight] to forecast the likely winner between Donald Trump and Kamala Harris. We aggregate high-quality poll data to create a Bayesian logistic regression model that estimates the probability of a Trump or Harris victory in each state. By comparing polling percentages for both candidates, we aim to predict election outcomes based on voter support patterns across the states.
 
-The estimand in this study is the probability that Donald Trump or Kamala Harris wins a given state, based on aggregated state-level polling averages. The binary outcome variable in our model indicates whether Trump (1) or Harris (0) is predicted to win in each state, and the predictor variables are the average polling percentages for each candidate.
+EDIT & ELABORATE - gpt generated
+The 2024 United States Presidential Election presents a unique opportunity to examine the dynamics of voter preferences in key battleground states. With a highly polarized electorate and the stakes at an all-time high, accurately predicting the outcome of this election is crucial for political analysts, campaigns, and the public. This paper develops a predictive model that leverages state-level polling data to forecast the likely winner between Donald Trump and Kamala Harris, using a Bayesian hierarchical approach to accommodate variations across states.
 
-Our model utilizes a Bayesian approach with a hierarchical structure to predict election outcomes by comparing the average polling percentages for Trump and Harris across states. This methodology incorporates time-dependent splines and state-specific random effects, which allow for capturing variations in support trends over time. Swing states emerge as critical battlegrounds, where polling percentages are closely contested and could influence the final election result.
+The central estimand of this study is the probability of victory for each candidate in battleground states, defined by the binary outcome variable indicating a predicted win for Trump (1) or Harris (0). To achieve this, we utilize aggregated polling percentages as predictor variables, allowing us to capture shifts in voter sentiment over time. By employing logistic regression and accounting for state-specific random effects, our model not only identifies trends in polling data but also highlights critical regions that could determine the overall election outcome.
 
-Accurate election predictions provide valuable insights into voter dynamics and help political analysts, campaigns, and the public anticipate electoral outcomes. By focusing on high-quality polling data, our model enhances the reliability of predictions and highlights key regions where voter sentiment may shift, ultimately affecting the election.
+In our analysis, we focused on key battleground states—Arizona, Georgia, Michigan, Nevada, North Carolina, Pennsylvania, and Wisconsin—where the margins are often razor-thin and can swing the election in favor of one candidate or another. Our findings indicate that Trump is predicted to win in these crucial states, positioning him as the likely overall victor in the 2024 election. This is significant as it underscores the importance of battleground states in shaping the electoral landscape and highlights the intricate dynamics of voter preferences that can influence the final result.
 
-The results of our model predict a victory for Donald Trump in the 2024 U.S. Presidential Election. Key battleground states, such as Florida, Ohio, and North Carolina, lean toward Trump, emphasizing his advantage in critical regions. Our analysis points to Trump as the probable overall winner, with swing states playing a decisive role in determining the final outcome.
-
-The remainder of this paper is structured as follows. In [@sec-data], we describe the data and variables used in the analysis. [@sec-model] outlines the model setup and estimation strategy. [@sec-results] presents the results, including the predicted election outcomes and visualizations. Finally, [@sec-discussion] discusses the implications and limitations of our findings.
+The structure of this paper is as follows: we begin by detailing the data sources and methodology used for the analysis. Next, we present the results, focusing on the predicted probabilities of each candidate winning in the targeted battleground states. Finally, we discuss the implications of our findings and the limitations of our model, contributing to a better understanding of voter dynamics in the 2024 U.S. Presidential Election.
 
 # Data {#sec-data}
-
 ## Overview
+This paper utilizes the dataset of the 2024 Presidential Election cycle, obtained from [@FiveThirtyEight]. The dataset is periodically updated throughout the presidential election campaign to reflect current and most up-to-date polling results. It consists of polling information from various pollsters such as the New York Times, ActiVote, Morning Consult, etc. For every pollster, relevant variables such as state, polling date, transparency score, candidate name, and percentage of support for the appropriate candidate are included. The dataset compiles data from all major pollsters in the US and provides us with an understanding of the current state of the presidential election. 
 
-REWRITE
+We use the statistical programming language R [cite R]... to perform data simulation, testing, cleaning, and analysis.
 
 ## Measurement
+In the current presidential election cycle,  Americans’ opinions on voting for their preferred candidate are transformed into data points through a series of steps that involve surveying, data processing, and structuring responses. Pollsters then store these responses in structured databases for analysis. In the dataset obtained from Project 538, each entry in the dataset corresponds to a poll conducted by each pollster, capturing the percentage of respondents who express support for each candidate. Each pollster has different approaches to sampling respondents, recruiting respondents, as well as questionnaire types, which affects each pollster’s reliability and data quality. 
 
-REWRITE
+Pollsters begin by selecting a sample from the registered voter population, often using voter files with demographic and contact information. They then apply methods of stratified random sampling to ensure the sample reflects the electorate’s diversity in terms of age, gender, race, education, voter behavior, etc. 
 
-## Outcome variables
+Then, pollsters reach out to voters through various channels, such as phone calls, emails, text messages, or online panels. These are called recruiting methods and usually, each of them has its trade-offs. If the respondents are connected through any of these channels, they are asked a series of questions either by a live interviewer or a preset of questions. 
 
-REWRITE
+The types of questions often include: 
 
+- “If the election were held today, would you vote for [Candidate A] or [Candidate B]?” 
+- “How strongly do you support [Candidate]?” (e.g., on a scale of 1 to 10, or strongly, somewhat, undecided)
+- “Do you support [Policy A] proposed by [Candidate A] or [Policy B] proposed by [Candidate B]?” 
+
+Responses are recorded digitally, either by survey software or directly into a database by interviewers, capturing both the answers and relevant demographic data. Each response becomes a data point in the database. For example, if a respondent prefers Candidate A, their answer may be recorded as a binary variable (e.g., “1” for Candidate A, “0” for Candidate B). Along with candidate preference, pollsters capture demographic and behavioral details, such as age, gender, race, education, income, voter history, and party registration. 
+
+Each respondent’s answers and demographic details are grouped and saved in a structured database. Pollsters then clean the data by checking for inconsistencies, removing incomplete responses, and addressing non-responses. Pollsters also perform weighting to ensure the representativeness of data collected, details of weighting are further explained in {appendix 1}.
+
+Once cleaned and weighted, data points are aggregated to determine overall candidate support, often producing metrics such as the percentage of respondents supporting each candidate by state or other specific demographics. Each pollster would have a database with all the weighted and aggregated data, and Project 538 presents a compilation of the databases obtained from various pollsters. 
+
+
+## Variables
+To give an overview of the data, we provide summary statistics of the key variables, highlighting the characteristics of the polling support for each candidate across the battleground states.
 ```{r}
-#| label: fig-averagetable
-#| fig-cap: Summary of 2024 U.S. Presidential Election Polling Averages by State for Trump and Harris, with Indicated Leading Candidate. States with missing data, such as Colorado, are labeled as "NA."
+#| label: fig-summarystatistics
+#| fig-cap: "Vertical Summary Statistics for Trump and Harris Polling Data. This table presents key summary statistics, including total polls, average support percentages, and the maximum and minimum polling levels for both candidates across the specified battleground states. All values are rounded to three decimal places, providing a concise overview of the polling landscape as of the selected election date."
 #| echo: false
 #| warning: false
 #| message: false
+
 # Load cleaned data
 clean_poll_data <- read_parquet("/Users/jamielee/2024_US_Elections/data/02-analysis_data/analysis_data.parquet")
 
+# Summary statistics for the relevant columns in clean_poll_data
+summary_statistics <- clean_poll_data %>%
+  summarize(
+    `Total Polls` = n(),
+    `Average Trump Support` = round(mean(Trump_pct, na.rm = TRUE), 3),
+    `Max Trump Support` = round(max(Trump_pct, na.rm = TRUE), 3),
+    `Min Trump Support` = round(min(Trump_pct, na.rm = TRUE), 3),
+    
+    `Average Harris Support` = round(mean(Harris_pct, na.rm = TRUE), 3),
+    `Max Harris Support` = round(max(Harris_pct, na.rm = TRUE), 3),
+    `Min Harris Support` = round(min(Harris_pct, na.rm = TRUE), 3)
+  )
+
+# Reshape the summary statistics to a vertical format
+summary_statistics_long <- pivot_longer(
+  summary_statistics,
+  cols = everything(),
+  names_to = "Statistic",
+  values_to = "Value"
+)
+
+# Display vertical summary statistics in a kable table
+kable(summary_statistics_long) %>%
+  kable_styling(full_width = FALSE, position = "center")
+
+```
+
+@tbl-summarystatistics reveals a total of 34 polls conducted, with an average support level of 46.321% for Trump and 46.661% for Harris. Trump's support peaked at 51.000%, while the lowest recorded support was 42.500%. For Harris, the maximum support also reached 51.000%, with a minimum of 42.000%. These statistics illustrate the competitive landscape in these critical states, emphasizing the narrow margins that could ultimately influence the election outcome. The data reflects the volatility of voter sentiment leading up to the 2024 Presidential Election, underscoring the importance of these battleground states in determining the final result.
+
+### Outcome Variable
+The outcome variable in this study is a binary indicator, specifically constructed to represent the predicted winner of the 2024 U.S. Presidential Election based on polling data from key battleground states. This variable categorizes the election outcome into two distinct categories: a value of "Trump" indicates that Donald Trump is predicted to win, while a value of "Harris" denotes a predicted victory for Kamala Harris. The classification is derived from a conditioning statement that assigns the predicted winner based on the probability of Trump winning; if this probability exceeds 0.5, the predicted winner is labeled as Trump, otherwise, it is labeled as Harris. This binary outcome variable serves a crucial role in facilitating the analysis of voter support dynamics and the effectiveness of the predictive modeling employed in this paper. 
+
+By focusing on this dichotomy, we can glean insights into how polling data might translate into electoral outcomes, highlighting the competitive nature of the election in these pivotal states. The construction of the outcome variable not only enhances our understanding of voter preferences but also underscores the significance of binary classification in electoral forecasting, especially in states that could ultimately sway the overall election results.
+
+### Predictive Variable
+The predictive variable in this study is the polling support percentage for each candidate, specifically for Donald Trump and Kamala Harris, measured across various battleground states. This variable represents the predicted likelihood of each candidate winning in the specified states based on the polling data collected during the election cycle.
+```{r}
+#| label: tbl-outcomevar
+#| fig-cap: "Average polling support percentages for Donald Trump and Kamala Harris across key battleground states. The table presents the average support levels, indicating Trump’s and Harris’s polling figures in states such as Wisconsin, North Carolina, Georgia, Arizona, Pennsylvania, Michigan, and Nevada. The comparative analysis highlights the varying levels of candidate support in these critical regions, providing insight into the electoral landscape ahead of the 2024 U.S. Presidential Election."
+#| echo: false
+#| warning: false
+#| message: false
 
 # Aggregating polling percentages for Trump and Harris by state
 state_average <- clean_poll_data %>%
@@ -80,9 +135,6 @@ state_average <- clean_poll_data %>%
     Harris_pct = mean(Harris_pct, na.rm = TRUE)
   )
 
-# Create winner column: 1 if Trump_pct is greater than Harris_pct, 0 otherwise
-state_average <- state_average |>
-  mutate(winner = ifelse(Trump_pct > Harris_pct, 1, 0))
 
 # Prepare table for display with rounding to 1 decimal place
 average_table <- state_average |>
@@ -94,52 +146,20 @@ average_table <- state_average |>
     State = state, 
     "Trump %" = Trump_pct, 
     "Harris %" = Harris_pct, 
-    Winner = winner
-  ) |>
-  mutate(Winner = ifelse(Winner == 1, "Trump", "Harris"))
+  ) 
 
 # Render the table
 knitr::kable(average_table)
 
-
 ```
+@tbl-predictivevar highlights the average support levels for both Donald Trump and Kamala Harris across key battleground states, including Wisconsin, North Carolina, Georgia, Arizona, Pennsylvania, Michigan, and Nevada. The values reflect the polling percentages for each candidate, providing a straightforward comparison of their standings within these critical regions.
 
-REWRITE
+Understanding these polling percentages is essential as they offer insight into the electoral landscape and help evaluate which candidate may hold an advantage in the upcoming election. The battleground states depicted in the table are particularly significant due to their historical tendency to swing between parties, making them crucial targets for campaign efforts. Analyzing the outcome variable through these polling percentages informs our predictive modeling and enhances our comprehension of the dynamics at play during the electoral process. This comparison not only contextualizes the current political climate but also underlines the importance of these battleground states in shaping the overall election results. As the campaign progresses, these insights will be invaluable for strategizing and understanding voter sentiment in these pivotal areas.
 
-## Predictor variables
-
-REWRITE
-
-
-```{r}
-#| label: fig-barplot
-#| fig-cap: "Comparison of 2024 U.S. Presidential Election Polling Averages for Trump and Harris by State. Bars represent the average polling percentages for each candidate, with states missing data, such as Colorado, labeled accordingly."
-#| echo: false
-#| warning: false
-
-# Reshape data to a long format for side-by-side bars
-stateaverage_long <- state_average %>%
-  pivot_longer(cols = c(Trump_pct, Harris_pct),
-               names_to = "candidate",
-               values_to = "support_pct")
-
-ggplot(stateaverage_long, aes(x = reorder(state, -support_pct), y = support_pct, fill = candidate)) + 
-  geom_bar(stat = "identity", position = position_dodge(width = 0.8), color = "black") +
-  labs(x = "State", y = "Average Percentage") +
-  scale_fill_manual(
-    name = "Candidate", 
-    values = c("Trump_pct" = "red", "Harris_pct" = "blue"),
-    labels = c("Trump_pct" = "Trump %", "Harris_pct" = "Harris %")
-  ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-```
-
-REWRITE
 
 ## Other Variables
 
-REWRITE
+WRITE SECTION
 
 # Model {#sec-model}
 
@@ -170,25 +190,19 @@ Where:
 - \begin{equation}
   \text{Trump\_pct}_i \text{ and } \text{Harris\_pct}_i \text{ are the polling support levels for Donald Trump and Kamala Harris in state } i.
   \end{equation}
-
 - \begin{equation}
   f(\text{end\_date\_num}_i) \text{ is a natural spline function of time (measured as } \text{end\_date\_num}, \text{ with 4 degrees of freedom, capturing the non-linear time trends in support.}
   \end{equation}
-
 - \begin{equation}
   \alpha_{\text{Trump}} \text{ and } \alpha_{\text{Harris}} \text{ are intercepts for the models, representing the baseline support levels for each candidate.}
   \end{equation}
-
 - \begin{equation}
   u_{\text{state}}^{\text{Trump}} \text{ and } u_{\text{state}}^{\text{Harris}} \text{ are state-level random effects, accounting for differences in baseline support across states.}
   \end{equation}
 
-
-
 For both models, we use weakly informative Normal priors. The intercepts $ \alpha_{\text{Trump}} $ and $ \alpha_{\text{Harris}} $ are given Normal priors with a mean of 0 and a standard deviation of 10, reflecting prior uncertainty about the baseline support levels. The time trend coefficients are also given Normal priors with mean 0 and standard deviation 5, allowing for flexibility in capturing the temporal changes in support. State-level random effects for each candidate are modeled with a Normal distribution centered at 0, with the variance estimated from the data.
 
 The model was implemented in R using the `brms` package, which allows for Bayesian inference using `Stan` as the backend. This approach captures the dynamic nature of polling support over time, while accounting for state-specific variability and allowing us to estimate the probability of Trump or Harris leading in each state.
-
 
 ```{r}
 #| echo: false
@@ -314,9 +328,13 @@ EDIT - explain results on graph
 #| fig-cap: "State-Level Support Trends for Trump and Harris Over Time."
 #| warning: false
 
+# Define battleground states
+battleground_states <- c("Arizona", "Georgia", "Michigan", "Nevada", 
+                          "North Carolina", "Pennsylvania", "Wisconsin")
+
 # Generate predictions for each state and date
 state_dates <- seq.Date(min(clean_poll_data$end_date), max(clean_poll_data$end_date), by = "1 week")
-state_prediction_grid <- expand.grid(state = unique(clean_poll_data$state), end_date = state_dates) %>%
+state_prediction_grid <- expand.grid(state = battleground_states, end_date = state_dates) %>%
   mutate(end_date_num = as.numeric(end_date - min(clean_poll_data$end_date)))
 
 # Predict support for each state and date
@@ -331,7 +349,9 @@ state_predictions <- state_prediction_grid %>%
 ggplot(state_predictions, aes(x = end_date)) +
   geom_line(aes(y = Trump_Support, color = "Trump")) +
   geom_line(aes(y = Harris_Support, color = "Harris")) +
-  labs(title = "State-Level Support Trends for Trump and Harris Over Time", y = "Predicted Support", x = "Date") +
+  labs(title = "State-Level Support Trends for Trump and Harris Over Time (Battleground States)", 
+       y = "Predicted Support", 
+       x = "Date") +
   facet_wrap(~ state) +
   scale_color_manual(values = c("Trump" = "red", "Harris" = "blue")) +
   scale_x_date(date_labels = "%b %Y", date_breaks = "3 months") +  # Set date format and break frequency
@@ -343,7 +363,6 @@ ggplot(state_predictions, aes(x = end_date)) +
     panel.spacing = unit(0.5, "lines"),    # Add spacing between facets
     panel.grid.major = element_line(linewidth = 0.3)  # Adjust gridline thickness
   )
-
 
 ```
 EDIT - explain results on graph
@@ -365,7 +384,9 @@ election_day <- as.Date("2024-11-05")  # Example election day
 # Predict probability of Trump and Harris winning by comparing posterior predictions for each state
 state_predictions <- clean_poll_data %>%
   distinct(state) %>%
-  mutate(end_date = election_day, end_date_num = as.numeric(election_day - min(clean_poll_data$end_date)))
+  filter(state %in% battleground_states) %>%  # Only include battleground states
+  mutate(end_date = election_day, 
+         end_date_num = as.numeric(end_date - min(clean_poll_data$end_date)))
 
 # Calculate probabilities of Trump and Harris winning in each state
 state_predictions <- state_predictions %>%
@@ -385,9 +406,9 @@ state_summary_table <- state_predictions %>%
     prob_harris_wins = round(prob_harris_wins * 100, 2)  # Convert to percentage and round
   )
 
-
-# Display state predictions i n table
-knitr::kable(state_summary_table)
+# Display state predictions in table
+knitr::kable(state_summary_table) %>%
+  kable_styling(full_width = FALSE, position = "center")
 
 ```
 
@@ -402,9 +423,10 @@ EDIT - explain table results
 #| fig-cap: "Probability of Trump Winning by State on Election Day."
 #| warning: false
 
-# Reshape the data for plotting
+# Reshape the data for plotting only for battleground states
 state_predictions_long <- state_predictions %>%
   select(state, prob_trump_wins, prob_harris_wins) %>%
+  filter(state %in% battleground_states) %>%  # Ensure we're only working with battleground states
   pivot_longer(cols = starts_with("prob"), 
                names_to = "Candidate", 
                values_to = "Probability") %>%
@@ -417,32 +439,33 @@ ggplot(state_predictions_long, aes(x = reorder(state, Probability), y = Probabil
   geom_col(position = "dodge") +  # Use dodge for side-by-side bars
   coord_flip() +  # Flip coordinates for better readability
   scale_fill_manual(values = c("Trump" = "red", "Harris" = "blue")) +
-  labs(title = "Predicted Winning Percentages by State on Election Day", 
+  labs(title = "Predicted Winning Percentages by Battleground State on Election Day", 
        x = "State", 
        y = "Winning Probability (%)") +
   theme_minimal() +
   theme(legend.position = "right")
+
 ```
 EDIT - explain graph results
 
 ## US Map Showing Predicted Winner by State on Election Day
 
 ```{r}
-
 #| echo: false
 #| eval: true
 #| label: fig-us-map
-#| fig-cap: "Predicted Winner by State on Election Day."
+#| fig-cap: "Predicted Winner by Battleground State on Election Day."
 #| warning: false
 
 # Add predicted winner column based on `prob_trump_wins`
 state_predictions <- state_predictions %>%
+  filter(state %in% battleground_states) %>%  # Ensure we only include battleground states
   mutate(predicted_winner = ifelse(prob_trump_wins > 0.5, "Trump", "Harris"))
 
 # Plot the US map with predicted winner for each state
 plot_usmap(data = state_predictions, values = "predicted_winner", regions = "states") +
   scale_fill_manual(values = c("Trump" = "red", "Harris" = "blue")) +
-  labs(title = "Predicted Winner by State on Election Day", fill = "Predicted Winner") +
+  labs(title = "Predicted Winner by Battleground State on Election Day", fill = "Predicted Winner") +
   theme(legend.position = "right")
 
 
