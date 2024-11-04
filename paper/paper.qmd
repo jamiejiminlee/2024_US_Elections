@@ -621,14 +621,13 @@ If Kamala Harris wins the election by a narrow margin, the results could have si
 Moreover, a narrow victory for Harris would reinforce national polarization, revealing the extent to which the country is split. The nearly equal support for both candidates highlights entrenched ideological divides, with voters committed to opposing perspectives on critical issues such as healthcare, immigration, climate policy, and the role of government [@discussion-article-2]. Economic concerns, including job security, wage equality, and tax policy, alongside cultural values related to family, education, and identity, play significant roles in voter alignment. Thus, a close election result suggests that these differences are sharply felt across the electorate, with each side viewing the outcome as an opportunity to uphold their values and address their unique challenges.
 
 ## Uncertainty Beyond Data and Modeling
-There are external factors other than data and modeling that could influence the actual outcome of the election. These factors are often hard to control and predict. 
+Beyond data and modeling, several external factors can influence the actual outcome of the election. Recency bias is one of the external factors, and it can significantly shape public perception and polling responses. Many people expect Trump to win due to his unexpected victory in 2016 and his narrow loss in 2020, despite lagging in the polls. This bias reflects a tendency to focus on recent, high-profile events while overlooking broader historical trends. For instance, in 2012, Barack Obama not only won but outperformed polling predictions, a fact that may be forgotten amidst recent election narratives [@discussion-article3]. Such a bias can affect both how people respond to polls and how pollsters interpret results, potentially leading to an overemphasis on recent events. Given that our model depends on polling data, any systematic bias from these recency expectations can skew predictions, making it challenging to account for potential polling errors.
 
-Firstly, recency bias influences public perception and even polling responses. Many people expect Trump to win because of his unexpected victory in 2016 and his close race in 2020, despite lagging in the polls. This bias conveys the tendency to focus on recent, high-profile events while overlooking historical trends, such as Obama’s strong polling performance in 2012, where he outperformed polls. This bias can affect how people respond to polls or even how pollsters interpret results, as certain events may be weighted more heavily than warranted. As our model depends on polling data, any systematic bias introduced by recency expectations can skew our predictions, making it challenging to account for potential polling errors.
+Social desirability bias and non-response bias add further layers of uncertainty, particularly regarding Trump’s support base. Some voters may be hesitant to openly express support for a conservative candidate due to social stigma, leading to an under-reporting of Trump support in polls. This effect may be stronger in regions where conservative views are less socially accepted. Additionally, Trump’s supporters often include individuals with lower social trust and civic engagement, making them less likely to participate in polls altogether [@discussion-article3]. If specific groups systematically avoid participation, polling data may under-represent these voters, potentially underestimating Trump’s support in our model. Non-response bias is difficult to quantify, introducing additional uncertainty to our predictions.
 
-Social desirability bias and non-response bias are additional sources of uncertainty, particularly with Trump’s supporters. Some voters may be hesitant to disclose their support for a conservative candidate due to social stigma, leading to underreporting of support in polls. This reluctance can be especially strong in areas where conservative views are less socially accepted. Trump’s support base also includes individuals with lower social trust and civic engagement, which means they are less likely to participate in polls altogether. If certain groups systematically avoid participating, polling data may underrepresent these voters, resulting in an underestimation of Trump’s support in our model. This non-response bias is difficult to quantify, adding a layer of uncertainty to our predictions.
-On the other hand, Harris faces potential biases such as the Bradley effect and gender-related bias. As a Black female candidate, Harris might encounter the Bradley effect, where some voters express indecision rather than explicitly stating they won’t support a minority candidate. Historically, this effect has impacted Black candidates, as undecided voters tend to lean against them in the actual vote count, despite polling responses suggesting neutrality. Additionally, Clinton’s 2016 campaign demonstrated that undecided voters can heavily swing against female candidates. This trend could similarly impact Harris’s polling and election results. If these voters decide against Harris in the end, our model might overestimate her support based on the polling data, leading to inaccuracies in predictions.
-These biases are inherently difficult to measure or adjust for, as they reflect deeper societal attitudes and individual decision-making processes. Pollsters may attempt to correct for non-response or social desirability bias, but such adjustments are often based on assumptions that may not fully capture the complex social dynamics at play. Consequently, our model’s predictions should be interpreted with caution, acknowledging that these biases can lead to unexpected shifts in voter behavior that fall outside the range of our data-driven forecasts.
+Harris, on the other hand, may face challenges like the Bradley effect and gender-related bias. As a Black female candidate, Harris could encounter the Bradley effect, where some voters indicate indecision rather than openly stating that they will not support a minority candidate. Historically, undecided voters have leaned against Black candidates in the actual vote count, despite neutral polling responses. Additionally, the 2016 election demonstrated that undecided voters could heavily swing against female candidates, as seen with Hillary Clinton [@discussion-article3]. This trend could similarly impact Harris’s results if undecided voters ultimately decide against her. Consequently, our model may overestimate Harris’s support based on polling data alone, leading to potential inaccuracies in prediction.
 
+These biases are inherently challenging to measure or adjust for, as they reflect deeper societal attitudes and individual decision-making patterns. While pollsters may attempt to correct for non-response or social desirability bias, such adjustments are often based on assumptions that cannot fully capture the complex social dynamics at play. Thus, our model’s predictions should be interpreted with caution, recognizing that these biases may cause unexpected shifts in voter behavior that go beyond what data-driven forecasts can capture.
 
 ## Limitations and Weaknesses
 Although the model is suitable and performs well on achieving the goal of predicting the outcome, it has several limitations that could be addressed in future studies. Here are some key areas:
@@ -780,8 +779,91 @@ Third, there are limited open-ended questions. Many voters may have mixed opinio
 # Idealized Methodology
 Building on our discussion of the New York Times/Siena College Poll, we now present an idealized methodology that aims to enhance the accuracy and reliability of our predictions. This approach incorporates best practices and innovative techniques to ensure a comprehensive prediction of voter behavior in the upcoming 2024 U.S. presidential election. To demonstrate our idealized methodology, we generated a survey on the 2024 US Presidential election, which can be accessed via the the URL provided in [@US-election-survey] under [References -@sec-references].
 
-## Sampling Approach
 
+## Survey Demo
+
+**Title: "2024 U.S. Presidential Election Survey"**
+
+### Survey Introduction
+We are conducting an important survey to understand voter opinions and predict the outcome of the upcoming 2024 U.S. Presidential Election. Your participation will help ensure that our findings accurately reflect the views of voters like you.
+
+This survey will take about 5–10 minutes to complete. Your responses will remain completely anonymous and confidential. We are committed to protecting your privacy, and no personal information will be shared or used for any purpose beyond this research.
+
+Thank you for your time and contribution.
+
+### Survey Questions
+1. **Thinking ahead to the presidential general election, are you going to vote?**  
+   *On a scale from 1 (Not at all likely) to 10 (Almost certain).*  
+   - 1 (Not at all likely)
+   - 2
+   - 3
+   - 4
+   - 5
+   - 6
+   - 7
+   - 8
+   - 9
+   - 10 (Almost certain)
+
+2. **Who do you want to vote for?**  
+   - Kamala Harris (Democratic Party)
+   - Donald Trump (Republican Party)
+   - Prefer not to answer
+
+3. **How likely are you to change your mind before the election?**  
+   *On a scale from 1 (Very unlikely) to 10 (Almost certain).*  
+   - 1 (Very unlikely)
+   - 2
+   - 3
+   - 4
+   - 5
+   - 6
+   - 7
+   - 8
+   - 9
+   - 10 (Almost certain)
+
+4. **Which of the following issues is most important to you in this election?**  
+   - Economy
+   - Healthcare
+   - Immigration
+   - Climate Change
+   - Safety
+   - Education
+   - Other (please specify)
+
+5. **If you have to decide between Kamala Harris and Donald Trump, who will you vote for?**  
+   - Kamala Harris
+   - Donald Trump
+   - Prefer not to answer
+
+6. **Who do you expect to win the upcoming elections?**  
+   - Kamala Harris
+   - Donald Trump
+   - Prefer not to answer
+
+7. **How often do you follow political news?**  
+   *On a scale from 1 (Rarely) to 10 (Daily).*  
+   - 1 (Rarely)
+   - 2
+   - 3
+   - 4
+   - 5
+   - 6
+   - 7
+   - 8
+   - 9
+   - 10 (Daily)
+
+8. **Would you be open to commenting on the issues in this survey and be interested in being contacted by a reporter?**  
+   - Yes
+   - No
+
+9. **For validation purposes, please select "Agree" from the options below.**  
+   - Agree
+   - Disagree
+   
+### Sampling Approach
 Using data from voter files, which contain demographic information about registered voters, we aim to ensure that our sample accurately represents the population. To achieve this, we will use stratified random sampling. Given the importance of state-level forecasts due to the Electoral College system, we will first stratify by state. 
 
 Within each state, we will apply stratified sampling again, dividing the population into 6 groups and selecting 100 random samples from each stratum within those groups, ensuring our sample captures key demographic critical for predicting voter behavior. The groups and their respective strata include age groups (18-29, 30-44, 45-64, and 65+), gender (Male, Female, and Other), and race/ethnicity (White, Black, Latino, Asian, and Other). Additionally, household status will be categorized as either renting or owning, with home ownership serving as a proxy for wealth. Voting history will be classified into those who voted in the previous election and non-voters, while party registration will include Democrats, Republicans, and Independents. 
