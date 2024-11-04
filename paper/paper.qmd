@@ -283,7 +283,6 @@ ggplot(clean_poll_data, aes(x = start_date)) +
 ```
 This distribution provides insights into the timing and intensity of polling efforts throughout the campaign season. By including only polls initiated after Harris’s campaign launch, we capture voter preferences in a context where both major candidates are actively campaigning, thus making the polling data more relevant for direct comparisons. This filtered timeline ensures our model focuses on data that reflects the competitive dynamics between Harris and Trump, enhancing the validity of our predictive analysis as we approach Election Day.
 
-\newpage
 
 # Model {#sec-model}
 The Bayesian Beta regression models constructed in this paper aim to predict the probability of victory for Donald Trump and Kamala Harris in the 2024 U.S. Presidential Election by analyzing polling data of the 7 battleground states. One Bayesian Beta regression model is constructed for each candidate, and each of them estimates the proportion of support for each candidate based on polling data, accounting for both polling trends over time, and state-level differences in voter sentiment. These models allow us to evaluate how support for each candidate fluctuates over time in key states, and predict potential electoral outcomes.
@@ -321,7 +320,7 @@ Where:
 
 The dataset for the Trump model was prepared by extracting the relevant polling data, including the state, end date, and corresponding percentage of support for Trump ($Trump\_pct$). The end date was converted into a numeric format, denoting the number of days since the earliest polling date in the dataset. This transformation allows the model to effectively capture the evolving nature of voter sentiment as the election approaches.
 
-The model was implemented using the **`brms`** package in R, applying a **Beta distribution** with a **logit link function** to accurately model the proportions of support:
+The model was implemented using the 'brms' package [@brms] in R [@citeR], applying a Beta distribution with a logit link function to accurately model the proportions of support:
 
 $$
 y_i \sim \text{Beta}(\mu_i, \phi)
@@ -654,7 +653,6 @@ The results of our model underscore the critical role that these battleground st
 
 ## Model Performance {#sec-model-performance}
 Out-of-sample testing results [Appendix -@sec-model-diagnostics] demonstrate the effectiveness and reliability of our Bayesian logistic regression model in predicting state-level outcomes for the 2024 U.S. presidential election. Our accuracy test generated a 75% score for the model, indicating our model's high reliability for making predictions about state-level election outcomes. Since presidential elections hinge on state-level wins, a reliable state-by-state prediction would imply a reliable national outcome prediction. 
-
 
 ### Model Performance - Trump Model
 The RMSE value generated for our model is 0.5, which indicates that the model-predicted probabilities are close to the true outcomes. The confusion matrix breaks down the model’s predictions into four categories: 1. orrectly predicted Trump wins, 2. Correctly predicted Harris wins, 3. Incorrectly predicted Trump wins, 4. Incorrectly predicted Harris wins. The generated confusion matrix for our model all had values of 0 to 2 for all four categories, indicating a balanced prediction between the two candidates, and suggesting the reliability of our model. Out-of-sample testing was conducted to test the reliability of our model, with further details provided in [Apppendix -@sec-model-diagnostics]. 
