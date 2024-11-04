@@ -33,7 +33,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 32,Beacon/Shaw,Oregon,2604,Kamala Harris,52.83917963504791
 33,ActiVote,Oregon,2647,Other,49.46606792276725
 34,CNN,Alaska,1715,Kamala Harris,47.55021418211982
-35,CNN,Florida,2941,Other,46.917948226910084
+35,CNN,Florida,2941,Other,46.91794822691008
 36,Other,California,2246,Donald Trump,48.921207210514694
 37,Other,Washington,1468,Other,48.40416884049773
 38,CNN,New Jersey,1791,Other,47.059424887411296
@@ -71,7 +71,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 70,Beacon/Shaw,New York,825,Kamala Harris,45.81089418614283
 71,Morning Consult,Utah,879,Kamala Harris,46.3399071036838
 72,Beacon/Shaw,New Jersey,1737,Other,52.129030427895486
-73,ActiVote,Florida,2035,Kamala Harris,53.164840559475124
+73,ActiVote,Florida,2035,Kamala Harris,53.16484055947512
 74,CNN,Colorado,947,Kamala Harris,47.68013204447925
 75,Morning Consult,New Jersey,2557,Donald Trump,47.92876472696662
 76,Other,New Jersey,1684,Other,49.21267744386569
@@ -79,7 +79,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 78,Beacon/Shaw,Colorado,804,Donald Trump,54.16940000606701
 79,Morning Consult,Washington,2683,Other,50.12390202609822
 80,CNN,Florida,2085,Other,47.46925410348922
-81,Morning Consult,Oregon,1810,Donald Trump,54.451318744104356
+81,Morning Consult,Oregon,1810,Donald Trump,54.45131874410435
 82,Beacon/Shaw,Oregon,1497,Kamala Harris,45.7419329113327
 83,Beacon/Shaw,New Jersey,539,Kamala Harris,48.466385037172586
 84,CNN,Colorado,2329,Donald Trump,54.79583705076948
@@ -97,7 +97,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 96,CNN,Utah,1099,Kamala Harris,52.73242380935699
 97,CNN,California,625,Donald Trump,50.27817224152386
 98,Beacon/Shaw,Washington,1908,Donald Trump,48.391626093070954
-99,Morning Consult,New Jersey,2492,Other,48.044095498044044
+99,Morning Consult,New Jersey,2492,Other,48.04409549804405
 100,Other,Oregon,612,Kamala Harris,53.20310454349965
 101,Morning Consult,California,1957,Donald Trump,50.37952632177621
 102,Beacon/Shaw,Alabama,1022,Other,54.648952789139
@@ -183,7 +183,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 182,ActiVote,Washington,532,Donald Trump,53.34880389273167
 183,Beacon/Shaw,Florida,2874,Other,50.49787154654041
 184,CNN,Alaska,1391,Kamala Harris,49.82231190195307
-185,CNN,Utah,992,Other,48.916315680835396
+185,CNN,Utah,992,Other,48.91631568083539
 186,Beacon/Shaw,Texas,1173,Donald Trump,47.883311924524605
 187,CNN,Pennsylvania,2601,Other,53.957493072375655
 188,Morning Consult,Texas,1345,Kamala Harris,53.8597582350485
@@ -216,8 +216,8 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 215,Other,California,2913,Other,47.10081580327824
 216,ActiVote,Oregon,687,Donald Trump,48.24544810457155
 217,Other,New Jersey,2938,Other,48.5184265836142
-218,Beacon/Shaw,Alaska,1930,Other,51.745515449438244
-219,Morning Consult,Pennsylvania,1853,Other,51.628171547781676
+218,Beacon/Shaw,Alaska,1930,Other,51.74551544943824
+219,Morning Consult,Pennsylvania,1853,Other,51.62817154778168
 220,Other,Colorado,1608,Other,51.93058896576986
 221,Beacon/Shaw,Pennsylvania,856,Other,53.61819065641612
 222,Morning Consult,Alaska,2827,Other,50.64957715570927
@@ -226,7 +226,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 225,ActiVote,Pennsylvania,2639,Kamala Harris,48.618787177838385
 226,Beacon/Shaw,Washington,2925,Donald Trump,49.66135079972446
 227,Morning Consult,California,1188,Kamala Harris,49.721499416045845
-228,Other,Florida,2977,Donald Trump,47.058439711108804
+228,Other,Florida,2977,Donald Trump,47.0584397111088
 229,Morning Consult,Washington,1715,Donald Trump,50.46371911186725
 230,Morning Consult,Florida,916,Other,50.231548328883946
 231,ActiVote,Colorado,2289,Other,50.16855635680258
@@ -258,7 +258,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 257,ActiVote,Texas,2341,Other,53.634773385711014
 258,Morning Consult,Pennsylvania,2334,Donald Trump,52.48284944333136
 259,Beacon/Shaw,Colorado,2099,Kamala Harris,48.1567170470953
-260,Morning Consult,California,698,Kamala Harris,52.571414939593524
+260,Morning Consult,California,698,Kamala Harris,52.57141493959352
 261,Other,Oregon,2040,Kamala Harris,46.03122818749398
 262,CNN,Washington,786,Other,45.6932802638039
 263,CNN,Florida,1982,Donald Trump,49.97573739849031
@@ -275,11 +275,11 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 274,Other,California,849,Kamala Harris,47.60363201610744
 275,Other,Alabama,1655,Other,47.78387490194291
 276,ActiVote,Washington,1465,Donald Trump,53.75710622174665
-277,Beacon/Shaw,Oregon,1602,Kamala Harris,49.112724910955876
+277,Beacon/Shaw,Oregon,1602,Kamala Harris,49.11272491095587
 278,Other,Alaska,2069,Donald Trump,52.878840495832264
 279,Other,Florida,1208,Kamala Harris,51.30020137876272
 280,Other,California,1880,Kamala Harris,52.84757180605084
-281,Morning Consult,Oregon,1784,Donald Trump,48.877142884302884
+281,Morning Consult,Oregon,1784,Donald Trump,48.87714288430288
 282,Other,Colorado,2250,Kamala Harris,50.71754703298211
 283,Morning Consult,Utah,2288,Donald Trump,47.01208765618503
 284,ActiVote,Washington,1311,Kamala Harris,46.17676891153678
@@ -294,7 +294,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 293,Beacon/Shaw,Colorado,1426,Donald Trump,49.563521191012114
 294,ActiVote,Oregon,747,Other,52.142293569631875
 295,Morning Consult,Alabama,2575,Other,46.64653243962675
-296,Morning Consult,Texas,911,Donald Trump,53.564902564976364
+296,Morning Consult,Texas,911,Donald Trump,53.56490256497637
 297,Other,Alaska,2133,Kamala Harris,53.777925146277994
 298,Other,Florida,2940,Other,48.6058665974997
 299,Morning Consult,Alabama,1140,Donald Trump,48.872118659783155
@@ -341,9 +341,9 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 340,CNN,Alabama,2399,Donald Trump,50.836694543249905
 341,CNN,New Jersey,2494,Other,49.793546434957534
 342,CNN,Utah,1803,Kamala Harris,46.97592527139932
-343,Other,New Jersey,522,Kamala Harris,50.037755500525236
+343,Other,New Jersey,522,Kamala Harris,50.03775550052523
 344,Beacon/Shaw,Colorado,1617,Other,54.45858787512407
-345,CNN,New Jersey,1232,Donald Trump,49.986724611371756
+345,CNN,New Jersey,1232,Donald Trump,49.98672461137176
 346,CNN,Washington,1980,Donald Trump,49.132411901373416
 347,CNN,Pennsylvania,960,Other,54.89559899549931
 348,Other,Washington,1231,Donald Trump,51.99249125784263
@@ -354,7 +354,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 353,Other,Alabama,751,Kamala Harris,47.11563752731308
 354,Other,Texas,2857,Kamala Harris,47.575899853836745
 355,ActiVote,Pennsylvania,2101,Donald Trump,49.58057677606121
-356,CNN,New Jersey,1537,Donald Trump,48.578625412192196
+356,CNN,New Jersey,1537,Donald Trump,48.57862541219219
 357,CNN,New York,2888,Kamala Harris,53.41329097747803
 358,Other,California,869,Other,54.50969585450366
 359,Beacon/Shaw,Alaska,1101,Donald Trump,51.39869122300297
@@ -375,10 +375,10 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 374,Other,Washington,1065,Donald Trump,48.63585467915982
 375,Other,Texas,2341,Other,54.663875398691744
 376,Beacon/Shaw,Washington,511,Donald Trump,50.65795735223219
-377,ActiVote,Alaska,2058,Other,50.944459626916796
+377,ActiVote,Alaska,2058,Other,50.9444596269168
 378,CNN,New York,1119,Donald Trump,49.75672327913344
 379,Morning Consult,Utah,1352,Donald Trump,48.39655379764736
-380,Beacon/Shaw,Pennsylvania,1531,Kamala Harris,50.517287862021476
+380,Beacon/Shaw,Pennsylvania,1531,Kamala Harris,50.51728786202147
 381,Beacon/Shaw,Utah,2070,Donald Trump,48.578132395632565
 382,ActiVote,California,1763,Other,54.11775200627744
 383,Morning Consult,Colorado,2288,Kamala Harris,52.42265398381278
@@ -392,10 +392,10 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 391,ActiVote,Alaska,2303,Donald Trump,51.4386975299567
 392,Morning Consult,Alabama,547,Donald Trump,52.4986722250469
 393,ActiVote,Texas,1147,Other,52.13432897813618
-394,Other,New York,1459,Other,49.680259379092604
+394,Other,New York,1459,Other,49.68025937909261
 395,Other,Alaska,1492,Donald Trump,54.44363787537441
 396,Morning Consult,Alaska,2240,Donald Trump,50.59914984041825
-397,ActiVote,Alaska,598,Donald Trump,48.206010265275836
+397,ActiVote,Alaska,598,Donald Trump,48.20601026527584
 398,Other,New York,2636,Donald Trump,51.40171308768913
 399,Beacon/Shaw,Utah,588,Other,50.965110084507614
 400,CNN,Colorado,2074,Other,49.916226582136005
@@ -446,7 +446,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 445,Morning Consult,New York,2879,Other,53.20412870729342
 446,Other,Pennsylvania,2664,Kamala Harris,49.739424218423665
 447,CNN,Alabama,2541,Other,53.182902191765606
-448,Other,Florida,790,Donald Trump,47.323005970101804
+448,Other,Florida,790,Donald Trump,47.32300597010181
 449,CNN,Colorado,2943,Other,48.40113813756034
 450,Morning Consult,New York,2906,Other,48.40003449236974
 451,Beacon/Shaw,Alabama,2927,Kamala Harris,48.806167969014496
@@ -465,7 +465,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 464,Other,Alabama,1958,Kamala Harris,45.42471082182601
 465,Beacon/Shaw,Oregon,2188,Donald Trump,51.84925687499344
 466,ActiVote,New Jersey,2061,Other,50.70957832504064
-467,CNN,Oregon,2745,Donald Trump,46.402182155288756
+467,CNN,Oregon,2745,Donald Trump,46.40218215528875
 468,ActiVote,New Jersey,1799,Other,51.184576763771474
 469,ActiVote,Utah,1487,Other,46.72321447636932
 470,ActiVote,Pennsylvania,2877,Donald Trump,52.74135486455634
@@ -496,10 +496,10 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 495,Other,Pennsylvania,2026,Kamala Harris,50.08919273968786
 496,Beacon/Shaw,Oregon,2154,Kamala Harris,47.96458149095997
 497,CNN,Colorado,2396,Other,53.43299030791968
-498,Other,Washington,849,Donald Trump,51.177695943042636
+498,Other,Washington,849,Donald Trump,51.17769594304264
 499,ActiVote,Texas,2553,Donald Trump,54.065684371162206
 500,CNN,Alaska,2476,Other,47.70617996575311
-501,Beacon/Shaw,California,1796,Kamala Harris,53.688618515152484
+501,Beacon/Shaw,California,1796,Kamala Harris,53.68861851515248
 502,CNN,Utah,1938,Donald Trump,45.06755080772564
 503,ActiVote,Texas,1259,Other,46.52671361807734
 504,CNN,Florida,1617,Other,51.65552552556619
@@ -543,7 +543,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 542,ActiVote,Alabama,565,Other,51.34730167221278
 543,Other,New Jersey,1873,Kamala Harris,54.227661257609725
 544,Other,New Jersey,1657,Kamala Harris,45.238843811675906
-545,Other,Utah,1158,Other,50.836050692014396
+545,Other,Utah,1158,Other,50.8360506920144
 546,Other,New Jersey,1907,Donald Trump,54.26841301843524
 547,ActiVote,New York,1919,Donald Trump,49.43717916030437
 548,Beacon/Shaw,Oregon,2236,Kamala Harris,50.66075045848265
@@ -586,7 +586,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 585,Beacon/Shaw,Pennsylvania,2917,Kamala Harris,54.89217834779993
 586,Beacon/Shaw,California,2825,Other,52.75888744741678
 587,Morning Consult,Texas,585,Donald Trump,52.0698332763277
-588,Other,Florida,1914,Other,53.274564701132476
+588,Other,Florida,1914,Other,53.27456470113248
 589,Beacon/Shaw,Colorado,519,Donald Trump,46.254749826621264
 590,Morning Consult,Alaska,896,Donald Trump,50.00277996994555
 591,Morning Consult,New Jersey,2533,Donald Trump,52.395720183849335
@@ -599,7 +599,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 598,ActiVote,Colorado,1374,Kamala Harris,48.684901325032115
 599,ActiVote,Alaska,2144,Other,50.4143965896219
 600,Morning Consult,Texas,716,Other,45.18129963893443
-601,Morning Consult,Alaska,1292,Kamala Harris,45.696067705284804
+601,Morning Consult,Alaska,1292,Kamala Harris,45.6960677052848
 602,Morning Consult,Utah,585,Donald Trump,48.905147137120366
 603,Beacon/Shaw,Alabama,2101,Kamala Harris,49.67935470165685
 604,Morning Consult,California,2289,Kamala Harris,47.93535498902202
@@ -611,7 +611,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 610,CNN,Alaska,2237,Other,49.17897538281977
 611,Beacon/Shaw,Utah,740,Kamala Harris,45.090835322625935
 612,ActiVote,New Jersey,2629,Kamala Harris,51.286023375578225
-613,CNN,Florida,668,Kamala Harris,54.410851129796356
+613,CNN,Florida,668,Kamala Harris,54.41085112979635
 614,CNN,Alabama,568,Kamala Harris,45.99306037882343
 615,Morning Consult,Alaska,1788,Kamala Harris,48.848012576345354
 616,Other,Alaska,1427,Other,49.021011549048126
@@ -630,7 +630,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 629,CNN,Utah,1601,Other,54.85389114357531
 630,Morning Consult,Oregon,2761,Donald Trump,53.23362114606425
 631,Beacon/Shaw,Alaska,2074,Other,49.43190433084965
-632,Other,California,1804,Other,45.131438970565796
+632,Other,California,1804,Other,45.13143897056579
 633,CNN,California,2535,Kamala Harris,49.90229481831193
 634,Other,Florida,2423,Kamala Harris,49.867892786860466
 635,ActiVote,New Jersey,842,Kamala Harris,54.33922222349793
@@ -639,7 +639,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 638,Other,Alabama,2194,Donald Trump,50.60688103782013
 639,Beacon/Shaw,Washington,711,Kamala Harris,50.30626330524683
 640,ActiVote,Utah,1341,Donald Trump,45.6294986163266
-641,CNN,Alaska,929,Donald Trump,53.840742490720004
+641,CNN,Alaska,929,Donald Trump,53.84074249072
 642,Other,Alabama,2327,Donald Trump,51.233171701896936
 643,Beacon/Shaw,Alabama,1609,Donald Trump,46.705829347483814
 644,CNN,California,1799,Donald Trump,52.525454917922616
@@ -666,7 +666,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 665,Morning Consult,New Jersey,2861,Other,45.62499550636858
 666,Morning Consult,Alaska,2476,Other,50.46861251350492
 667,Beacon/Shaw,New York,1845,Kamala Harris,45.30107702827081
-668,ActiVote,California,1803,Other,50.664142535533756
+668,ActiVote,California,1803,Other,50.66414253553376
 669,Beacon/Shaw,New York,1890,Other,48.7559584248811
 670,Beacon/Shaw,Colorado,1302,Kamala Harris,46.486231004819274
 671,CNN,Florida,1432,Donald Trump,47.15793578652665
@@ -699,17 +699,17 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 698,ActiVote,Texas,1982,Donald Trump,52.116245036013424
 699,CNN,Texas,2965,Other,49.13707296829671
 700,Other,Texas,2460,Kamala Harris,53.54903436964378
-701,CNN,Texas,2231,Donald Trump,51.098710875958204
+701,CNN,Texas,2231,Donald Trump,51.09871087595821
 702,Morning Consult,Florida,592,Kamala Harris,45.255849016830325
 703,CNN,Alaska,1736,Other,46.08246281277388
 704,Other,California,1146,Kamala Harris,54.80141920270398
 705,ActiVote,Alaska,2310,Other,48.302147621288896
 706,Beacon/Shaw,Texas,2522,Donald Trump,53.39926840970293
 707,ActiVote,Alabama,2963,Other,51.09564943704754
-708,Other,Oregon,2247,Donald Trump,50.395629128906876
+708,Other,Oregon,2247,Donald Trump,50.39562912890688
 709,Morning Consult,New York,1875,Donald Trump,49.17731749359518
 710,CNN,Alabama,2077,Donald Trump,48.9047688501887
-711,Morning Consult,Oregon,841,Kamala Harris,46.310408995486796
+711,Morning Consult,Oregon,841,Kamala Harris,46.3104089954868
 712,Morning Consult,Alaska,2606,Donald Trump,48.09019202599302
 713,Beacon/Shaw,Pennsylvania,1377,Other,49.43711466388777
 714,Morning Consult,Utah,1289,Donald Trump,54.803492713253945
@@ -734,7 +734,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 733,Morning Consult,New Jersey,505,Kamala Harris,45.732988426461816
 734,Other,Texas,1223,Donald Trump,45.935125718824565
 735,ActiVote,New Jersey,2136,Kamala Harris,52.21311545232311
-736,Beacon/Shaw,Pennsylvania,966,Other,52.435521038714796
+736,Beacon/Shaw,Pennsylvania,966,Other,52.4355210387148
 737,Morning Consult,Utah,668,Other,53.002303685061634
 738,Morning Consult,Texas,1796,Kamala Harris,48.56699117925018
 739,Beacon/Shaw,Oregon,2617,Donald Trump,48.580486006103456
@@ -795,7 +795,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 794,CNN,Washington,2455,Kamala Harris,49.506351372692734
 795,CNN,Pennsylvania,607,Other,47.48627446126193
 796,CNN,Texas,2627,Other,49.49823716189712
-797,CNN,Florida,2204,Donald Trump,47.817974167410284
+797,CNN,Florida,2204,Donald Trump,47.81797416741029
 798,ActiVote,Oregon,1179,Donald Trump,52.48291772324592
 799,CNN,California,1814,Other,48.253660164773464
 800,Morning Consult,New Jersey,2908,Other,50.95929701812565
@@ -812,14 +812,14 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 811,ActiVote,California,1454,Donald Trump,54.35454478254542
 812,Morning Consult,Pennsylvania,1688,Other,45.7636044267565
 813,Beacon/Shaw,Utah,2455,Other,47.28486462729052
-814,CNN,California,2015,Donald Trump,49.135418334044516
+814,CNN,California,2015,Donald Trump,49.13541833404451
 815,Beacon/Shaw,New York,1680,Kamala Harris,52.63478824170306
 816,CNN,Colorado,1201,Donald Trump,52.185779677238315
 817,Beacon/Shaw,Utah,2791,Kamala Harris,46.32740215631202
 818,ActiVote,California,2274,Other,54.955920793581754
 819,Morning Consult,Alabama,2894,Donald Trump,49.3879953189753
 820,Beacon/Shaw,Pennsylvania,2705,Other,53.62558057066053
-821,Beacon/Shaw,Florida,1238,Donald Trump,50.140676465816796
+821,Beacon/Shaw,Florida,1238,Donald Trump,50.1406764658168
 822,Other,Pennsylvania,1050,Donald Trump,50.83685490535572
 823,Other,New Jersey,2059,Donald Trump,48.24857720639557
 824,CNN,New York,714,Kamala Harris,50.905116100329906
@@ -870,15 +870,15 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 869,ActiVote,New Jersey,2270,Kamala Harris,54.251283288467675
 870,ActiVote,Texas,2074,Donald Trump,51.117942954879254
 871,CNN,New Jersey,540,Other,50.63193129142746
-872,Morning Consult,Washington,2312,Donald Trump,53.491130580659956
+872,Morning Consult,Washington,2312,Donald Trump,53.49113058065995
 873,ActiVote,Oregon,2328,Donald Trump,45.05213315365836
 874,ActiVote,Texas,2931,Donald Trump,53.05829128017649
 875,CNN,Colorado,1805,Donald Trump,52.342431063298136
-876,CNN,Alaska,1104,Kamala Harris,45.816411392297596
+876,CNN,Alaska,1104,Kamala Harris,45.8164113922976
 877,Other,Washington,2472,Donald Trump,54.0233747405
 878,Beacon/Shaw,New Jersey,1627,Kamala Harris,53.46663744421676
 879,CNN,California,899,Donald Trump,49.74030354991555
-880,Other,Alabama,1603,Other,50.900157829746604
+880,Other,Alabama,1603,Other,50.90015782974661
 881,Other,New York,1723,Kamala Harris,46.33166233077645
 882,Other,Alabama,2945,Other,48.465521356556565
 883,Beacon/Shaw,California,1786,Other,50.53349969210103
@@ -903,7 +903,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 902,Morning Consult,New Jersey,2496,Donald Trump,51.06142720673233
 903,ActiVote,Alabama,874,Other,47.99821081571281
 904,ActiVote,Oregon,2498,Kamala Harris,51.65886303642765
-905,Beacon/Shaw,Alaska,1032,Kamala Harris,48.481936980970204
+905,Beacon/Shaw,Alaska,1032,Kamala Harris,48.48193698097021
 906,ActiVote,Colorado,1987,Other,48.545972395222634
 907,ActiVote,Texas,2455,Donald Trump,53.02710429299623
 908,Morning Consult,Florida,2935,Donald Trump,52.04754845239222
@@ -918,16 +918,16 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 917,Beacon/Shaw,Alaska,2821,Donald Trump,52.019428513012826
 918,Beacon/Shaw,Alabama,984,Donald Trump,50.6077400338836
 919,ActiVote,New Jersey,2673,Other,48.7261045887135
-920,Other,Alaska,2225,Other,54.191326783038676
+920,Other,Alaska,2225,Other,54.19132678303867
 921,CNN,New Jersey,1934,Kamala Harris,52.70774141419679
 922,ActiVote,New Jersey,880,Other,50.96078917151317
 923,ActiVote,Alabama,1112,Donald Trump,49.36715865274891
 924,Other,California,2073,Donald Trump,54.568838111590594
-925,ActiVote,Alabama,1530,Donald Trump,48.169655648525804
+925,ActiVote,Alabama,1530,Donald Trump,48.16965564852581
 926,Beacon/Shaw,New York,881,Donald Trump,46.34760742774233
 927,CNN,Florida,739,Donald Trump,46.916703504975885
 928,Other,Washington,1807,Donald Trump,51.92184353247285
-929,Morning Consult,Alabama,2468,Kamala Harris,49.079172373749316
+929,Morning Consult,Alabama,2468,Kamala Harris,49.07917237374931
 930,Beacon/Shaw,New Jersey,2890,Other,48.783203621860594
 931,Morning Consult,New Jersey,2862,Donald Trump,50.730902252253145
 932,Other,Washington,1095,Other,50.20072925835848
@@ -963,7 +963,7 @@ poll_id,pollster,state,sample_size,candidate,support_percent
 962,ActiVote,Texas,802,Donald Trump,46.93303289124742
 963,Beacon/Shaw,Colorado,1084,Donald Trump,54.45296423044056
 964,Beacon/Shaw,Oregon,2715,Other,46.96298369439319
-965,CNN,Florida,1981,Other,45.856821183115244
+965,CNN,Florida,1981,Other,45.85682118311525
 966,CNN,Alaska,2471,Donald Trump,48.30299969529733
 967,Beacon/Shaw,New York,1323,Other,52.22655133577064
 968,Other,Alabama,1842,Other,49.31710444856435

@@ -1,11 +1,11 @@
 #### Preamble ####
-# Purpose: Tests... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 26 September 2024 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Conducts data quality tests on claen_poll_data to insure quality and validity of data being used for trump_model.rds and harris_model.rds
+# Author: Jimin Lee, Sarah Ding, Xiyann Chen
+# Date: 26 September 2024
+# Contact: jamiejimin.lee@mail.utoronto.ca, sarah.ding@mail.utoronto.ca, xiyan.chen@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Pre-requisites: R Packages (tidyverse, janitor, lubridate, arrow, testthat), clean_poll_data
+# Additional Information: N/A
 
 
 #### Workspace setup ####
