@@ -141,7 +141,7 @@ ggplot(clean_poll_data, aes(x = state)) +
 The distribution of the state variable is visualized in @fig-state-distribution and indicates that some states, such as Pennsylvania, North Carolina and Wisconsin have more polling observations compared to others, like Nevada. This variability reflects differences in polling frequency and interest among these battleground states. States with more polling observations provide a larger sample size, potentially leading to more stable and reliable predictions for those states in the model. 
 
 #### End Date {#sec-end-date}
-End date (**'end_date'**) marks the conclusion of data collection for each poll, serving as a predictive variable in our analysis of changes in voter support over time. This inclusion helps identify patterns as Election Day approaches, potentially reflecting the impact of campaign events, debates, or political developments.
+End date (**'end_date'**) marks the conclusion of data collection for each poll, serving as a predictive variable in our analysis of changes in voter support over time. This inclusion helps identify patterns as Election Day approaches, potentially reflecting the impact of campaign events, debates, or political developments. @fig-end-date-distribution shows polling end dates from July 2024 to October 2024, with the earliest date set to July 2024, coinciding with Kamala Harris's official presidential campaign announcement on July 21, 2024. The latest end date, October 14, 2024, reflects the last data update from Project 538 [@FiveThirtyEight] on October 15, 2024. The distribution reveals that polling activity is not evenly spread, with notable peaks in early September, late September, and early October, likely corresponding to periods of heightened political interest or significant campaign events that drive increased polling activity.
 ```{r}
 #| echo: false
 #| eval: true
@@ -165,7 +165,7 @@ ggplot(clean_poll_data, aes(x = end_date)) +
   )
 
 ```
-@fig-end-date-distribution shows polling end dates from July 2024 to October 2024, with the earliest date set to July 2024, coinciding with Kamala Harris's official presidential campaign announcement on July 21, 2024. The latest end date, October 14, 2024, reflects the last data update from Project 538 [@FiveThirtyEight] on October 15, 2024. The distribution reveals that polling activity is not evenly spread, with notable peaks in early September, late September, and early October, likely corresponding to periods of heightened political interest or significant campaign events that drive increased polling activity.
+
 
 ### Other Variables
 This section details additional variables that provide essential context for our analysis, including **'numeric_grade'**, which evaluates the quality of the polls; **'transparency_score'**, indicating the openness of poll methodologies; **'pollster'**, identifying the organizations conducting the polls; and **'start_date'**, which denotes the initiation of the polling period for each survey.
