@@ -133,8 +133,9 @@ For instance, @tbl-outcomevar reveals a total of 107 polls conducted, calculated
 It is important to note that since ‘pct’ stands for percentage, there may be a misconception that the values for Trump and Harris will always add up to 100%. For instance, in the summary statistics presented in Table 1, the average support for Donald Trump is 47.801%, while the average support for Kamala Harris is 47.999%. This results in a combined average support of 95.800%, indicating that there is a significant portion of respondents who are either undecided or supporting other candidates. This highlights the competitive nature of the election and emphasizes the necessity of examining not only the percentages attributed to the main candidates but also the context of voter preferences that could influence the final outcome.
 
 ### Predictive Variables
+In this section, we outline the two key predictor variables used in our analysis: 'state', which captures the geographical context of the polling data, and 'end_date', which reflects the timing of the polls relative to the election, allowing us to assess trends in voter support over ti
 #### State
-One of the paper's predictive variables is the 'state' variable indicates the U.S. state where the poll was conducted or targeted. In the context of the U.S. presidential election, the outcome is frequently determined by several key states. In the current 2024 election cycle, there are seven battleground states that are pivotal in the contest between Kamala Harris, representing the Democratic Party, and Donald Trump, representing the Republican Party. To enhance our model and refine our predictions, we focused exclusively on these seven battleground states. The polling results from each of these states play a crucial role in predicting electoral outcomes, as the percentage of support is evaluated on a state-by-state basis.
+The state ('state') variable indicates the U.S. state where the poll was conducted or targeted. In the context of the U.S. presidential election, the outcome is frequently determined by several key battlegroud states. In the current 2024 election cycle, there are seven battleground states that are pivotal in the contest between Kamala Harris, representing the Democratic Party, and Donald Trump, representing the Republican Party. To enhance our model and refine our predictions, we focused exclusively on these seven battleground states. The polling results from each of these states play a crucial role in predicting electoral outcomes, as the percentage of support is evaluated on a state-by-state basis.
 ```{r}
 #| echo: false
 #| eval: true
@@ -159,8 +160,8 @@ ggplot(clean_poll_data, aes(x = state)) +
 ```
 The distribution of the state variable is visualized in @fig-state-distribution and indicates that some states, such as Pennsylvania, North Carolina and Wisconsin have more polling observations compared to others, like Nevada. This variability reflects differences in polling frequency and interest among these battleground states. States with more polling observations provide a larger sample size, potentially leading to more stable and reliable predictions for those states in the model. 
 
-#### End Date
-The variable 'end_date' represents the date the poll ended, essentially the date the poll stopped collecting data from electorates. In the context of our paper, the end date of each poll serves as one of the predictive variables and is used to assess changes in voter support over time. Including end date as a variable in our model can help us identify patterns in voter support as Election Day approaches, potentially reflecting the impact of campaign events, debates, or other political developments. @fig-end-date-distribution displays the distribution of polling end dates from July 2024 to October 2024.
+#### End Date {#sec-end-date}
+End date ('end_date') represents the date the poll ended, essentially the date the poll stopped collecting data from electorates. In the context of our paper, the end date of each poll serves as one of the predictive variables and is used to assess changes in voter support over time. Including end date as a variable in our model can help us identify patterns in voter support as Election Day approaches, potentially reflecting the impact of campaign events, debates, or other political developments. @fig-end-date-distribution displays the distribution of polling end dates from July 2024 to October 2024.
 ```{r}
 #| echo: false
 #| eval: true
@@ -184,10 +185,12 @@ ggplot(clean_poll_data, aes(x = end_date)) +
   )
 
 ```
-We filtered for the earliest end date as July 2024 since Harris officially announced her presidential campaign on July 21, 2024. Therefore, any polls that has an end date before July would not contain polling results for Harris. The data from [@FiveThirtyEight] is last updated on October 15, 2024, thus the latest end date being October 21, 2024. Furthermore, @fig-end-date-distribution also reveals that polling activity is not evenly distributed over time. There are clear peaks where the number of polls conducted is higher, notably in early September, late Semptember, as well as early October. This concentration of polls likely corresponds to period of heightened political interest or significant campaign events that prompt increased polling. 
+We filtered for the earliest end date as July 2024 since Harris officially announced her presidential campaign on July 21, 2024. Therefore, any polls that has an end date before July would not contain polling results for Harris. The data from [@FiveThirtyEight] is last updated on October 15, 2024, thus the latest end date being October 21, 2024. Furthermore, @fig-end-date-distribution also reveals that polling activity is not evenly distributed over time. There are clear peaks where the number of polls conducted is higher, notably in early September, late September, as well as early October. This concentration of polls likely corresponds to period of heightened political interest or significant campaign events that prompt increased polling. 
 
 ### Other Variables
+This section details additional variables that provide essential context for our analysis, including numeric grade, which evaluates the quality of the polls; transparency score, indicating the openness of poll methodologies; pollster, identifying the organizations conducting the polls; and start date, which denotes the initiation of the polling period for each survey.
 #### Numeric Grade
+Numeric Grade ('numeric_grade') represents the quality of each poll, as rated by [@FiveThirtyEight], based on factors such as methodology, transparency, and historical accuracy. In the context of our paper, numeric grade allows us to weigh the reliability of different polls. By including numeric grade as a variable in our model, we aim to account for variations in poll quality, ensuring that polls with higher ratings (indicating higher reliability) contribute more significantly to our predictions of voter support. @fig-numgrade-distribution displays the distribution of numeric grades for the polls included in our analysis, ranging from 2.5 to 3.0. Polls with higher grades are generally seen as more methodologically rigorous and transparent, which helps improve the reliability of our model’s predictions. The distribution shows several peaks, indicating that certain grade levels (around 2.7, 2.8, and 3.0) are more common among the polling data we collected.
 ```{r}
 #| echo: false
 #| eval: true
@@ -205,8 +208,10 @@ ggplot(clean_poll_data, aes(x = numeric_grade)) +
   theme_minimal()
 
 ```
+This variability in numeric grade highlights the diversity in polling quality within our dataset. The presence of peaks suggests that some pollsters consistently receive higher ratings, likely due to their use of more rigorous methods or transparent reporting standards. Conversely, the valleys in the distribution may indicate fewer polls from sources with lower numeric grades, reflecting a potential tendency for lower-quality polls to be less prevalent or less frequently conducted. By accounting for numeric grade, we can improve the accuracy of predictions by emphasizing data from more reliable sources. This consideration is crucial, as polling quality can impact the stability of the model’s forecasts, especially in closely contested states where polling accuracy is essential for reliable predictions.
 
 #### Transparency Score
+Transparency Score ('transparency_score') represents the degree of methodological transparency provided by each pollster, rated on a scale from 0 to 10 by [@FiveThirtyEight]. This score reflects the extent to which pollsters disclose details about their data collection and analysis methods, such as sample size, weighting, and margin of error. In the context of our paper, transparency score is an essential variable for evaluating the reliability of polling data, as higher transparency scores generally indicate a greater level of methodological rigor and openness. @fig-transparency-score-distribution displays the distribution of transparency scores across the polling data for key battleground states. The plot shows that transparency scores cluster heavily around ratings of  7 and 9, suggesting that a majority of polls in our dataset come from sources that maintain a relatively high level of transparency. There are smaller peaks at lower scores (5 and 10), indicating that while some pollsters offer limited transparency, a few polls also achieve perfect transparency scores.
 ```{r}
 #| echo: false
 #| eval: true
@@ -224,9 +229,10 @@ ggplot(clean_poll_data, aes(x = transparency_score)) +
   theme_minimal()
 
 ```
-
+This distribution is important for understanding the credibility of our data sources. Polls with higher transparency scores are more likely to provide consistent and reliable results, as they openly disclose their methodologies, allowing us to assess potential biases or limitations in their data. In contrast, polls with lower transparency scores may lack sufficient methodological detail, making it challenging to gauge their accuracy. Incorporating transparency scores into our model helps differentiate between high- and low-transparency polls. This adjustment is crucial as transparency can influence the stability of the model’s predictions, especially in closely contested states where the reliability of polling data may impact the accuracy of our forecasted election outcomes.
 
 #### Pollster
+Pollster ('pollster') represents the various organizations responsible for conducting polls across key battleground states in the lead-up to the 2024 United States Presidential Election. In the context of our paper, the diversity and frequency of polling by different pollsters are essential for understanding the reliability and variance in the data. Each pollster may use different methodologies, sample populations, and data collection techniques, which can affect the results and introduce variability in polling outcomes.
 ```{r}
 #| echo: false
 #| eval: true
@@ -245,9 +251,10 @@ ggplot(clean_poll_data, aes(x = factor(pollster))) +  # Convert to factor to ens
   coord_flip() +  
   theme(axis.text.y = element_text(angle = 0, hjust = 1))  
 ```
-
+@fig-pollster-distribution displays the count of polls conducted by each pollster, illustrating the distribution of polling efforts across multiple organizations. Notably, Emerson is the most frequent pollster, conducting the highest number of polls, followed by Quinnipiac and Siena/NYT. Other pollsters, such as YouGov, CNN/SSRS, and Marist, also contribute a significant number of polls, whereas some organizations like The Washington Post and SurveyUSA have comparatively fewer entries in the dataset.This distribution is crucial for evaluating the consistency and breadth of the polling data. Pollsters with a higher count of polls, like Emerson, contribute substantially to the dataset and can have a greater influence on the model's predictions, particularly if their methodology or sample selection differs from others. On the other hand, pollsters with fewer entries may provide valuable but limited data points, potentially adding unique perspectives but with less influence on overall trends.
 
 #### Start Date
+Start date ('start_date') represents the date when each poll began collecting responses. In the context of our paper, start date is a key variable as it allows us to focus on polling data collected after July 21, 2024—the date Kamala Harris officially announced her presidential campaign. By filtering the dataset to include only polls with a start date after this announcement, we ensure that each poll reflects voter sentiment with Harris as an active candidate, enabling a more accurate comparison between her and Donald Trump. @fig-start-date-distribution displays the distribution of polling start dates from late July to mid-October 2024, showing when polling efforts began across key battleground states. The histogram reveals peaks in polling activity, particularly in mid-August, early September, and late September, indicating periods of heightened interest or campaign events that likely prompted increased polling.
 ```{r}
 #| echo: false
 #| eval: true
@@ -266,42 +273,82 @@ ggplot(clean_poll_data, aes(x = start_date)) +
   scale_x_date(date_breaks = "15 days", date_labels = "%b %d") +  # Adjust x-axis labels
   theme_minimal()
 ```
+This distribution provides insights into the timing and intensity of polling efforts throughout the campaign season. By including only polls initiated after Harris’s campaign launch, we capture voter preferences in a context where both major candidates are actively campaigning, thus making the polling data more relevant for direct comparisons. This filtered timeline ensures our model focuses on data that reflects the competitive dynamics between Harris and Trump, enhancing the validity of our predictive analysis as we approach Election Day.
+
 
 # Model {#sec-model}
+The Bayesian Beta regression models constructed in this paper aim to predict the probability of victory for Donald Trump and Kamala Harris in the 2024 U.S. Presidential Election by analyzing polling data of the 7 battleground states. One Bayesian Beta regression model is constructed for each candidate, and each of them estimates the proportion of support for each candidate based on polling data, accounting for both polling trends over time, and state-level differences in voter sentiment. These models allow us to evaluate how support for each candidate fluctuates over time in key states, and predict potential electoral outcomes.
 
-In this analysis, we develop separate Bayesian models for candidates Donald Trump and Kamala Harris to predict their respective probabilities of winning in the 2024 U.S. Presidential Election. The use of distinct models allows us to capture the unique polling dynamics and voter preferences for each candidate across key battleground states, which include Arizona, Georgia, Michigan, Nevada, North Carolina, Pennsylvania, and Wisconsin. By analyzing polling data collected from various sources, we aim to provide a comprehensive assessment of each candidate’s electoral prospects.
+One of the goals of our model is to analyze changes in voter support for each candidate over time, as Election Day approaches. By using end_date_num (days the earliest poll date) as a predictor with natural splines, the model captures non-linear trends in support. The time-based analysis provides us with information about how voter preference may shift due to campaign events, news cycles, and other influential factors in the months leading up to the election. 
 
-The models are built using state-level polling data, which is aggregated to ensure robustness in the predictions. Each candidate's model incorporates temporal factors through natural splines applied to the numeric representation of the end date, allowing us to observe changes in voter support over time. This approach provides a nuanced understanding of how public sentiment evolves as the election date approaches. Further background details, model specifications, and diagnostics are included in [Appendix -@sec-model-details].
+Another goal of our model is to predict the potential winner of the Presidential Election. We recognize that battleground states have unique political landscapes, so we include state as a random effect in each model. This allows each of the 7 battleground states to have a unique baseline level of support for each candidate, capturing regional differences in voter preferences. By incorporating state-level effects, the model can show variations in support across different states, revealing the potential winning candidate for the presidential election. Further background details, model specifications, and diagnostics are included in [Appendix -@sec-model-details].
+
+## Model Assumptions
+In order to ensure the validity and reliability of our Bayesian models for predicting voter support percentages for Donald Trump and Kamala Harris, we establish several key assumptions that guide the modeling process:
+
+- **Linearity in the Log-Odds**: The relationship between predictor variables (end_date and state) and the log-odds of the outcome variable (percentage of support) is linear. To account for non-linear trends over time, nature splines are used. 
+- **Independence**: The outcome for each polling observation is assumed to be independent of others. Each poll represents a distinct sample of voter sentiment at a specific time and location. 
+- **Appropriate Distribution for Proportions**: Since the model predicts support percentages (bounded between 0 and 100), a Beta distribution with a logit link is applied, which is ideal for data that are restricted to this range.
+- **Random Effects**: To capture variation across states, state-level random effects are included, allowing each state to have its unique baseline level of support, acknowledging regional political differences
+- **Prior Distributions**: The model uses weakly informative priors for the intercept and coefficients, which helps in generating stable estimates and reducing the influence of outliers or unusual polling data.
+
 
 ## Model Setup
-The primary estimand in our models is the probability of victory for each candidate in the selected battleground states, expressed through a logistic regression framework. The model is formulated as follows:
+In this section, we outline the statistical models employed to predict the probabilities of victory for Donald Trump and Kamala Harris in the 2024 presidential election within key battleground states. Our analysis utilizes a Bayesian framework, which allows us to incorporate uncertainty and prior information into the modeling process, yielding more robust predictions. The primary estimand for both models is the probability of each candidate's victory, expressed through a logistic regression approach. By examining polling data and its temporal dynamics, we aim to capture the evolving nature of voter support leading up to the election. We present separate subsections for the models of Donald Trump and Kamala Harris, detailing the structure, variables, and assumptions underlying each model. This division allows for a focused discussion on how each model has been tailored to reflect the unique electoral contexts and polling dynamics for each candidate. 
+
+### Trump Model
+The primary estimand for Donald Trump's model is the probability of victory in the selected battleground states, derived from a logistic regression framework. The model is structured as follows:
 
 $$
-P(\text{Victory}_i) = \frac{e^{\beta_0 + \beta_1 \cdot \text{end\_date\_num}_i + u_{\text{state}}}}{1 + e^{\beta_0 + \beta_1 \cdot \text{end\_date\_num}_i + u_{\text{state}}}}
+P(\text{Victory}_{Trump} = 1) = \frac{e^{\beta_0 + \beta_1 \cdot \text{end\_date\_num} + u_{\text{state}}}}{1 + e^{\beta_0 + \beta_1 \cdot \text{end\_date\_num} + u_{\text{state}}}}
 $$
 
 Where:
 
-- $P(\text{Victory}_i)$ is the predicted probability of winning for candidate $i$.
-- $\beta_0$ represents the intercept, reflecting the baseline log-odds of winning.
-- $\beta_1$ is the coefficient for the natural spline transformation of the numeric end date $(\text{end\_date\_num}_i)$, capturing nonlinear trends in voter support over time.
-- $u_{\text{state}}$ is the random effect associated with each state, accounting for variations in voter preferences.
+- $P(\text{Victory}_{Trump})$ is the predicted probability of Donald Trump winning.
+- $\beta_0$ represents the intercept, indicating the baseline log-odds of winning.
+- $\beta_1$ is the coefficient for the natural spline transformation of the numeric end date ($\text{end\_date\_num}$), capturing nonlinear trends in voter support over time.
+- $u_{\text{state}}$ accounts for random effects specific to each state, reflecting variations in voter preferences.
 
-Data preparation involved creating two distinct datasets from the cleaned polling data: one for Donald Trump and another for Kamala Harris. Each dataset included the state, end date, and corresponding polling percentage, with the end date converted into a numeric format representing the number of days since the earliest date in the dataset. This allows the model to effectively capture the evolving nature of voter sentiment as the election approaches.
+The dataset for the Trump model was prepared by extracting the relevant polling data, including the state, end date, and corresponding percentage of support for Trump ($Trump\_pct$). The end date was converted into a numeric format, denoting the number of days since the earliest polling date in the dataset. This transformation allows the model to effectively capture the evolving nature of voter sentiment as the election approaches.
 
-We implemented the models using the **`brms`** package in R, selecting a **Beta distribution** with a **logit link function** to accurately model the proportions of support for each candidate:
+The model was implemented using the **`brms`** package in R, applying a **Beta distribution** with a **logit link function** to accurately model the proportions of support:
 
 $$
 y_i \sim \text{Beta}(\mu_i, \phi)
 $$
 
-In this model:
+Here, $y_i$ is the proportion of support for Trump in a given state, $\mu_i$ is the mean of the Beta distribution, and $\phi$ is the precision parameter reflecting variability.
 
-- $y_i$ represents the proportion of support for candidate $i$ in a given state.
-- $\mu_i$ is the mean of the Beta distribution, reflecting the expected support proportion.
-- $\phi$ is the precision parameter, indicating the variability around the mean.
+We specified priors for the model parameters as follows:
 
-This approach allows us to effectively capture the dynamics of voter support in various states as we approach the election.
+- For the intercept $\beta_0$, we set a prior of $\beta_0 \sim \text{Normal}(0, 10)$, allowing the data to inform the estimation of baseline log-odds without imposing strong assumptions.
+- For the slope $\beta_1$, we applied a prior of $\beta_1 \sim \text{Normal}(0, 5)$, reflecting reasonable expectations regarding the influence of polling trends.
+
+Natural splines were used to model the effect of the end date, accommodating observed non-linearity in voter support. Key assumptions include the independence of observations within states and the suitability of the Beta distribution for modeling proportions. However, limitations may arise from the accuracy of polling data and the assumption that historical voting patterns will predict future behavior.
+
+### Harris Model
+Similar to the Trump model, the estimand for Kamala Harris's model is the probability of her victory in the selected battleground states, modeled within a logistic regression framework. The formulation is analogous:
+
+$$
+P(\text{Victory}_{Harris} = 1) = \frac{e^{\beta_0 + \beta_1 \cdot \text{end\_date\_num} + u_{\text{state}}}}{1 + e^{\beta_0 + \beta_1 \cdot \text{end\_date\_num} + u_{\text{state}}}}
+$$
+
+Where the components mirror those described for the Trump model, tailored to reflect the probability of victory for Harris.
+
+For this model, the dataset was constructed similarly, extracting polling data specifically for Harris ($Harris\_pct$). The same transformations were applied, converting end dates into a numeric format to facilitate the modeling of trends over time.
+
+The Harris model was also implemented using the **`brms`** package, employing a **Beta distribution** with a **logit link function** to represent the proportions of support accurately. The same mathematical representation and priors were applied as in the Trump model:
+
+$$
+y_i \sim \text{Beta}(\mu_i, \phi)
+$$
+
+With the same definitions for $y_i$, $\mu_i$, and $\phi$. 
+
+Natural splines were employed to adapt to the non-linear trends in voter support over time. The assumptions and limitations discussed for the Trump model apply equally to the Harris model.
+
+By utilizing Bayesian beta regression models for both candidates, we leverage their flexibility and capacity to incorporate prior beliefs, which is particularly advantageous in the context of electoral forecasting where uncertainty plays a critical role.
 
 ```{r}
 #| echo: false
@@ -379,12 +426,13 @@ trump_summary <- tidy(trump_model, effects = "fixed", conf.int = TRUE) %>%
 knitr::kable(trump_summary) %>%
   kable_styling(full_width = FALSE, position = "center")
 ```
-
 In comparison, the model summary for Donald Trump presents a different picture. The intercept for Trump's model is $-0.0923$ with a standard error of $0.0306$, indicating a similarly negative baseline log-odds of victory as Harris. However, Trump's model demonstrates more pronounced increases in support as reflected by the estimates for the natural spline terms. For example, the second spline term ($nsendate_{num\_df42}$) has a positive coefficient of $0.0803$, highlighting a significant upward trend in support over time. This trend is further supported by the confidence interval, which ranges from $0.0179$ to $0.1426$, indicating a substantial increase in his predicted probabilities as the election approaches. The fourth spline term ($nsendate_{num\_df44}$) also shows a positive coefficient of $0.0789$, suggesting that the support for Trump remains resilient over the polling period. Overall, both models reveal complex interactions between time and voter sentiment, with implications for the electoral dynamics leading up to the election.
 
 # Results {#sec-results}
+In this section, we present the results of our analysis, focusing on the electoral support for Donald Trump and Kamala Harris across key battleground states during the 2024 Presidential Election cycle. We begin by examining the state-level polling averages for both candidates, which provide a snapshot of voter preferences as captured by various pollsters. Next, we explore how polling averages have evolved over time, highlighting trends that may influence election outcomes. We then assess the predicted probabilities of Trump winning on Election Day, followed by a detailed look at the likelihood of winning by state. Finally, we visualize the predicted winner by state on a US map, summarizing our findings and their implications for the electoral landscape.
+
 ## State-Level Polling Averages for Trump and Harris
-WRITE - explain why we are showing this average table first and what the table reveals
+@tbl-outcomevar displays overview of the percentage of support for Trump and Harris by each battleground state. It provides us with a high level understanding of the current voter dynamic. The pct results are aggregated averages of all pct data points for Trump and Harris in each state. By comparing the percentage of support for T.rump and Harris, we can determine the candidate that has a leading advantage in winning each state. For example,Trump has 49.2% support in Arizona while Harris has 46.8% support, which means Trump has won the state of Arizona.
 ```{r}
 #| echo: false
 #| warning: false
@@ -417,6 +465,7 @@ state_average <- clean_poll_data %>%
  # Render the table
  knitr::kable(average_table)
 ```
+This distribution is crucial for evaluating the consistency and breadth of the polling data. Pollsters with a higher count of polls, like Emerson, contribute substantially to the dataset and can have a greater influence on the model's predictions, particularly if their methodology or sample selection differs from others. On the other hand, pollsters with fewer entries may provide valuable but limited data points, potentially adding unique perspectives but with less influence on overall trends.
 
 ## Polling Averages for Trump and Harris Over Time in Battleground States
 @fig-state-polling-average provides a visual comparison of the current polling support for Donald Trump and Kamala Harris across key battleground states, tracked over time from August 2024 to October 2024. Each line plot represents the average polling percentages for both candidates in a specific state, with red lines denoting Trump’s support and blue lines representing Harris’s support. Across several states, there are noticeably increased fluctuations in polling averages for both candidates closer to the election particularly from late September to October. This pattern may indicate heightened voter interest and engagement as the election date approaches which is November 4th, 2024, it could also reflect changes in public opinion due to campaign events, political debates, or other external factors.
@@ -591,7 +640,11 @@ The results of our model underscore the critical role that these battleground st
 ## Model Performance {#sec-model-performance}
 Out-of-sample testing results [Appendix -@sec-model-diagnostics] demonstrate the effectiveness and reliability of our Bayesian logistic regression model in predicting state-level outcomes for the 2024 U.S. presidential election. Our accuracy test generated a 75% score for the model, indicating our model's high reliability for making predictions about state-level election outcomes. Since presidential elections hinge on state-level wins, a reliable state-by-state prediction would imply a reliable national outcome prediction. 
 
+
+### Model Performance - Trump Model
 The RMSE value generated for our model is 0.5, which indicates that the model-predicted probabilities are close to the true outcomes. The confusion matrix breaks down the model’s predictions into four categories: 1. orrectly predicted Trump wins, 2. Correctly predicted Harris wins, 3. Incorrectly predicted Trump wins, 4. Incorrectly predicted Harris wins. The generated confusion matrix for our model all had values of 0 to 2 for all four categories, indicating a balanced prediction between the two candidates, and suggesting the reliability of our model. Out-of-sample testing was conducted to test the reliability of our model, with further details provided in [Apppendix -@sec-model-diagnostics]. 
+
+### Model Performance - Harris Model
 
 ## Weaknesses and Next Steps
 While our model provides valuable insights into the electoral landscape, it faces limitations due to missing data for certain states, which results in some states being left blank in our predictions. Although our primary focus is on understanding the dynamics within battleground states, the lack of information from other states can lead to incomplete predictions which may obscure broader trends affecting voter sentiment.
@@ -619,27 +672,63 @@ Furthermore, in the full raw data set from 538 [@FiveThirtyEight], for the state
 
 # Model details {#sec-model-details}
 
-## Diagnostics {#sec-model-diagnostics}
-Out-of-sample testing was conducted to test our model’s reliability in predicting potential presidential election outcomes. We train our model on a training set of our data and then test its performance on the test set of our data, we evaluate how well the model generalizes to new data that it was not trained on. 
+## Model Diagnostics {#sec-model-diagnostics}
+In order to assess the validity and reliability of our Bayesian models for predicting voter support for Kamala Harris and Donald Trump, we conducted posterior predictive checks for both models. Posterior predictive checks are a crucial diagnostic tool that allows us to evaluate how well our models can replicate observed data based on the parameters estimated during the modeling process. By comparing the distribution of the observed support percentages with the predicted support values, we can identify potential discrepancies and gauge the overall fit of our models.
 
-This process helps reveal whether the model is over-fitting to the training data or truly capturing the underlying patterns that apply more broadly. The test produces an accuracy score, RMSE, and a confusion matrix, each measuring different aspects of the model’s prediction. Accuracy is the proportion of correctly predicted outcomes compared to the total number of predictions made in the test set. The testing was implemented using the following packages in R [@citeR]: caret [@caret], rstanarm [@rstanarm], ggplot2 [@ggplot2], dplyr [@dplyr]. 
+These checks not only help us verify whether the model assumptions hold but also provide insights into how well the models capture the underlying data-generating processes. A strong alignment between observed and predicted values would suggest that our models are robust and capable of accurately reflecting the dynamics of voter support in the current electoral context. Conversely, significant deviations may indicate areas for model refinement or highlight limitations in our current approach. Through these diagnostics, we aim to ensure the credibility of our findings and enhance our understanding of the electoral landscape as we approach the 2024 Presidential Election.
+
+## Posterior Predictive Check for the Trump Model
+The posterior predictive check for the Trump model is illustrated @fig-trump-check, showcasing the relationship between the observed support percentages $y$ and the predicted support values $y_{\text{rep}}$. The plot displays a density estimate for both the actual observed data (in dark blue) and the predicted values generated by the model (in light blue). The primary aim of this diagnostic check is to assess how well the model captures the distribution of observed support for Donald Trump.
+```{r}
+#| echo: false
+#| eval: true
+#| message: false
+#| warning: false
+#| label: fig-trump-check
+#| fig-cap: "Posterior predictive check for Donald Trump's model, illustrating the distribution of observed support percentages $y$ alongside the predicted support values $y_{\text{rep}}$. The graph shows a strong overlap between the observed and predicted distributions, indicating that the model accurately captures the dynamics of voter support for Trump."
+
+# Generate posterior predictive checks for Trump model
+posterior_predict_trump <- posterior_predict(trump_model)
+
+# Plot the posterior predictive check
+pp_check_trump <- bayesplot::pp_check(trump_model, nsamples = 100) +
+  xlab("Support (%)") +
+  ylab("Density") +
+  theme_minimal()
+
+print(pp_check_trump)
+```
+From the visualization, we can observe that the predicted values closely align with the actual observed support percentages. The dark blue curve representing the observed data indicates a concentrated support range around 48% to 52%, suggesting that the model effectively captures the central tendency of voter support for Trump. The light blue curves depict a variety of predicted densities, indicating the model's ability to simulate a range of possible outcomes around the observed values. The alignment of the $y$ and $y_{\text{rep}}$ distributions indicates that the model is successfully reflecting the dynamics of voter support, thereby validating the choice of model and its structure. However, the presence of some variability in the predicted values suggests that while the model fits the observed data well, there may still be unexplained fluctuations in support levels that could warrant further investigation. These limitations are further discussed in @sec-model-diagnostics. This examination enhances our confidence in the model’s utility for forecasting electoral outcomes, ensuring it is robust enough to inform strategic decisions as the election approaches.
+
+### Model Diagnostics - Harris Model
+The posterior predictive check for the Harris model is presented in Figure X, illustrating the relationship between the observed support percentages $y$ and the predicted support values $y_{\text{rep}}$. @fig-harris-check displays a density estimate for both the actual observed data (depicted in dark blue) and the predicted values generated by the model (shown in light blue). The purpose of this diagnostic check is to evaluate how well the model captures the distribution of observed support for Kamala Harris.
+```{r}
+#| echo: false
+#| eval: true
+#| message: false
+#| warning: false
+#| label: fig-harris-check
+#| fig-cap: "Posterior predictive check for Kamala Harris's model, illustrating the distribution of observed support percentages $y$ against the predicted support values $y_{\text{rep}}$. The graph shows a strong correspondence between the observed and predicted distributions, indicating that the model accurately captures the dynamics of voter support for Harris in the given dataset."
 
 
-### Model Diagnostics Result
+# Generate posterior predictive checks for Harris model
+posterior_predict_harris <- posterior_predict(harris_model)
 
-[@fig-barplot-diagnostics] displays the performance of the Bayesian logistic regression model used to predict the outcome of the 2024 presidential election. The model's accuracy is approximately 75%, indicating that 75% of the test set's state-level outcomes were correctly predicted. The RMSE (Root Mean Squared Error) is about 0.5, showing the average error in predicting the winning candidate across states.
+# Plot the posterior predictive check
+pp_check_harris <- bayesplot::pp_check(harris_model, nsamples = 100) +
+  xlab("Support (%)") +
+  ylab("Density") +
+  theme_minimal()
 
+print(pp_check_harris)
+```
 
-This suggests the model performs reasonably well, but there is some error in predicting the exact outcome in certain states, which may be due to variations in polling data or other unaccounted factors.
+## Posterior Predictive Check for the Harris Model
+The posterior predictive check for the Harris model is presented in Figure X, illustrating the relationship between the observed support percentages $y$ and the predicted support values $y_{\text{rep}}$. This visualization features a density estimate for both the actual observed data (depicted in dark blue) and the predicted values generated by the model (shown in light blue). The purpose of this diagnostic check is to evaluate how well the model captures the distribution of observed support for Kamala Harris.
 
-### Confusion Matrix
-[@tbl-confusion-matrix] displays the model's predictive performance in distinguishing between state-level wins for Trump (coded as 1) and Harris (coded as 0). 
-
-
-In this case, the model correctly predicted 12 Harris wins and 15 Trump wins (true positives and true negatives). However, there were 5 instances where the model incorrectly predicted a Trump win when Harris won (false positives), and 3 instances where it predicted a Harris win when Trump won (false negatives). This breakdown helps assess not only the overall accuracy but also how well the model distinguishes between close contests in different states, which is critical for predicting the outcome of the 2024 presidential election.
+In the plot, we observe a strong overlap between the $y$ and $y_{\text{rep}}$ distributions, with the dark blue curve representing the observed support percentages primarily concentrated around 48% to 52%. This indicates that the model successfully approximates the actual voting support dynamics for Harris. The light blue curves signify the distribution of predicted values, demonstrating the model's ability to replicate the observed trends effectively. The close alignment of the observed and predicted densities suggests that the model adequately reflects the underlying support for Harris among voters, thereby affirming the appropriateness of the model structure. However, similar to the Trump model, the presence of some variability in the predicted values indicates that while the model performs well, there may still be unexplained variations in support levels that could benefit from further analysis. Such limitations are also discussed in @sec-model-diagnostics. 
 
 # Pollster Methodology Overview and Evaluation
-
 The following information about the Siena College/New York Times poll methodology is based on the details provided in the article "How The Times/Siena Poll Is Conducted" by the New York Times [@nyt-siena-methodology].
 
 The Siena College/New York Times poll for the 2024 presidential election uses a robust sampling approach to ensure accuracy and relevance. The poll applies a stratified dual-frame sample, drawing from both land-lines and cell phones. Each poll is conducted by phone using live interviewers at call centers based in Florida, New York, South Carolina, Texas, and Virginia. The sampling population is all registered voters who live in the six battleground states: Arizona, Georgia, Michigan, Nevada, Pennsylvania, and Wisconsin.
