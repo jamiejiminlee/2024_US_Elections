@@ -143,7 +143,7 @@ The state ('state') variable indicates the U.S. state where the poll was conduct
 #| warning: false
 #| message: false
 #| label: fig-state-distribution
-#| fig-cap: "Bar plot showing the distribution of observations across key battleground states in the 2024 United States Presidential Election polling data. The plot illustrates the count of polling observations for each state, highlighting states with more frequent polling activity. This visualization aids in understanding the level of engagement and data collection in each battleground state leading up to the election."
+#| fig-cap: "Distribution of Observations for Each State in Polling Data. Illustrates the number of polling observations across key battleground states in the lead-up to the 2024 United States Presidential Election. Notably, Pennsylvania has the highest count of observations, suggesting a more robust polling presence, while Nevada shows fewer observations. "
 
 
 # Visualize the distribution of the state variable
@@ -169,7 +169,7 @@ End date ('end_date') represents the date the poll ended, essentially the date t
 #| warning: false
 #| message: false
 #| label: fig-end-date-distribution
-#| fig-cap: "Histogram illustrating the distribution of polling end dates for key battleground states in the lead-up to the 2024 United States Presidential Election. The histogram shows the frequency of polls conducted over time, providing insight into the timing of polling activities and potential trends in voter sentiment as Election Day approaches. This visualization is crucial for understanding how polling data correlates with the election timeline."
+#| fig-cap: "Distribution of Polling End Dates. This histogram displays the frequency of polling end dates for key battleground states leading up to the 2024 United States Presidential Election, highlighting peaks in polling activity around late September."
 
 # Visualize the distribution of end_date
 ggplot(clean_poll_data, aes(x = end_date)) +
@@ -193,13 +193,14 @@ This section details additional variables that provide essential context for our
 
 #### Numeric Grade
 Numeric Grade ('numeric_grade') represents the quality of each poll, as rated by [@FiveThirtyEight], based on factors such as methodology, transparency, and historical accuracy. In the context of our paper, numeric grade allows us to weigh the reliability of different polls. By including numeric grade as a variable in our model, we aim to account for variations in poll quality, ensuring that polls with higher ratings (indicating higher reliability) contribute more significantly to our predictions of voter support. @fig-numgrade-distribution displays the distribution of numeric grades for the polls included in our analysis, ranging from 2.5 to 3.0. Polls with higher grades are generally seen as more methodologically rigorous and transparent, which helps improve the reliability of our model’s predictions. The distribution shows several peaks, indicating that certain grade levels (around 2.7, 2.8, and 3.0) are more common among the polling data we collected.
+
 ```{r}
 #| echo: false
 #| eval: true
 #| warning: false
 #| message: false
 #| label: fig-numgrade-distribution
-#| fig-cap: "Histogram illustrating the distribution of polling end dates for key battleground states in the lead-up to the 2024 United States Presidential Election. Displays the frequency of polls conducted over time, providing insight into the timing of polling activities and potential trends in voter sentiment as Election Day approaches. This visualization is crucial for understanding how polling data correlates with the election timeline."
+#| fig-cap: "Density plot illustrating the distribution of numeric grades assigned to pollsters within the polling data as the 2024 United States Presidential Election approaches. The graph highlights the frequency of numeric grades, indicating key concentrations that suggest variability in pollster quality. "
 
 # Density plot for numeric grade
 ggplot(clean_poll_data, aes(x = numeric_grade)) +
@@ -220,7 +221,7 @@ Transparency Score ('transparency_score') represents the degree of methodologica
 #| warning: false
 #| message: false
 #| label: fig-transparency-score-distribution
-#| fig-cap: "Histogram illustrating the distribution of transparency scores for polls in key battleground states. Reveals the frequency of different transparency ratings, providing insight into the reliability of polling data. Understanding the distribution of transparency scores is crucial for evaluating the credibility of the polling results as Election Day approaches."
+#| fig-cap: "Histogram displaying the distribution of transparency scores among pollsters in the polling data leading up to the 2024 United States Presidential Election. The plot indicates the frequency of various transparency scores, highlighting a concentration of scores around 7 and 9, which suggests a predominance of high transparency among the assessed pollsters. "
 
 # Distribution of transparency score
 ggplot(clean_poll_data, aes(x = transparency_score)) +
@@ -241,7 +242,7 @@ Pollster ('pollster') represents the various organizations responsible for condu
 #| warning: false
 #| message: false
 #| label: fig-pollster-distribution
-#| fig-cap: "Horizontal bar graph illustrating the distribution of polls by various pollsters in key battleground states. Displays the count of polls conducted by each pollster, highlighting the most frequently utilized polling organizations. Understanding the diversity of pollsters is essential for assessing the reliability and variance in polling data as Election Day approaches."
+#| fig-cap: "Horizontal bar chart displaying the distribution of polls conducted by various pollsters in key battleground states for the 2024 United States Presidential Election. The chart highlights the frequency of polling activities across different organizations, with Marist and Emerson standing out as the most prolific pollsters."
 
 # Horizontal bar graph for the distribution of pollsters
 ggplot(clean_poll_data, aes(x = factor(pollster))) +  # Convert to factor to ensure proper categorization
@@ -263,8 +264,7 @@ Start date ('start_date') represents the date when each poll began collecting re
 #| warning: false
 #| message: false
 #| label: fig-start-date-distribution
-#| fig-cap: "Histogram illustrating the distribution of polling start dates for key battleground states in the lead-up to the 2024 United States Presidential Election. This visualization displays the frequency of polls conducted over time, providing insights into when polling activities were initiated and potential trends in voter sentiment as Election Day approaches. Understanding the timing of polls is crucial for evaluating the relevance of the polling data."
-
+#| fig-cap: "Histogram illustrating the distribution of polling start dates for key battleground states leading up to the 2024 United States Presidential Election. The chart highlights the frequency of polling activities initiated over time, with a notable peak on September 14, indicating a surge in polling efforts as the election approached."
 
 # Distribution of start_date with x-axis labels every 15 days
 ggplot(clean_poll_data, aes(x = start_date)) +
@@ -276,7 +276,6 @@ ggplot(clean_poll_data, aes(x = start_date)) +
   theme_minimal()
 ```
 This distribution provides insights into the timing and intensity of polling efforts throughout the campaign season. By including only polls initiated after Harris’s campaign launch, we capture voter preferences in a context where both major candidates are actively campaigning, thus making the polling data more relevant for direct comparisons. This filtered timeline ensures our model focuses on data that reflects the competitive dynamics between Harris and Trump, enhancing the validity of our predictive analysis as we approach Election Day.
-
 
 # Model {#sec-model}
 The Bayesian Beta regression models constructed in this paper aim to predict the probability of victory for Donald Trump and Kamala Harris in the 2024 U.S. Presidential Election by analyzing polling data of the 7 battleground states. One Bayesian Beta regression model is constructed for each candidate, and each of them estimates the proportion of support for each candidate based on polling data, accounting for both polling trends over time, and state-level differences in voter sentiment. These models allow us to evaluate how support for each candidate fluctuates over time in key states, and predict potential electoral outcomes.
@@ -369,14 +368,23 @@ harris_model <-
 
 ## Model Justification
 
-The decision to utilize Bayesian logistic regression models stems from their flexibility and the ability to incorporate prior beliefs into the estimation process. This approach is particularly valuable in the context of electoral forecasting, where uncertainty is a significant factor. We defined the following priors for the model parameters:
+The Bayesian Beta Regression model with a logit link function is the most suitable model for our prediction of the 2024 U.S. Presidential Election because it aligns closely with both the nature of the data and the goals of our paper, which include understanding voter support trends over time and accounting for regional differences across battleground states. 
 
-- For the intercept $\beta_0$, we specified $\beta_0 \sim \text{Normal}(0, 10)$, providing a relatively uninformative prior that allows the data to inform the estimation of baseline log-odds.
-- For the slope $\beta_1$, we used $\beta_1 \sim \text{Normal}(0, 5)$, reflecting reasonable expectations regarding the influence of polling trends over time.
+Our primary outcome variable is the percentage of support for each candidate in 7 key battleground states, scaled to a proportion between 0 and 1. Support percentages are naturally bounded between 0% and 100%, and this bounded nature poses challenges for traditional linear regression, which assumes an unbounded continuous outcome. The Beta distribution is ideal for modeling proportion data because it is inherently defined on the interval (0, 1). This allows us to model the proportions of support without the risk of generating unrealistic values outside this range. Unlike a linear model, which could predict support percentages exceeding 100% or falling below 0%, the Beta distribution respects the boundaries of our data. The logit link function further ensures that the model predicts in terms of log odds, which is suitable for interpreting support as probabilities—an essential consideration given our goal of forecasting potential victory in each state.
 
-Natural splines were chosen to model the effect of the end date due to the observed nonlinearities in voter support, allowing the model to adapt to changing public opinion. Key assumptions include the independence of observations within states and the appropriateness of the Beta distribution for modeling proportions. However, potential limitations include the reliance on the accuracy of polling data and the assumption that historical voting patterns are indicative of future behavior.
+One of our key goals is to examine how support for each candidate evolves over time as Election Day approaches. Polling data often show non-linear trends, with fluctuations in support that may correspond to campaign events, debates, or shifts in the political landscape. Using natural splines with end_date_num (the number of days since the earliest poll date) allows the model to capture these non-linear trends in a flexible way. By including natural splines with 4 degrees of freedom, we allow the model to capture gradual changes in voter sentiment while avoiding overfitting to noise or abrupt fluctuations in the data. This is particularly important in the context of election polling, where voter opinions can change either slowly or rapidly depending on unpredictable external events. Alternative models, such as standard logistic regression without splines, would fail to capture these changes, potentially leading to a less accurate depiction of how support varies over time. 
+
+A unique aspect of our analysis is the focus on battleground states, which have distinct political dynamics that can heavily influence election outcomes. Incorporating state as a random effect provides flexibility in estimating state-specific baseline support levels for each candidate, while still allowing us to identify overall trends across all states. This approach is more effective than treating state as a fixed effect because it avoids overparameterizing the model with individual state coefficients, which could lead to overfitting in cases with limited data for some states. The random effect structure also helps generalize the model’s predictions, making it more robust when predicting support in battleground states with varying polling frequencies.
+
+The Bayesian approach offers advantages for our model by allowing us to incorporate prior information, enhancing the stability and reliability of our estimates. Given that polling data can be sparse for certain states or dates, Bayesian inference helps stabilize parameter estimates, especially when there are limited data points for certain states or specific dates. By using weakly informative priors, we let the data primarily determine the model’s outcomes, while still providing some structure to prevent overfitting or extreme parameter values. The Bayesian framework also produces credible intervals, which provide a clear interpretation of uncertainty around our predictions. In the context of election forecasting, this is valuable as it enables us to quantify the range of plausible outcomes for each candidate’s support, adding a layer of transparency to our predictions.
+This model provides interpretability that aligns well with the goals of our paper. By structuring the model with a logit link function, we can interpret the results in terms of odds or probability of victory, which is highly relevant in an election context. This interpretability allows us to understand the likelihood of each candidate winning in a specific state at a given time.
+
+Additionally, the Bayesian Beta regression model offers flexibility in how we examine each candidate’s trends individually. By constructing separate models for Trump and Harris, we can directly compare their temporal trends and state-level variations without confounding effects. 
+
+Overall, the Bayesian Beta regression model with a logit link function is the most suitable model for our study. It allows for flexible non-linear trends over time, accounts for regional variation across battleground states, and provides interpretable results in terms of victory probabilities. The Bayesian framework stabilizes estimates in the presence of sparse data and provides meaningful uncertainty estimates. The model’s structure aligns well with our goal of forecasting each candidate’s probability of victory, justifying the choice for achieving a comprehensive analysis and prediction of the 2024 U.S. Presidential Election. 
 
 ## Model Summary
+
 ### Trump Model Summary
 ```{r}
 #| echo: false
@@ -426,8 +434,6 @@ knitr::kable(harris_summary) %>%
   kable_styling(full_width = FALSE, position = "center")
 
 ```
-
-
 
 # Results {#sec-results}
 In this section, we present the results of our analysis, focusing on the electoral support for Donald Trump and Kamala Harris across key battleground states during the 2024 Presidential Election cycle. We begin by examining the state-level polling averages for both candidates, which provide a snapshot of voter preferences as captured by various pollsters. Next, we explore how polling averages have evolved over time, highlighting trends that may influence election outcomes. We then assess the predicted probabilities of Trump winning on Election Day, followed by a detailed look at the likelihood of winning by state. Finally, we visualize the predicted winner by state on a US map, summarizing our findings and their implications for the electoral landscape.
