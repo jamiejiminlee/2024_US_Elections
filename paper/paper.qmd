@@ -240,8 +240,6 @@ ggplot(clean_poll_data, aes(x = transparency_score)) +
 ```
 This distribution is important for understanding the credibility of our data sources. Polls with higher transparency scores are more likely to provide consistent and reliable results, as they openly disclose their methodologies, allowing us to assess potential biases or limitations in their data. In contrast, polls with lower transparency scores may lack sufficient methodological detail, making it challenging to gauge their accuracy. Incorporating transparency scores into our model helps differentiate between high- and low-transparency polls. This adjustment is crucial as transparency can influence the stability of the model’s predictions, especially in closely contested states where the reliability of polling data may impact the accuracy of our forecasted election outcomes.
 
-\newpage
-
 #### Pollster
 Pollster ('pollster') represents the various organizations responsible for conducting polls across key battleground states in the lead-up to the 2024 United States Presidential Election. In the context of our paper, the diversity and frequency of polling by different pollsters are essential for understanding the reliability and variance in the data. Each pollster may use different methodologies, sample populations, and data collection techniques, which can affect the results and introduce variability in polling outcomes.
 ```{r}
@@ -305,7 +303,7 @@ In order to ensure the validity and reliability of our Bayesian models for predi
 
 
 ## Model Setup
-In this section, we outline the statistical models employed to predict the probabilities of victory for Donald Trump and Kamala Harris in the 2024 presidential election within key battleground states. Our analysis utilizes a Bayesian framework, which allows us to incorporate uncertainty and prior information into the modeling process, yielding more robust predictions. The primary estimand for both models is the probability of each candidate's victory, expressed through a logistic regression approach. By examining polling data and its temporal dynamics, we aim to capture the evolving nature of voter support leading up to the election. We present separate subsections for the models of Donald Trump and Kamala Harris, detailing the structure, variables, and assumptions underlying each model. This division allows for a focused discussion on how each model has been tailored to reflect the unique electoral contexts and polling dynamics for each candidate. 
+Our models were ran in R [@citeR] using the 'rstanarm' package of @rstanarm. 
 
 ### Trump Model
 The primary estimand for Donald Trump's model is the probability of victory in the selected battleground states, derived from a logistic regression framework. The model is structured as follows:
@@ -677,8 +675,6 @@ Another weakness of our model is the lack of consideration for the national vote
 # Appendix {-}
 
 # Additional Data Details {#sec-data-details}
-
-
 Given the nature of the presidential election, the electoral college is more impactful and influential on the possible outcome compared to the nationwide popular votes. Therefore, the majority of the pollsters choose to focus on the battleground states to perform their polling, to gain more insight into the public sentiment specific to certain states. For instance, Sienna/NYT mentions that they have in-state interviewers who call their respondents in states such as Arizona, Georgia, Michigan, Nevada, Pennsylvania, and Wisconsin. 
 
 This could explain the discrepancies in our data, where there are many missing values from states other than the battleground ones. Furthermore, many pollsters focus on state-wide polls instead of nationwide polls given the nature of the election, resulting in fewer data points or missing data for nationwide poll results. Even though the national popular vote and the results in the electoral college don’t line up a lot of the time, the popular votes can still provide information about issues and opinions that are shaping the election as a whole. Therefore, even if we are focusing on selective states, results from other states and popular votes still remain relevant to outcome prediction. 
