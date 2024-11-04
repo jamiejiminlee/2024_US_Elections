@@ -18,4 +18,4 @@ The repo is structured as:
 
 ## Statement on LLM usage
 
-Aspects of the code were written with the assistance of ChatGPT. The data cleaning, testing and modelling scripts were written with the help of ChatGPT and the entire chat history is available in inputs/llms/usage.txt.
+Aspects of the code were written with the assistance of ChatGPT. The data cleaning, testing and modelling scripts, as well as discussions, results, introduction, model sections were written with the help of ChatGPT and the entire chat history is available in inputs/llms/usage.txt.
