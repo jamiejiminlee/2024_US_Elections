@@ -67,13 +67,13 @@ Then, pollsters reach out to voters through various channels, such as phone call
 
 The types of questions often include: 
 
-- “If the election were held today, would you vote for [Candidate A] or [Candidate B]?” 
-- “How strongly do you support [Candidate]?” (e.g., on a scale of 1 to 10, or strongly, somewhat, undecided)
-- “Do you support [Policy A] proposed by [Candidate A] or [Policy B] proposed by [Candidate B]?” 
+- “If the election were held today, would you vote for Candidate A or Candidate B?” 
+- “How strongly do you support Candidate?” (e.g., on a scale of 1 to 10, or strongly, somewhat, undecided)
+- “Do you support Policy A proposed by Candidate A or Policy B proposed by Candidate B?” 
 
 Responses are recorded digitally, either by survey software or directly into a database by interviewers, capturing both the answers and relevant demographic data. Each response becomes a data point in the database. For example, if a respondent prefers Candidate A, their answer may be recorded as a binary variable (e.g., “1” for Candidate A, “0” for Candidate B). Along with candidate preference, pollsters capture demographic and behavioral details, such as age, gender, race, education, income, voter history, and party registration. 
 
-Each respondent’s answers and demographic details are grouped and saved in a structured database. Pollsters then clean the data by checking for inconsistencies, removing incomplete responses, and addressing non-responses. Pollsters also perform weighting to ensure the representativeness of data collected, details of weighting are further explained in {appendix 1}.
+Each respondent’s answers and demographic details are grouped and saved in a structured database. Pollsters then clean the data by checking for inconsistencies, removing incomplete responses, and addressing non-responses. Pollsters also perform weighting to ensure the representativeness of data collected, details of weighting are further explained in @sec-pollster-methodology.
 
 Once cleaned and weighted, data points are aggregated to determine overall candidate support, often producing metrics such as the percentage of respondents supporting each candidate by state or other specific demographics. Each pollster would have a database with all the weighted and aggregated data, and Project 538 presents a compilation of the databases obtained from various pollsters. 
 
@@ -216,7 +216,6 @@ ggplot(clean_poll_data, aes(x = numeric_grade)) +
 
 ```
 This variability in numeric grade highlights the diversity in polling quality within our dataset. The presence of peaks suggests that some pollsters consistently receive higher ratings, likely due to their use of more rigorous methods or transparent reporting standards. Conversely, the valleys in the distribution may indicate fewer polls from sources with lower numeric grades, reflecting a potential tendency for lower-quality polls to be less prevalent or less frequently conducted. By accounting for numeric grade, we can improve the accuracy of predictions by emphasizing data from more reliable sources. This consideration is crucial, as polling quality can impact the stability of the model’s forecasts, especially in closely contested states where polling accuracy is essential for reliable predictions.
-
 \newpage
 
 #### Transparency Score
@@ -739,7 +738,7 @@ The posterior predictive check for the Harris model is presented in Figure X, il
 
 In the plot, we observe a strong overlap between the $y$ and $y_{\text{rep}}$ distributions, with the dark blue curve representing the observed support percentages primarily concentrated around 48% to 52%. This indicates that the model successfully approximates the actual voting support dynamics for Harris. The light blue curves signify the distribution of predicted values, demonstrating the model's ability to replicate the observed trends effectively. The close alignment of the observed and predicted densities suggests that the model adequately reflects the underlying support for Harris among voters, thereby affirming the appropriateness of the model structure. However, similar to the Trump model, the presence of some variability in the predicted values indicates that while the model performs well, there may still be unexplained variations in support levels that could benefit from further analysis. Such limitations are also discussed in @sec-model-diagnostics. 
 
-# Pollster methodology overview and evaluation: NYT/Siena College
+# Pollster methodology overview and evaluation: NYT/Siena College {#sec-pollster-methodology}
 
 ## Background of NYT/Siena College Polling
 The NYT/Siena College Polling is a U.S. polling organization where the New York Times and Siena College collaborate to deliver precise and timely poll results for the presidential elections [@nyt-siena-methodology]. For the 2024 election cycle, The NYT/Siena College poll uses a robust sampling approach to ensure accuracy and representativeness. The poll applies a stratified dual-frame sample, drawing from both landlines and cell phones.
