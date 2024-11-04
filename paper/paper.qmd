@@ -133,7 +133,8 @@ For instance, @tbl-outcomevar reveals a total of 107 polls conducted, calculated
 It is important to note that since ‘pct’ stands for percentage, there may be a misconception that the values for Trump and Harris will always add up to 100%. For instance, in the summary statistics presented in Table 1, the average support for Donald Trump is 47.801%, while the average support for Kamala Harris is 47.999%. This results in a combined average support of 95.800%, indicating that there is a significant portion of respondents who are either undecided or supporting other candidates. This highlights the competitive nature of the election and emphasizes the necessity of examining not only the percentages attributed to the main candidates but also the context of voter preferences that could influence the final outcome.
 
 ### Predictive Variables
-In this section, we outline the two key predictor variables used in our analysis: 'state', which captures the geographical context of the polling data, and 'end_date', which reflects the timing of the polls relative to the election, allowing us to assess trends in voter support over ti
+In this section, we outline the two key predictor variables used in our analysis: 'state', which captures the geographical context of the polling data, and 'end_date', which reflects the timing of the polls relative to the election, allowing us to assess trends in voter support over time. 
+
 #### State
 The state ('state') variable indicates the U.S. state where the poll was conducted or targeted. In the context of the U.S. presidential election, the outcome is frequently determined by several key battlegroud states. In the current 2024 election cycle, there are seven battleground states that are pivotal in the contest between Kamala Harris, representing the Democratic Party, and Donald Trump, representing the Republican Party. To enhance our model and refine our predictions, we focused exclusively on these seven battleground states. The polling results from each of these states play a crucial role in predicting electoral outcomes, as the percentage of support is evaluated on a state-by-state basis.
 ```{r}
@@ -189,6 +190,7 @@ We filtered for the earliest end date as July 2024 since Harris officially annou
 
 ### Other Variables
 This section details additional variables that provide essential context for our analysis, including numeric grade, which evaluates the quality of the polls; transparency score, indicating the openness of poll methodologies; pollster, identifying the organizations conducting the polls; and start date, which denotes the initiation of the polling period for each survey.
+
 #### Numeric Grade
 Numeric Grade ('numeric_grade') represents the quality of each poll, as rated by [@FiveThirtyEight], based on factors such as methodology, transparency, and historical accuracy. In the context of our paper, numeric grade allows us to weigh the reliability of different polls. By including numeric grade as a variable in our model, we aim to account for variations in poll quality, ensuring that polls with higher ratings (indicating higher reliability) contribute more significantly to our predictions of voter support. @fig-numgrade-distribution displays the distribution of numeric grades for the polls included in our analysis, ranging from 2.5 to 3.0. Polls with higher grades are generally seen as more methodologically rigorous and transparent, which helps improve the reliability of our model’s predictions. The distribution shows several peaks, indicating that certain grade levels (around 2.7, 2.8, and 3.0) are more common among the polling data we collected.
 ```{r}
@@ -375,6 +377,31 @@ The decision to utilize Bayesian logistic regression models stems from their fle
 Natural splines were chosen to model the effect of the end date due to the observed nonlinearities in voter support, allowing the model to adapt to changing public opinion. Key assumptions include the independence of observations within states and the appropriateness of the Beta distribution for modeling proportions. However, potential limitations include the reliance on the accuracy of polling data and the assumption that historical voting patterns are indicative of future behavior.
 
 ## Model Summary
+### Trump Model Summary
+```{r}
+#| echo: false
+#| eval: true
+#| label: tbl-trump-fixed-effects
+#| tbl-cap: "Fixed Effects Summary for Trump Model."
+#| warning: false
+
+# Summarize fixed effects for Trump model
+trump_summary <- tidy(trump_model, effects = "fixed", conf.int = TRUE) %>%
+  select(term, estimate, std.error, conf.low, conf.high) %>%
+  rename(
+    Estimate = estimate,
+    `Std. Error` = std.error,
+    `Lower 95% CI` = conf.low,
+    `Upper 95% CI` = conf.high
+  ) %>%
+  mutate(term = gsub("[^[:alnum:] ]", "", term))  # Clean up term names
+
+# Display the Trump model summary table
+knitr::kable(trump_summary) %>%
+  kable_styling(full_width = FALSE, position = "center")
+```
+
+
 ### Harris Model Summary
 ```{r}
 #| echo: false
@@ -400,33 +427,7 @@ knitr::kable(harris_summary) %>%
 
 ```
 
-The model summary for Kamala Harris indicates that the intercept estimate is $-0.1508$ with a standard error of $0.0279$. This intercept value suggests a negative baseline log-odds for her victory, reflecting the starting point of her support in the absence of any other predictors. The model shows that the coefficients for the natural spline terms ($nsendate_{num}$) are particularly informative, with the first spline term ($nsendate_{num\_df41}$) yielding a positive estimate of $0.1225$, suggesting that as time progresses, Harris’s probability of winning increases, particularly during key moments captured by the polling data. This is also reflected in the confidence intervals, with the upper limit of the confidence interval for this term reaching $0.1903$. In contrast, the estimates for the second spline term ($nsendate_{num\_df42}$) indicate a smaller effect, suggesting fluctuations in her support that may warrant further investigation.
 
-
-### Trump Model Summary
-```{r}
-#| echo: false
-#| eval: true
-#| label: tbl-trump-fixed-effects
-#| tbl-cap: "Fixed Effects Summary for Trump Model."
-#| warning: false
-
-# Summarize fixed effects for Trump model
-trump_summary <- tidy(trump_model, effects = "fixed", conf.int = TRUE) %>%
-  select(term, estimate, std.error, conf.low, conf.high) %>%
-  rename(
-    Estimate = estimate,
-    `Std. Error` = std.error,
-    `Lower 95% CI` = conf.low,
-    `Upper 95% CI` = conf.high
-  ) %>%
-  mutate(term = gsub("[^[:alnum:] ]", "", term))  # Clean up term names
-
-# Display the Trump model summary table
-knitr::kable(trump_summary) %>%
-  kable_styling(full_width = FALSE, position = "center")
-```
-In comparison, the model summary for Donald Trump presents a different picture. The intercept for Trump's model is $-0.0923$ with a standard error of $0.0306$, indicating a similarly negative baseline log-odds of victory as Harris. However, Trump's model demonstrates more pronounced increases in support as reflected by the estimates for the natural spline terms. For example, the second spline term ($nsendate_{num\_df42}$) has a positive coefficient of $0.0803$, highlighting a significant upward trend in support over time. This trend is further supported by the confidence interval, which ranges from $0.0179$ to $0.1426$, indicating a substantial increase in his predicted probabilities as the election approaches. The fourth spline term ($nsendate_{num\_df44}$) also shows a positive coefficient of $0.0789$, suggesting that the support for Trump remains resilient over the polling period. Overall, both models reveal complex interactions between time and voter sentiment, with implications for the electoral dynamics leading up to the election.
 
 # Results {#sec-results}
 In this section, we present the results of our analysis, focusing on the electoral support for Donald Trump and Kamala Harris across key battleground states during the 2024 Presidential Election cycle. We begin by examining the state-level polling averages for both candidates, which provide a snapshot of voter preferences as captured by various pollsters. Next, we explore how polling averages have evolved over time, highlighting trends that may influence election outcomes. We then assess the predicted probabilities of Trump winning on Election Day, followed by a detailed look at the likelihood of winning by state. Finally, we visualize the predicted winner by state on a US map, summarizing our findings and their implications for the electoral landscape.
